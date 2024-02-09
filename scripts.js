@@ -210,7 +210,7 @@ function createYearListItem(year) {
 }
 
 
-// Scrol Top Button
+// Scroll Top Button
 document.addEventListener("DOMContentLoaded", function () {
 
     const scrollToTopBtn = document.getElementById("scrollToTopBtn");
@@ -248,3 +248,40 @@ function showRandomToast() {
 
 // Call the function to show the toast
 showRandomToast();
+
+
+
+
+// JavaScript code to handle screensaver behavior
+let screensaver = document.getElementById('screensaver');
+let video = document.getElementById('screensaver-video');
+let activityTimeout;
+
+function startScreensaver() {
+    screensaver.classList.add('active'); // Apply CSS class for smooth transition
+    video.play();
+}
+
+function stopScreensaver() {
+    screensaver.classList.remove('active'); // Remove CSS class to fade out
+    video.pause();
+    video.currentTime = 0; // Reset video to beginning
+}
+
+function resetTimer() {
+    clearTimeout(activityTimeout);
+    activityTimeout = setTimeout(startScreensaver, 10000); // 10 seconds of inactivity
+}
+
+document.addEventListener('mousemove', function() {
+    resetTimer();
+    stopScreensaver();
+});
+
+document.addEventListener('keypress', function() {
+    resetTimer();
+    stopScreensaver();
+});
+
+resetTimer(); // Start timer initially
+

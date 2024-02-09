@@ -118,3 +118,34 @@
 #scrollToTopBtn.hidden {
     display: none;
 }
+
+
+
+#screensaver {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Cover entire viewport width */
+    height: 100vh; /* Cover entire viewport height */
+    z-index: 9999;
+    background-color: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease; /* Smooth transition */
+}
+#screensaver.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+#video-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+}
+video {
+    width: 100%;
+    height: 100%;
+}
