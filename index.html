@@ -40,6 +40,7 @@
                 <a href="#about" class="nav-link px-2">About Me</a>
                 <a href="#research" class="nav-link px-2">Research</a>
                 <a href="#internships" class="nav-link px-2">Internships</a>
+                <a href="#collaborations" class="nav-link px-2">Collaborations</a>
                 <a href="#publications" class="nav-link px-2">Publications</a>
                 <a href="#contact" class="nav-link px-2">Let's Connect</a>
             </nav>
@@ -61,23 +62,42 @@
                     </div>
                     <div class="col-lg-9 text-center text-md-start d-flex flex-column">
                         <h2 class="display-4">About Me</h2>
-                        <p class="lead">Welcome to my researcher website! I am Maciej Spiegel, a passionate researcher
+                        <p class="lead">Welcome to my website! I am a passionate researcher
                             dedicated to the computational aided drug design. With a strong background in radical
                             reactions, I aim
                             to contribute valuable insights to the scientific community. Explore my website to learn
                             more about my journey and research endeavors.</p>
 
-                        <!-- University Logo 
-                        <img src="https://www.umw.edu.pl/sites/default/files/znak_ze_skrotem_nazwy_wersja_POL_wersja_jednobarwna_pozytywowa_0.jpg"
-                            alt="University Logo"
-                            class="position-absolute top-50 end-0 translate-middle-y img-fluid max-logo-size"
-                            style="opacity: 0.15; z-index: -1; max-width: 150%; max-height: 150%;">-->
-
+                        <div class="col">
+                            <!--
+                            <div class="timeline-steps">
+                                <div class="timeline-step">
+                                    <div class="timeline-content">
+                                        <div class="inner-circle"></div>
+                                        <p class="h6 mt-3 mb-1">2019</p>
+                                        <p class="h6 text-muted mb-0 mb-lg-0">Master of Pharmacy</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-step">
+                                    <div class="timeline-content">
+                                        <div class="inner-circle"></div>
+                                        <p class="h6 mt-3 mb-1">2023</p>
+                                        <p class="h6 text-muted mb-0 mb-lg-0">Doctor of Pharmaceutical Sciences</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <img src="https://www.umw.edu.pl/sites/default/files/znak_ze_skrotem_nazwy_wersja_POL_wersja_jednobarwna_pozytywowa_0.jpg"
+                                alt="University Logo"
+                                class="position-absolute top-50 end-0 translate-middle-y img-fluid max-logo-size"
+                                style="opacity: 0.10; z-index: -1; max-width: 150%; max-height: 150%;">-->
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
+
+
 
     <!-- Divier -->
     <div class="divider"></div>
@@ -89,12 +109,12 @@
 
             <!-- Custom Cards Section -->
             <div class="container px-md-5 py-4" id="custom-cards">
-                <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-3">
+                <div class="row align-items-stretch g-4 py-3">
                     <!-- Card 1: Senotherapeutic Agents -->
                     <div class="col">
                         <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
                             data-bs-toggle="collapse" data-bs-target="#senoBox"
-                            style="background-image: url('https://www.lifespan.io/wp-content/uploads/2017/02/shutterstock_1615272484.jpg'); background-size: cover; background-position: center;">
+                            style="background-image: url('https://www.lifespan.io/wp-content/uploads/2017/02/shutterstock_1615272484.jpg'); background-size: cover; background-position: center; cursor:pointer">
                             <!-- Card Content -->
                             <div class="d-flex flex-column h-100 p-5 pb-3 text-white outlined-text">
                                 <h3 class="pt-5 mt-5 mb-4 display-7 lh-1 fw-bold">Senotherapeutic Agents</h3>
@@ -106,35 +126,24 @@
                     <div class="col">
                         <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
                             data-bs-toggle="collapse" data-bs-target="#cancerBox"
-                            style="background-image: url('https://us.images.westend61.de/0001569248pw/3d-illustration-of-cancer-cell-in-human-body-SPCF01412.jpg'); background-size: cover; background-position: center;">
+                            style="background-image: url('https://us.images.westend61.de/0001569248pw/3d-illustration-of-cancer-cell-in-human-body-SPCF01412.jpg'); background-size: cover; background-position: center; cursor:pointer">
                             <!-- Card Content -->
                             <div class="d-flex flex-column h-100 p-5 pb-3 text-white outlined-text">
                                 <h3 class="pt-5 mt-5 mb-4 display-7 lh-1 fw-bold">Anticancer Drugs</h3>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Card 3: Antioxidants -->
-                    <div class="col">
-                        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
-                            data-bs-toggle="collapse" data-bs-target="#antioxBox"
-                            style="background-image: url('https://media.istockphoto.com/id/623942396/photo/destruction-of-a-cell-conceptual-image.jpg?s=612x612&w=0&k=20&c=zbiMN-zt44zYQ_PYJd6N0MYfMgURNM97sbOB-lLzFgo='); background-size: cover; background-position: center;">
-                            <!-- Card Content -->
-                            <div class="d-flex flex-column h-100 p-5 pb-3 text-white outlined-text">
-                                <h3 class="pt-5 mt-5 mb-4 display-7 lh-1 fw-bold">Antioxidants</h3>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
-                <!-- Description - Collapse Boxes -->
+                <!-- Collapse Boxes -->
                 <div class="row">
                     <!-- Card 1: Senotherapeutic Agents -->
                     <div class="col">
                         <div class="collapse multi-collapse" id="senoBox">
                             <div class="card card-body">
-                                This is some placeholder content for a horizontal collapse. It's hidden by default and
-                                shown when triggered.
+                                Senotherapeutic agents target senescent cells or their inducing factors, aiming to
+                                prevent age-related diseases and potentially extend healthspan. Computer-aided drug
+                                design in this field holds great promise, facilitating the generation of multiple hits
+                                before wet lab studies, thereby accelerating research progress.
                             </div>
                         </div>
                     </div>
@@ -143,21 +152,68 @@
                     <div class="col">
                         <div class="collapse multi-collapse" id="cancerBox">
                             <div class="card card-body">
-                                This is some placeholder content for a horizontal collapse. It's hidden by default and
-                                shown when triggered.
+                                A variety of agents with diverse mechanisms of action, including photosensitizers,
+                                platinum compounds, and BODIPY agents, are deployed against cancer cells. Given the
+                                emergence of resistance in certain neoplastic cells to existing substances,
+                                computational chemistry plays a pivotal role in advancing these treatments by predicting
+                                efficacy and selective toxicity of new drugs.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-stretch g-4 py-3">
+                    <!-- Card 3: Antioxidants -->
+                    <div class="col">
+                        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+                            data-bs-toggle="collapse" data-bs-target="#antioxBox"
+                            style="background-image: url('https://media.istockphoto.com/id/623942396/photo/destruction-of-a-cell-conceptual-image.jpg?s=612x612&w=0&k=20&c=zbiMN-zt44zYQ_PYJd6N0MYfMgURNM97sbOB-lLzFgo='); background-size: cover; background-position: center; cursor:pointer">
+                            <!-- Card Content -->
+                            <div class="d-flex flex-column h-100 p-5 pb-3 text-white outlined-text">
+                                <h3 class="pt-5 mt-5 mb-4 display-7 lh-1 fw-bold">Dietary Antioxidants</h3>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Card 4: Catalysis -->
+                    <div class="col">
+                        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+                            data-bs-toggle="collapse" data-bs-target="#catalBox"
+                            style="background-image: url('https://static.vecteezy.com/system/resources/previews/024/062/457/large_2x/vivid-3d-illustration-depicting-enzyme-catalysis-in-action-ai-generated-free-photo.jpg'); background-size: cover; background-position: center; cursor:pointer">
+                            <!-- Card Content -->
+                            <div class="d-flex flex-column h-100 p-5 pb-3 text-white outlined-text">
+                                <h3 class="pt-5 mt-5 mb-4 display-7 lh-1 fw-bold">Catalysis</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <!-- Card 3: Antioxidants -->
                     <div class="col">
                         <div class="collapse multi-collapse" id="antioxBox">
                             <div class="card card-body">
-                                This is some placeholder content for a horizontal collapse. It's hidden by default and
-                                shown when triggered.
+                                Negative oxidative stress, stemming from an inadequate supply of biological
+                                antioxidants, leads to the oxidation of biomolecules and subsequent cellular
+                                dysfunction. Polyphenols, widely acknowledged for their significant antioxidative
+                                activity, exert both direct and indirect effects against radicals.Understanding the
+                                mechanism underlying this activity could rationalize the intake of polyphenols,
+                                potentially mitigating oxidative stress-related cellular dysfunction.
                             </div>
                         </div>
                     </div>
+
+                    <!-- Card 4: Catalysys -->
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="catalBox">
+                            <div class="card card-body">
+                                Catalysis, a fundamental branch of chemistry, accelerates chemical reactions through
+                                catalysts. Computational chemistry plays a key role by elucidating reaction mechanisms,
+                                designing innovative catalysts, and optimizing catalytic processes to achieve heightened
+                                efficiency and selectivity.
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -173,53 +229,59 @@
 
             <!-- List of Years -->
             <div class="row">
-                <div class="col">
-                    <ul id="years-list" class="list-unstyled d-flex justify-content-center mb-4">
-                        <!-- The years will be added dynamically here -->
-                    </ul>
+                <div class="col d-flex justify-content-center" id="years-button">
+                    <!-- The years will be added dynamically here -->
                 </div>
             </div>
 
-            <!-- Timeline -->
-            <div class="timeline collapse" id="timelineitems">
-                <!-- Timeline items will be added here dynamically -->
+            <!-- Toast Container -->
+            <div class="row justify-content-center" id="toast-container">
+                <!-- Toasts will be added dynamically here -->
             </div>
+
         </div>
     </section>
+
+
 
     <!-- Divier -->
     <div class="divider"></div>
 
     <!-- Internships Section -->
-    <section id="internships" class="py-5">
+    <section id="internships" class="py-5" style="overflow: hidden;">
         <div class="container">
             <h2 class="mb-4 pb-2 border-bottom">Internships</h2>
-
             <div class="row">
-                <div class="col-md-4" style="min-height: 700px;">
+                <div class="col-12 mb-4" style="min-height: 250px;" id="UdG" onclick="expand(this)">
                     <div class="p-4 border rounded-3 h-100 text-white outlined-text h-100 d-flex flex-column"
-                        style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e6/Cosenza20231.jpg'); background-size: cover; background-position: center;">
-                        <h2 class="fw-bold mt-auto mb-4">University of Calabria</h2>
+                        style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/f/f9/Girona_des_de_l_aire.jpg'); background-size: cover; background-position: 100% 5%;">
+                        <h2 class="fw-bold mt-auto mb-4">🇪🇸University of Girona</h2>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-4" style="min-height: 750px;" id="Unical" onclick="expand(this)">
+                    <div class="p-4 border rounded-3 h-100 text-white outlined-text h-100 d-flex flex-column"
+                        style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e6/Cosenza20231.jpg'); background-size: cover; background-position: 0%;">
+                        <h2 class="fw-bold mt-auto mb-4">🇮🇹University of Calabria</h2>
+                    </div>
+                </div>
+                <div class="col-8">
                     <div class="row">
-                        <div class="col-md-6 mb-4" style="min-height: 350px;">
+                        <div class="col-6 mb-4" style="min-height: 375px;" id="PSL" onclick="expand(this)">
                             <div class="p-4 border rounded-3 text-white outlined-text h-100 d-flex flex-column"
-                                style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/65/Eiffel_Tower_from_the_Tour_Montparnasse%2C_1_May_2012_N2.jpg'); background-size: cover; background-position: center;">
-                                <h2 class="fw-bold mt-auto mb-4">Chimie ParisTech</h2>
+                                style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/65/Eiffel_Tower_from_the_Tour_Montparnasse%2C_1_May_2012_N2.jpg'); background-size: cover; background-position: 0%;">
+                                <h2 class="fw-bold mt-auto mb-4">🇫🇷Chimie ParisTech</h2>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-4">
+                        <div class="col-6 mb-4" style="min-height: 375px;" id="WIS" onclick="expand(this)">
                             <div class="p-4  border rounded-3 text-white outlined-text h-100 d-flex flex-column"
-                                style="background-image: url('https://149490531.v2.pressablecdn.com/wp-content/uploads/2020/09/0.jpg'); background-size: cover; background-position: center;">
-                                <h2 class="fw-bold mt-auto mb-4">Weizmann Institute of Science</h2>
+                                style="background-image: url('https://149490531.v2.pressablecdn.com/wp-content/uploads/2020/09/0.jpg'); background-size: cover; background-position: 0;">
+                                <h2 class="fw-bold mt-auto mb-4">🇮🇱Weizmann Institute of Science</h2>
                             </div>
                         </div>
-                        <div class="col-md-12" style="min-height: 350px;">
+                        <div class="col-12" style="min-height: 350px;" id="UP" onclick="expand(this)">
                             <div class="p-4 y border rounded-3 text-white outlined-text h-100 d-flex flex-column"
                                 style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Puente_de_Don_Luis_I%2C_Oporto%2C_Portugal%2C_2019-06-02%2C_DD_29-31_HDR.jpg/800px-Puente_de_Don_Luis_I%2C_Oporto%2C_Portugal%2C_2019-06-02%2C_DD_29-31_HDR.jpg?20191115200852'); background-size: cover; background-position: center;">
-                                <h2 class="fw-bold mt-auto mb-4">University of Porto</h2>
+                                <h2 class="fw-bold mt-auto mb-4">🇵🇹University of Porto</h2>
                             </div>
                         </div>
                     </div>
@@ -227,6 +289,7 @@
             </div>
         </div>
     </section>
+
 
     <!-- Divier -->
     <div class="divider"></div>
@@ -275,18 +338,18 @@
         </div>
         <!-- Testimonials -->
         <div class="position-absolute"
-            style="top: 5vh; right: 5vw; z-index: -1; opacity: 0.5; font-family: Palatino, serif; font-size: 1.2rem;">
+            style="top: 5vh; right: 5vw; z-index: -1; opacity: 0.20; font-family: Palatino, serif; font-size: 1.2rem;">
             <p style="font-style: italic;">"I commend widely his professional<br> and personal behavior."</p>
             <footer class="blockquote-footer float-end">prof. Nino Russo</footer>
         </div>
         <div class="position-absolute"
-            style="top: 15vh; left: 5vw; z-index: -1; opacity: 0.5; font-family: Palatino, serif; font-size: 1.2rem;">
+            style="top: 20vh; left: 5vw; z-index: -1; opacity: 0.20; font-family: Palatino, serif; font-size: 1.2rem;">
             <p style="font-style: italic;">"Maciej has, despite a pharmaceutical study curriculum, <br>an excellent
                 background in computational chemistry."</p>
             <footer class="blockquote-footer float-end">prof. Carlo Adamo</footer>
         </div>
         <div class="position-absolute"
-            style="bottom: 0vh; right: 5vw; z-index: -1; opacity: 0.5; font-family: Palatino, serif; font-size: 1.2rem;">
+            style="bottom: 0vh; right: 5vw; z-index: -1; opacity: 0.20; font-family: Palatino, serif; font-size: 1.2rem;">
             <p style="font-style: italic;">"He is very intelligent, hard-working, independent<br> and rigorous in
                 his
                 attitude toward science".</p>
@@ -314,7 +377,7 @@
             <ul class="nav col-md-6 justify-content-end list-unstyled d-flex">
                 <!-- Twitter-X -->
                 <li class="ms-3">
-                    <a class="text-body-secondary" href="#" target="_blank">
+                    <a class="text-body-secondary" href="https://twitter.com/MaciejSpiegel" target="_blank">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                             class="bi bi-twitter-x" viewBox="0 0 16 16">
                             <path
@@ -324,7 +387,7 @@
                 </li>
                 <!-- LinkedIn -->
                 <li class="ms-3">
-                    <a class="text-body-secondary" href="#" target="_blank">
+                    <a class="text-body-secondary" href="https://www.linkedin.com/in/maciejspiegel/" target="_blank">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                             class="bi bi-linkedin" viewBox="0 0 16 16">
                             <path
@@ -334,7 +397,8 @@
                 </li>
                 <!-- ResearchGate -->
                 <li class="ms-3">
-                    <a class="text-body-secondary" href="#" target="_blank">
+                    <a class="text-body-secondary" href="https://www.researchgate.net/profile/Maciej-Spiegel"
+                        target="_blank">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi"
                             viewBox="0 0 32 32">
                             <path
@@ -346,7 +410,7 @@
                 </li>
                 <!-- WOS -->
                 <li class="ms-3">
-                    <a class="text-body-secondary" href="#" target="_blank">
+                    <a class="text-body-secondary" href="https://www.webofscience.com/wos/author/record/AAM-6262-2021" target="_blank">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi"
                             viewBox="0 0 1420 1563">
                             <path
@@ -360,7 +424,7 @@
                 </li>
                 <!-- ORCiD -->
                 <li class="ms-3">
-                    <a class="text-body-secondary" href="#" target="_blank">
+                    <a class="text-body-secondary" href="https://orcid.org/0000-0002-8012-1026" target="_blank">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi"
                             viewBox="0 0 256 256">
                             <path
@@ -377,13 +441,8 @@
         </footer>
     </div>
 
-    <!-- Scroll to Top button -->
-    <div id="scrollToTopBtn">
-        <button type="button" class="btn btn-light"><i class="bi bi-arrow-up"></i></button>
-    </div>
-
     <!-- Sticky Toast -->
-    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+    <div class="position-fixed top-20 end-0 p-3" style="z-index: 1">
         <div class="toast" role="alert" aria-live="assertive" data-bs-autohide="false" aria-atomic="true" id="myToast">
             <div class="toast-header">
                 <img style="height: 32px; width: 32px;"
@@ -398,25 +457,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Screensaver -->
-    <div id="screensaver">
-        <div id="video-container">
-            <video id="screensaver-video" muted autoplay loop>
-                <source src="rynek.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-        <!-- Copyright Caption using Bootstrap -->
-        <div class="position-absolute bottom-0 end-0 p-3 text-white"><small>
-            "<i>Wroclaw Evening Timelapse</i>" &copy; marekw, videvo.net.<br>Used under a
-            CC-BY 3.0 license: <a href="https://creativecommons.org/licenses/by/3.0/pl/" class="link-light"
-                target="_blank">https://creativecommons.org/licenses/by/3.0/pl/</a></small>
-        </div>
-    </div>
-
-
-
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
