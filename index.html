@@ -463,7 +463,7 @@
     <div class="divider-hero-to-timeline"></div>
 
     <section id="timeline" class="py-5 bg-light">
-        <div class="container-fluid">
+        <div class="container">
             <h2 class="display-5 fw-bold mb-4 text-center fade-in-up">Timeline</h2>
 
             <div class="timeline-container">
@@ -834,6 +834,11 @@
                 
                 myGlobe.pointOfView({ lat: point.lat, lng: point.lng, altitude: 2 }, 1000);
             });
+        
+            myGlobe.lights([ 
+                new THREE.AmbientLight(0xffffff),     // low intensity ambient
+                new THREE.DirectionalLight(0xffffff) // directional with moderate intensity
+            ]);
         
         // Handle window resize
         window.addEventListener('resize', () => {
