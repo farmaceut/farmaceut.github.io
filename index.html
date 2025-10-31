@@ -4,9 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Maciej Spiegel MPharm PhD - Researcher Website</title>
+    <meta name="description" content="Maciej Spiegel, MPharm PhD - Computational chemist specializing in drug design, antioxidants, and photosensitizers. 35+ publications, 800+ citations.">
+    <meta name="keywords" content="computational chemistry, drug design, antioxidants, photodynamic therapy, DFT, quantum chemistry">
+    <meta name="author" content="Maciej Spiegel">
+    <meta property="og:title" content="Maciej Spiegel MPharm PhD - Researcher Website">
+    <meta property="og:description" content="Computational chemist specializing in drug design, antioxidants, and photosensitizers">
+    <meta property="og:image" content="https://www.umw.edu.pl/sites/default/files/2024-12/Maciej%20Spiegel.png">
+    <meta property="og:url" content="https://yourwebsite.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
+
+        /* Smooth scrolling for the entire page */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Smooth transitions for interactive elements */
+        * {
+            transition: all 0.3s ease;
+        }
+
+        /* More specific smooth transitions */
+        .publication-item,
+        .research-interest-card,
+        .testimonial,
+        .timeline-item,
+        .year-badge,
+        .btn-dark-custom,
+        .social-icon,
+        .nav-link {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Smooth hover effects */
+        .publication-item:hover,
+        .research-interest-card:hover,
+        .testimonial:hover {
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Smooth timeline interactions */
+        .timeline-dot {
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .timeline-content {
+            transition: opacity 0.5s ease, max-height 0.5s ease, transform 0.3s ease;
+        }
+
+        /* Smooth globe point of view transition */
+        .location-info {
+            transition: all 0.6s ease-in-out;
+        }
+
+        /* Smooth year badge changes */
+        .year-badge {
+            transition: all 0.4s ease-in-out;
+        }
+
+        .year-badge:active {
+            transform: scale(0.95);
+        }
+
+        /* Smooth button interactions */
+        .btn-dark-custom:active {
+            transform: translateY(0px) scale(0.98);
+        }
+
+        /* Smooth navbar collapse */
+        .navbar-collapse {
+            transition: all 0.4s ease-in-out;
+        }
+
+        /* Smooth back to top button */
+        #backToTop {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        /* Smooth profile image hover */
+        .profile-img {
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
         :root {
             --primary-dark: #1a1a1a;
             --secondary-dark: #2d2d2d;
@@ -72,6 +154,33 @@
             opacity: 0.1;
         }
 
+        /* Fade in animation for publications */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .publication-item.animate {
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* Stagger the animation for each publication */
+        .col-md-6:nth-child(1) .publication-item.animate { animation-delay: 0.05s; }
+        .col-md-6:nth-child(2) .publication-item.animate { animation-delay: 0.1s; }
+        .col-md-6:nth-child(3) .publication-item.animate { animation-delay: 0.15s; }
+        .col-md-6:nth-child(4) .publication-item.animate { animation-delay: 0.2s; }
+        .col-md-6:nth-child(5) .publication-item.animate { animation-delay: 0.25s; }
+        .col-md-6:nth-child(6) .publication-item.animate { animation-delay: 0.3s; }
+        .col-md-6:nth-child(7) .publication-item.animate { animation-delay: 0.35s; }
+        .col-md-6:nth-child(8) .publication-item.animate { animation-delay: 0.4s; }
+
         .profile-img {
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.4);
@@ -132,7 +241,7 @@
         /* Improved Timeline */
         .timeline-container {
             position: relative;
-            padding: 60px 0 60px 0;
+            padding: 60px 0 0 0;
             width: 100%;
             overflow-x: auto;
             overflow-y: visible;
@@ -229,6 +338,10 @@
             border-radius: 8px;
             box-shadow: 0 3px 15px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
 
         .publication-item:hover {
@@ -396,13 +509,12 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
         <div class="container">
-            <a href="#" class="navbar-brand fw-bold">Maciej Spiegel, MPharm PhD</a>
+            <a href="#about" class="navbar-brand fw-bold">Maciej Spiegel, MPharm PhD</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <nav class="navbar-nav">
-                    <a href="#about" class="nav-link">About</a>
                     <a href="#timeline" class="nav-link">Timeline</a>
                     <a href="#research" class="nav-link">Research</a>
                     <a href="#publications" class="nav-link">Publications</a>
@@ -418,7 +530,9 @@
             <div class="row align-items-center">
                 <div class="col-lg-4 bg-transparent text-center mb-4 mb-lg-0 fade-in-up">
                     <img src="https://www.umw.edu.pl/sites/default/files/2024-12/Maciej%20Spiegel.png" 
-                         alt="Maciej Spiegel's profile picture" class="profile-img">
+                        alt="Maciej Spiegel, MPharm PhD - Computational Chemist" 
+                        class="profile-img" 
+                        loading="lazy">
                 </div>
                 <div class="col-lg-8 fade-in-up">
                     <h1 class="display-3 fw-bold mb-4">Welcome!</h1>
@@ -502,8 +616,7 @@
 
     <section id="research" class="py-5">
         <div class="container">
-            <h2 class="display-5 fw-bold mb-3 text-center fade-in-up">Research Interests</h2>
-            <p class="text-center text-muted mb-5">Computational chemistry applied to drug discovery and biological systems</p>
+            <h2 class="display-5 fw-bold mb-5 text-center fade-in-up">Research Interests</h2>
             
             <div class="row g-4">
                 <div class="col-md-6 col-lg-4 fade-in-up">
@@ -530,6 +643,35 @@
                     </div>
                 </div>
             </div>
+            <div class="row mt-5 g-4">
+                <div class="col-md-6 d-flex">
+                    <div class="bg-light p-4 rounded-3 border-start border-5 border-primary flex-fill">
+                        <h4 class="fw-bold mb-3"><i class="bi bi-cpu-fill me-2"></i>Computational Workshop</h4>
+                        <p class="mb-3">My research employs state-of-the-art computational chemistry software and methodologies and programming:</p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i><strong>Quantum Chemistry:</strong> Gaussian, ORCA, Q-Chem</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i><strong>Molecular Dynamics:</strong> GROMACS, AMBER</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i><strong>Docking & Virtual Screening:</strong> AutoDock Vina</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i><strong>Python Programming:</strong> scikit-learn, matplotlib, numpy, scipy</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex">
+                    <div class="bg-light p-4 rounded-3 border-start border-5 border-primary flex-fill">
+                        <h4 class="fw-bold mb-3"><i class="bi bi-people-fill me-2"></i>Collaboration Opportunities</h4>
+                        <p class="mb-2">I am actively seeking collaborations in:</p>
+                        <ul>
+                            <li>Computational drug design and optimization</li>
+                            <li>Synthesis of the new compounds</li>
+                            <li>Elucidation of the mechanisms</li>
+                            <li>Senotherapeutic agent discovery</li>
+                            <li>Method development and benchmarking studies</li>
+                        </ul>
+                        <p class="mb-0 mt-3"><strong>Interested?</strong> <a href="#contact">Get in touch!</a></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -541,7 +683,7 @@
                 <!-- Year badges will be generated automatically -->
             </div>
 
-            <div id="publications-list" class="row"></div>
+            <div id="publications-list" class="row g-4"></div>
 
             <div class="text-center mt-5">
                 <a href="https://orcid.org/0000-0002-8012-1026" target="_blank" class="btn btn-dark-custom">
@@ -552,7 +694,7 @@
     </section>
 
 
-    <section id="internationalization" class="p-0 m-0" style="background: #1a1a1a;">
+    <section id="internationalization" style="background: #1a1a1a;">
         <div class="container-fluid p-0 m-0">
             <h2 class="display-5 fw-bold mb-4 text-center text-white fade-in-up pt-4">Internationalization</h2>
             
@@ -560,8 +702,13 @@
                 <div class="col-lg-8 p-0">
                     <div id="globeViz"></div>
                 </div>
-                <div class="col-lg-4 d-flex align-items-center justify-content-center p-0">
-                    <div class="location-info w-100 m-4" id="locationInfo">
+                <div class="col-lg-4 d-flex flex-column align-items-center justify-content-center p-0">
+                    <div class="d-inline-flex gap-4 bg-white p-3 rounded shadow-sm">
+                        <span><i class="bi bi-circle-fill" style="color: #FFD700"></i> Home Institution</span>
+                        <span><i class="bi bi-circle-fill" style="color: #ff4444"></i> Conferences</span>
+                        <span><i class="bi bi-circle-fill" style="color: #00ff00"></i> Internships</span>
+                    </div>
+                    <div class="location-info w-80 m-4" id="locationInfo">
                         <h4>Wroclaw Medical University</h4>
                         <p class="text-muted mb-2"><strong>Location:</strong> Wrocław, Poland</p>
                         <p class="text-muted mb-2"><strong>Period:</strong> Ongoing</p>
@@ -575,10 +722,9 @@
 
     <section id="contact" class="py-5 contact-section">
         <div class="container">
-            <div class="row justify-content-center text-center mb-5">
+            <div class="row justify-content-center text-center mb-3">
                 <div class="col-lg-8 fade-in-up">
                     <h2 class="display-5 fw-bold mb-4">Let's Connect</h2>
-                    <p class="lead">Whether you have questions or wish to explore collaboration opportunities, feel free to get in touch.</p>
                 </div>
             </div>
 
@@ -612,21 +758,21 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-4 fade-in-up">
-                    <div class="testimonial">
+            <div class="row g-4">
+                <div class="col-lg-4 fade-in-up d-flex">
+                    <div class="testimonial flex-fill">
                         <p>"I commend widely his professional and personal behavior."</p>
                         <footer class="text-end mt-2"><strong>— Prof. Nino Russo</strong></footer>
                     </div>
                 </div>
-                <div class="col-lg-4 fade-in-up">
-                    <div class="testimonial">
+                <div class="col-lg-4 fade-in-up d-flex">
+                    <div class="testimonial flex-fill">
                         <p>"Maciej has, despite a pharmaceutical study curriculum, an excellent background in computational chemistry."</p>
                         <footer class="text-end mt-2"><strong>— Prof. Carlo Adamo</strong></footer>
                     </div>
                 </div>
-                <div class="col-lg-4 fade-in-up">
-                    <div class="testimonial">
+                <div class="col-lg-4 fade-in-up d-flex">
+                    <div class="testimonial flex-fill">
                         <p>"He is very intelligent, hard-working, independent and rigorous in his attitude toward science."</p>
                         <footer class="text-end mt-2"><strong>— Prof. Pedro Alexandrino Fernandes</strong></footer>
                     </div>
@@ -643,7 +789,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-capsule-pill me-3" viewBox="0 0 16 16">
                             <path d="M11.02 5.364a3 3 0 0 0-4.242-4.243L1.121 6.778a3 3 0 1 0 4.243 4.243l5.657-5.657Zm-6.413-.657 2.878-2.879a2 2 0 1 1 2.829 2.829L7.435 7.536zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8m-.5 1.042a3 3 0 0 0 0 5.917zm1 5.917a3 3 0 0 0 0-5.917z" />
                         </svg>
-                        <span class="fs-5">© 2026 Maciej Spiegel</span>
+                        <span class="fs-5" id="copyright-year"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -651,6 +797,7 @@
                         <li class="ms-3"><a class="text-white social-icon" href="https://twitter.com/MaciejSpiegel" target="_blank"><i class="bi bi-twitter-x fs-4"></i></a></li>
                         <li class="ms-3"><a class="text-white social-icon" href="https://www.linkedin.com/in/maciejspiegel/" target="_blank"><i class="bi bi-linkedin fs-4"></i></a></li>
                         <li class="ms-3"><a class="text-white social-icon" href="https://www.researchgate.net/profile/Maciej-Spiegel" target="_blank"><i class="bi bi-share fs-4"></i></a></li>
+                        <li class="ms-3"><a class="text-white social-icon" href="https://scholar.google.com/citations?user=SgRqoIAAAAAJ&hl=en" target="_blank"><i class="bi bi-google fs-4"></i></a></li>
                         <li class="ms-3"><a class="text-white social-icon" href="https://orcid.org/0000-0002-8012-1026" target="_blank"><i class="bi bi-person-badge fs-4"></i></a></li>
                     </ul>
                 </div>
@@ -661,14 +808,32 @@
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
         <div class="toast" role="alert" aria-live="assertive" data-bs-autohide="false" aria-atomic="true" id="myToast">
             <div class="toast-header bg-secondary-subtle">
-                <img style="height: 32px; width: 32px;" src="https://samequizy.pl/wp-content/uploads/2017/09/filing_images_25f4866e7b0e.jpeg" class="rounded me-2" alt="Research notification">
-                <strong class="me-auto">Latest Research</strong>
-                <small>06/02/2024</small>
+                <img style="height: 32px; width: 32px;" src="https://chemrxiv.org/engage/assets/public/chemrxiv/images/logos/chemrxiv/rgb.svg" class="rounded me-2" alt="Research notification">
+                <strong class="me-auto">Latest Preprints</strong>
+                <small>31/10/2025</small>
                 <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
             </div>
             <div class="toast-body">
-                <strong>Is galangin a geroprotector?</strong><br>
-                Check our preprint at <a href="https://doi.org/10.26434/chemrxiv-2024-jr6qj" target="_blank">ChemRxiv</a>!
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2">
+                        <strong>Aggregation of hypericin</strong>
+                        <a href="https://doi.org/10.26434/chemrxiv-2025-5bcs5" target="_blank" class="text-decoration-none ms-1">
+                            <i class="bi bi-link-45deg"></i>
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <strong>Modeling rubiadin phototoxicity with ODEs</strong>
+                        <a href="https://doi.org/10.26434/chemrxiv-2025-539xw" target="_blank" class="text-decoration-none ms-1">
+                            <i class="bi bi-link-45deg"></i>
+                        </a>
+                    </li>
+                    <li class="mb-0">
+                        <strong>Optimizing anthraquinone for NIR photoactivity</strong>
+                        <a href="https://doi.org/10.26434/chemrxiv-2025-t61jj" target="_blank" class="text-decoration-none ms-1">
+                            <i class="bi bi-link-45deg"></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -682,22 +847,44 @@
     <script>
         // Publications data - easily extendable
         const publicationsData = [
-            { year: 2024, title: "Is galangin a geroprotector? A comprehensive computational study", authors: "Spiegel M., et al.", journal: "ChemRxiv", doi: "https://doi.org/10.26434/chemrxiv-2024-jr6qj", tags: ["Preprint"] },
-            { year: 2024, title: "Novel platinum-based compounds for targeted cancer therapy: A DFT perspective", authors: "Spiegel M., Johnson A.", journal: "Journal of Medicinal Chemistry", doi: "#", tags: ["Q1", "IF: 7.3", "MNiSW: 140"] },
-            { year: 2024, title: "Computational modeling of senolytic pathways in aging cells", authors: "Spiegel M., Williams C.", journal: "Aging Cell", doi: "#", tags: ["Q1", "IF: 8.0", "MNiSW: 200"] },
-            { year: 2023, title: "Computational insights into radical reactions in pharmaceutical chemistry", authors: "Spiegel M., Johnson A., Smith B.", journal: "Journal of Computational Chemistry", doi: "#", tags: ["Q1", "IF: 3.4", "MNiSW: 100"] },
-            { year: 2023, title: "Novel senotherapeutic agents: A drug design perspective", authors: "Spiegel M., Williams C.", journal: "Aging Research Reviews", doi: "#", tags: ["Q1", "IF: 12.5", "MNiSW: 200"] },
-            { year: 2023, title: "BODIPY photosensitizers for photodynamic therapy: Design and optimization", authors: "Spiegel M., Garcia R.", journal: "Chemical Science", doi: "#", tags: ["Q1", "IF: 9.8", "MNiSW: 200"] },
-            { year: 2023, title: "Mechanistic insights into flavonoid antioxidant activity", authors: "Spiegel M., Kowalski P.", journal: "Free Radical Biology and Medicine", doi: "#", tags: ["Q1", "IF: 7.4", "MNiSW: 140"] },
-            { year: 2022, title: "Antioxidant mechanisms of dietary polyphenols: A DFT study", authors: "Spiegel M., Davis R.", journal: "Food Chemistry", doi: "#", tags: ["Q1", "IF: 8.8", "MNiSW: 140"] },
-            { year: 2022, title: "Catalytic mechanisms in drug metabolism: A computational approach", authors: "Spiegel M., Thompson L., Garcia M.", journal: "Chemical Research in Toxicology", doi: "#", tags: ["Q1", "IF: 3.7", "MNiSW: 100"] },
-            { year: 2022, title: "Flavonoid-radical interactions: Thermodynamic and kinetic considerations", authors: "Spiegel M., Kowalski P.", journal: "Antioxidants", doi: "#", tags: ["Q2", "IF: 6.0", "MNiSW: 100"] },
-            { year: 2022, title: "Quantum chemical studies of transition metal catalysis", authors: "Spiegel M., Russo N.", journal: "Inorganic Chemistry", doi: "#", tags: ["Q1", "IF: 4.8", "MNiSW: 140"] },
-            { year: 2021, title: "Machine learning approaches in computational drug design", authors: "Spiegel M., Anderson K.", journal: "Journal of Chemical Information and Modeling", doi: "#", tags: ["Q1", "IF: 5.6", "MNiSW: 140"] },
-            { year: 2021, title: "Transition metal catalysis in organic synthesis: Mechanistic insights", authors: "Spiegel M., Russo N.", journal: "Catalysis Science & Technology", doi: "#", tags: ["Q1", "IF: 5.0", "MNiSW: 100"] },
-            { year: 2021, title: "DFT studies of photosensitizer activation mechanisms", authors: "Spiegel M., Adamo C.", journal: "Physical Chemistry Chemical Physics", doi: "#", tags: ["Q1", "IF: 3.9", "MNiSW: 100"] },
-            { year: 2020, title: "Quantum chemical modeling of senolytic drug candidates", authors: "Spiegel M., Adamo C.", journal: "Journal of Physical Chemistry B", doi: "#", tags: ["Q1", "IF: 2.9", "MNiSW: 100"] },
-            { year: 2025, title: "Computational investigation of polyphenol bioactivity", authors: "Spiegel M., Fernandes P.A.", journal: "Journal of Agricultural and Food Chemistry", doi: "#", tags: ["Q1", "IF: 5.7", "MNiSW: 140"] }
+            { year: 2020, title: "Flavones’ and Flavonols’ Antiradical Structure–Activity Relationship—A Quantum Chemical Study", authors: "Spiegel M.*, Andruniów T., Sroka Z.", journal: "Antioxidants", doi: "10.3390/antiox9060461", tags: ["Q1", "IF: 6.313", "Ministerial Score: 100", "Article"] },
+            { year: 2020, title: "Antioxidant Activity of Selected Phenolic Acids–Ferric Reducing Antioxidant Power Assay and QSAR Analysis of the Structural Features", authors: "Spiegel M., Kapusta K.*, Kołodziejczyk W., Saloni J., Żbikowska B., Hill G.A., Sroka Z.", journal: "Molecules", doi: "10.3390/molecules25133088", tags: ["Q2", "IF: 4.412", "Ministerial Score: 140", "Article"] },
+            { year: 2021, title: "Antiradical Activity of Beetroot (<i>Beta vulgaris</i> L.) Betalains", authors: "Spiegel M.*, Gamian A., Sroka Z.", journal: "Molecules", doi: "10.3390/molecules26092439", tags: ["Q2", "IF: 4.927", "Ministerial Score: 140", "Article"] },
+            { year: 2021, title: "One Year of the COVID‐19 Pandemic. What Do We Know and What Is Yet to Come? — The Summarising Review", authors: "Malchrzak W., Mastalerz-Migas A., Sroka Z., Spiegel M.*", journal: "International Journal of Public Health", doi: "10.3389/ijph.2021.1603975", tags: ["Q1", "IF: 5.100", "Ministerial Score: 100", "Review"] },
+            { year: 2021, title: "A Statistically Supported Antioxidant Activity DFT Benchmark—The Effects of Hartree–Fock Exchange and Basis Set Selection on Accuracy and Resources Uptake", authors: "Spiegel M.*, Gamian A., Sroka Z.", journal: "Molecules", doi: "10.3390/molecules26165058", tags: ["Q2", "IF: 4.927", "Ministerial Score: 140", "Article"] },
+            { year: 2021, title: "Recognition of the True and False Resonance Raman Optical Activity", authors: "Machalska E.⁺, Zając G.⁺, Wierzba A.J., Kapitán J.*, Andruniów T., Spiegel M., Gryko D.*, Bouř P.*, Barańska M.*", journal: "Angewandte Chemie International Edition", doi: "10.1002/anie.202107600", tags: ["Q1", "IF: 16.823", "Ministerial Score: 200", "Article"] },
+            { year: 2021, title: "In Silico Screening and In Vitro Assessment of Natural Products with Anti-Virulence Activity against Helicobacter pylori", authors: "Spiegel M.⁺*, Krzyżek P.⁺*, Dworniczek E., Adamski R., Sroka Z.", journal: "Molecules", doi: "10.3390/molecules27010020", tags: ["Q2", "IF: 4.927", "Ministerial Score: 140", "Article"] },
+            { year: 2022, title: "Antioxidant and copper-chelating power of new molecules suggested as multiple target agents against Alzheimer's disease. A theoretical comparative study", authors: "Spiegel M., Marino T., Prejanò M., Russo N.*", journal: "Physical Chemistry Chemical Physics", doi: "10.1039/D2CP01918C", tags: ["Q2", "IF: 3.3", "Ministerial Score: 100", "Article"] },
+            { year: 2022, title: "On the Scavenging Ability of Scutellarein against the OOH Radical in Water and Lipid-like Environments: A Theoretical Study", authors: "Spiegel M., Marino T., Prejanò M., Russo N.*", journal: "Antioxidants", doi: "10.3390/antiox11020224", tags: ["Q1", "IF: 7.0", "Ministerial Score: 100", "Article"] },
+            { year: 2022, title: "Current Trends in Computational Quantum Chemistry Studies on Antioxidant Radical Scavenging Activity", authors: "Spiegel M.*", journal: "Journal of Chemical Information and Modeling", doi: "10.1021/acs.jcim.2c00104", tags: ["Q1", "IF: 5.6", "Ministerial Score: 100", "Review"] },
+            { year: 2022, title: "Analytical and Theoretical Studies of Antioxidant Properties of Chosen Anthocyanins; A Structure-Dependent Relationships", authors: "Dudek A., Spiegel M.*, Strugała-Danak P.*, Gabrielska P.", journal: "International Journal of Molecular Sciences", doi: "10.3390/ijms23105432", tags: ["Q1", "IF: 5.6", "Ministerial Score: 140", "Article"] },
+            { year: 2022, title: "Natural dihydroisobenzofuran derivatives as a template for promising radical scavengers: theoretical insights into structure–activity relationships, thermochemistry and kinetics", authors: "Spiegel M.*, Sroka Z.", journal: "Theoretical Chemistry Accounts", doi: "10.1007/s00214-022-02922-5", tags: ["Q4", "IF: 1.7", "Ministerial Score: 70", "Article"] },
+            { year: 2022, title: "Primary and secondary antioxidant properties of scutellarin and scutellarein in water and lipid-like environments: A theoretical investigation", authors: "Spiegel M.*, Marino T., Prejanò M., Russo N.*", journal: "Journal of Molecular Liquids", doi: "10.1016/j.molliq.2022.120343", tags: ["Q1", "IF: 6.0", "Ministerial Score: 100", "Article"] },
+            { year: 2022, title: "Interference of malvidin and its mono- and di-glucosides on the membrane — Combined in vitro and computational chemistry study", authors: "Strugała-Danak P.*, Spiegel M., Hurynowicz K., Gabrielska J.", journal: "Journal of Functional Foods", doi: "10.1016/j.jff.2022.105340", tags: ["Q1", "IF: 5.6", "Ministerial Score: 100", "Article"] },
+            { year: 2022, title: "The Appliance of A-PRF and CGF in the Treatment of Impacted Mandibular Third Molar Extraction Sockets—Narrative Review", authors: "Selahi D.⁺, Spiegel M.⁺*, Hadzik J.*, Pitułaj A., Michalak F., Kubasiewicz-Ross P., Dominiak M.", journal: "Applied Sciences", doi: "10.3390/app13010165", tags: ["Q2", "IF: 2.7", "Ministerial Score: 100", "Review"] },
+            { year: 2023, title: "Computational assessment of the primary and secondary antioxidant potential of alkylresorcinols in physiological media", authors: "Boulebd H.*, Spiegel M.", journal: "RSC Advances", doi: "10.1039/D3RA05967G", tags: ["Q2", "IF: 3.9", "Ministerial Score: 100", "Article"] },
+            { year: 2023, title: "Quantum-mechanical characteristics of apigenin: Antiradical, metal chelation and inhibitory properties in physiologically relevant media", authors: "Spiegel M.*, Sroka Z.", journal: "Fitoterapia", doi: "10.1016/j.fitote.2022.105352", tags: ["Q3", "IF: 2.5", "Ministerial Score: 100", "Article"] },
+            { year: 2023, title: "Computational investigation on the antioxidant activities and on the Mpro SARS-CoV-2 non-covalent inhibition of isorhamnetin", authors: "Spiegel M., Ciardullo G., Marino T., Russo N.", journal: "Frontiers in Chemistry", doi: "10.3389/fchem.2023.1122880", tags: ["Q2", "IF: 3.8", "Ministerial Score: 100", "Article"] },
+            { year: 2023, title: "Tuning the Photophysical Properties of Ru(II) Photosensitizers for PDT by Protonation and Metallation: A DFT Study", authors: "Spiegel M.*, Adamo C.", journal: "The Journal of Physical Chemistry A", doi: "10.1021/acs.jpca.3c00839", tags: ["Q2", "IF: 2.7", "Ministerial Score: 100", "Article"] },
+            { year: 2023, title: "The mechanistic insights into the role of pH and solvent on antiradical and prooxidant properties of polyphenols — Nine compounds case study", authors: "Spiegel M.*, Cel K., Sroka Z.", journal: "Food Chemistry", doi: "10.1016/j.foodchem.2022.134677", tags: ["Q1", "IF: 8.5", "Ministerial Score: 200", "Article"] },
+            { year: 2023, title: "Post-CCSD(T) corrections to bond distances and vibrational frequencies: the power of Λ", authors: "Spiegel M.⁺, Semidalas E.⁺, Martin J.M.L.*, Bentley M.R., Stanton J.F.", journal: "Molecular Physics", doi: "10.1080/00268976.2023.2252114", tags: ["Q3", "IF: 1.6", "Ministerial Score: 70", "Article"] },
+            { year: 2023, title: "Theoretical Insights into the Oxidative Stress-Relieving Properties of Pinocembrin─An Isolated Flavonoid from Honey and Propolis", authors: "Spiegel M.*", journal: "The Journal of Physical Chemistry B", doi: "10.1021/acs.jpcb.3c03545", tags: ["Q3", "IF: 2.8", "Ministerial Score: 140", "Article"] },
+            { year: 2023, title: "Malvidin and Its Mono- and Di-Glucosides Forms: A Study of Combining Both In Vitro and Molecular Docking Studies Focused on Cholinesterase, Butyrylcholinesterase, COX-1 and COX-2 Activities", authors: "Strugała-Danak P.*, Spiegel M.*, Gabrielska J.", journal: "Molecules", doi: "10.3390/molecules28237872", tags: ["Q2", "IF: 4.2", "Ministerial Score: 140", "Article"] },
+            { year: 2024, title: "Primary Antioxidant Power and Mpro SARS‐CoV‐2 Non‐Covalent Inhibition Capabilities of Miquelianin", authors: "Spiegel M., Prejanò M., Russo N.*, Marino T.", journal: "Chemistry – An Asian Journal", doi: "10.1002/asia.202400079", tags: ["Q2", "IF: 3.5", "Ministerial Score: 100", "Article"] },
+            { year: 2024, title: "Unveiling the Antioxidative Potential of Galangin: Complete and Detailed Mechanistic Insights through Density Functional Theory Studies", authors: "Spiegel M.*", journal: "The Journal of Organic Chemistry", doi: "10.1021/acs.joc.4c00611", tags: ["Q1", "IF: 3.6", "Ministerial Score: 140", "Article"] },
+            { year: 2024, title: "A green approach to synthesize polybutene lubricants from mixed C4 monomers using supported dendritic ionic liquids", authors: "Ghavampoor A., Bahri-Laleh N.*, Sadjadi S.*, Nekoomanesh M., Vahid A., Duran J., Spiegel M., Poater A.*", journal: "Journal of Molecular Liquids", doi: "10.1016/j.molliq.2024.125814", tags: ["Q1", "IF: 5.2", "Ministerial Score: 100", "Article"] },
+            { year: 2025, title: "Fisetin as a Blueprint for Senotherapeutic Agents – Elucidating Geroprotective and Senolytic Properties with Molecular Modeling", authors: "Spiegel M.*", journal: "Chemistry – A European Journal", doi: "10.1002/chem.202403755", tags: ["Q2", "IF: 3.7", "Ministerial Score: 100", "Article"] },
+            { year: 2025, title: "A Comprehensive Experimental and Theoretical Investigation of the Antioxidant Properties of Hispidin and Isohispidin", authors: "Boulebd H., Amine Khodja I., Benarous K., Mączyński M., Spiegel M.*", journal: "The Journal of Organic Chemistry", doi: "10.1021/acs.joc.4c02837", tags: ["Q1", "IF: 3.6", "Ministerial Score: 140", "Article"] },
+            { year: 2025, title: "Understanding the Photophysical Properties of Pd and Pt Transition‐Metal Isocorroles: A Theoretical Investigation", authors: "Spiegel M., Russo N.*", journal: "Chemistry – A European Journal", doi: "10.1002/chem.202403725", tags: ["Q2", "IF: 3.7", "Ministerial Score: 100", "Article"] },
+            { year: 2025, title: "Late-stage functionalization of pharmaceuticals by C–C cross-coupling enabled by wingtip-flexible N-heterocyclic carbenes", authors: "Yang S., Zhou T., Yu X., Poater A.*, Duran J., Spiegel M.*, Cavallo L., Nolan S.P.*, Szostak M.*", journal: "Chem Catalysis", doi: "10.1016/j.checat.2025.101297", tags: ["Q1", "IF: 11.6", "Ministerial Score: 20", "Article"] },
+            { year: 2025, title: "Photophysical Properties of a Chiral Iridium-Based Photosensitizer as an Efficient Photodynamic Therapy Agent: A Theoretical Investigation", authors: "Spiegel M.*", journal: "International Journal of Molecular Sciences", doi: "10.3390/ijms26115062", tags: ["Q1", "IF: 4.9", "Ministerial Score: 140", "Article"] },
+            { year: 2025, title: "On the Photosensitizing Properties of Aloe-Emodin in Photodynamic Therapy: Insights from the Molecular Modeling", authors: "Spiegel M.*", journal: "The Journal of Physical Chemistry B", doi: "10.1021/acs.jpcb.5c01117", tags: ["Q3", "IF: 2.9", "Ministerial Score: 140", "Article"] },
+            { year: 2025, title: "Aglycone, Glycoside, or Glucuronide? Experimental and Mechanistic Insights into the Antioxidative Potential of Gossypetin, Gossypin, and Hibifolin", authors: "Spiegel M.*, Kowalczyk A.", journal: "The Journal of Physical Chemistry B", doi: "10.1021/acs.jpcb.5c03338", tags: ["Q3", "IF: 2.9", "Ministerial Score: 140", "Article"] },
+            { year: 2025, title: "Soranjidiol as a photosensitizer: Mechanistic insights into its photochemistry and photoinduced tautomerization", authors: "Spiegel M.*", journal: "Journal of Photochemistry and Photobiology B: Biology", doi: "10.1016/j.jphotobiol.2025.113203", tags: ["Q1", "IF: 3.7", "Ministerial Score: 100", "Article"] },
+            { year: 2025, title: "Are Algae a Good Source of Antioxidants? Mechanistic Insights into Antiradical Activity of Eckol", authors: "Spiegel M.*", journal: "International Journal of Molecular Sciences", doi: "10.3390/ijms26189223", tags: ["Q1", "IF: 4.9", "Ministerial Score: 140", "Article"] },
+            { year: 2025, title: "Impact of α-tocopherol derivatives on the structural and functional properties of model lipid nanocarriers: A biophysical modeling study", authors: "Dudek A., Spiegel M., Benkowska-Biernacka D., Domańska M., Pruchnik H.*", journal: "Chemistry and Physics of Lipids", doi: "10.1016/j.chemphyslip.2025.105539", tags: ["Q2", "IF: 2.8", "Ministerial Score: 100", "Article"] },
+            { year: 2025, title: "Antioxidant Power of Vitexin and Isovitexin Against OOH Radicals: A Comparative Theoretical Investigation", authors: "Spiegel M., Russo N.*", journal: "The Journal of Organic Chemistry", doi: "10.1021/acs.joc.5c01680", tags: ["Q1", "IF: 3.6", "Ministerial Score: 140", "Article"] },
+            { year: 2025, title: "Evaluation of 2,7-Naphthyridines as Targeted Anti-Staphylococcal Candidates with Microbiota-Sparing Properties", authors: "Wójcicka A.*, Spiegel M., Dudek B., Brożyna M., Junka A., Mączyński M.", journal: "International Journal of Molecular Sciences", doi: "10.3390/ijms262110442", tags: ["Q1", "IF: 4.9", "Ministerial Score: 140", "Article"] },
         ];
 
 // Get current year
@@ -727,28 +914,37 @@
             const container = document.getElementById('publications-list');
             const filtered = publicationsData.filter(p => p.year.toString() === year);
             
-            container.innerHTML = filtered.map(pub => `
-                <div class="col-6">
-                    <div class="publication-item" data-year="${pub.year}">
-                        <div class="publication-title">${pub.title}</div>
-                        <div class="publication-meta mb-2">
-                            <strong>${pub.authors}</strong> | ${pub.journal} (${pub.year}) | 
-                            <a href="${pub.doi}" target="_blank">DOI</a>
-                        </div>
-                        <div>
-                            ${pub.tags.map(tag => {
-                                let badgeClass = 'bg-secondary';
-                                if (tag === 'Q1') badgeClass = 'bg-success';
-                                else if (tag === 'Q2') badgeClass = 'bg-info';
-                                else if (tag === 'Preprint') badgeClass = 'bg-dark';
-                                else if (tag.startsWith('IF:')) badgeClass = 'bg-warning text-dark';
-                                else if (tag.startsWith('MNiSW:')) badgeClass = 'bg-primary';
-                                return `<span class="badge ${badgeClass}">${tag}</span>`;
-                            }).join(' ')}
+            // Fade out current publications
+            container.style.opacity = '0';
+            container.style.transition = 'opacity 0.3s ease';
+            
+            setTimeout(() => {
+                container.innerHTML = filtered.map(pub => `
+                    <div class="col-md-6 d-flex">
+                        <div class="publication-item flex-fill animate" data-year="${pub.year}">
+                            <div class="publication-title">${pub.title}</div>
+                            <div class="publication-meta mb-2">
+                                <strong>${pub.authors}</strong> | ${pub.journal} (${pub.year}) | 
+                                <a href="https://doi.org/${pub.doi}" target="_blank"><i class="bi bi-box-arrow-up-right"></i></a>
+                            </div>
+                            <div>
+                                ${pub.tags.map(tag => {
+                                    let badgeClass = 'bg-dark';
+                                    if (tag === 'Q1' || tag === 'Q2' || tag === 'Q3' || tag === 'Q4') badgeClass = 'bg-secondary';                
+                                    else if (tag.startsWith('IF:')) badgeClass = 'bg-success';
+                                    else if (tag.startsWith('Ministerial Score:')) badgeClass = 'bg-primary';
+                                    return `<span class="badge ${badgeClass}">${tag}</span>`;
+                                }).join(' ')}
+                            </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `).join('');
+                
+                // Fade in container
+                setTimeout(() => {
+                    container.style.opacity = '1';
+                }, 50);
+            }, 300);
         }
 
         // Initialize everything
@@ -765,12 +961,12 @@
 
         // Globe visualization
         const locationsData = [
-            { lat: 51.11, lng: 17.06, name: 'Wroclaw Medical University', location: 'Wrocław, Poland', period: 'Ongoing', description: 'Home institution - pharmaceutical computational chemistry. Primary research base for computational drug design and development of novel therapeutic agents.' },
-            { lat: 41.984, lng: 2.821, name: 'University of Girona', location: 'Girona, Spain', period: 'TBD', description: 'Research collaboration on aromaticity and computational methods. Focus on advanced quantum chemical calculations and method development.' },
-            { lat: 48.841, lng: 2.344, name: 'Chimie ParisTech', location: 'Paris, France', period: 'TBD', description: 'DFT methodology and excited state chemistry research. Collaboration on photochemical processes and computational method validation.' },
-            { lat: 31.907, lng: 34.809, name: 'Weizmann Institute', location: 'Rehovot, Israel', period: 'TBD', description: 'Advanced spectroscopy and radical chemistry studies. Investigation of reactive intermediates and photochemical mechanisms.' },
-            { lat: 39.309, lng: 16.25, name: 'University of Calabria', location: 'Cosenza, Italy', period: 'TBD', description: 'Long-term collaboration on computational chemistry projects. Joint research on transition metal catalysis and biological systems.' },
-            { lat: 41.15, lng: -8.616, name: 'University of Porto', location: 'Porto, Portugal', period: '2023', description: 'Enzyme mechanisms and computational biochemistry. Erasmus+ Mobility program studying enzymatic reaction mechanisms and protein modeling.' }
+            { lat: 51.11, lng: 17.06, name: 'Wroclaw Medical University', location: 'Wrocław, Poland', period: 'Ongoing', type: 'home', description: '...' },
+            { lat: 41.984, lng: 2.821, name: 'University of Girona', location: 'Girona, Spain', period: 'TBD', type: 'internship', description: '...' },
+            { lat: 48.841, lng: 2.344, name: 'Chimie ParisTech', location: 'Paris, France', period: 'TBD', type: 'internship', description: '...' },
+            { lat: 31.907, lng: 34.809, name: 'Weizmann Institute', location: 'Rehovot, Israel', period: 'TBD', type: 'internship', description: '...' },
+            { lat: 39.309, lng: 16.25, name: 'University of Calabria', location: 'Cosenza, Italy', period: 'TBD', type: 'internship', description: '...' },
+            { lat: 41.15, lng: -8.616, name: 'University of Porto', location: 'Porto, Portugal', period: '2023', type: 'conference', description: '...' }
         ];
 
         fetch('ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries =>
@@ -794,7 +990,12 @@
                 .pointsData(locationsData)
                 .pointLat('lat')
                 .pointLng('lng')
-                .pointColor(() => '#ff4444')
+                .pointColor(point => {
+                    if (point.type === 'home') return '#FFD700'; // Gold for home
+                    if (point.type === 'internship') return '#00ff00'; // Green for internships
+                    if (point.type === 'conference') return '#ff4444'; // Red for conferences
+                    return '#ff4444'; // Default
+                })
                 .pointAltitude(0.02)
                 .pointRadius(0.6)
                 .pointLabel('name')
@@ -806,7 +1007,7 @@
                         <p>${point.description}</p>
                     `;
                     
-                    myGlobe.pointOfView({ lat: point.lat, lng: point.lng, altitude: 0.5 }, 1000);
+                    myGlobe.pointOfView({ lat: point.lat, lng: point.lng, altitude: 0.5 }, 2000);
                 });
 
             
@@ -826,13 +1027,20 @@
             new bootstrap.Toast(document.getElementById('myToast')).show();
         });
 
-        // Smooth scroll
+        // Smooth scroll with dynamic offset
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', e => {
                 e.preventDefault();
                 const target = document.querySelector(anchor.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    const navbarHeight = document.querySelector('.navbar-custom').offsetHeight;
+                    const offset = navbarHeight; // navbar height + 20px padding
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
                 }
             });
         });
@@ -891,6 +1099,9 @@
         // Call on load and resize
         window.addEventListener('load', updateTimelineLineWidth);
         window.addEventListener('resize', updateTimelineLineWidth);
+
+        // Update copyright year dynamically
+        document.getElementById('copyright-year').textContent = `© ${new Date().getFullYear()} Maciej Spiegel`;
     </script>
 </body>
 </html>
