@@ -1,469 +1,914 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Maciej Spiegel MPharm PhD - Researcher Website</title>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles.css">
-
-    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary-dark: #1a1a1a;
+            --secondary-dark: #2d2d2d;
+            --accent-gray: #4a4a4a;
+            --light-gray: #f8f9fa;
+            --medium-gray: #6c757d;
+            --accent-blue: #2563eb;
+            --accent-purple: #7c3aed;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+            color: #2d2d2d;
+        }
 
-    <!-- Include the Altmetric embed script -->
-    <script type="text/javascript" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
+        .navbar-custom {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
 
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary-dark);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+            color: white;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .profile-img {
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+
+        .metrics-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            color: var(--primary-dark);
+            padding: 8px 16px;
+            border-radius: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin: 5px;
+        }
+
+        .metrics-badge i {
+            color: var(--accent-blue);
+        }
+
+        .research-interest-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            height: 100%;
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--primary-dark);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .research-interest-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .research-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: white;
+        }
+
+        /* Improved Timeline */
+        .timeline-container {
+            position: relative;
+            padding: 60px 0 60px 0;
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: visible;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+        
+        .timeline-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--light-gray) 0%, var(--primary-dark) 50%, var(--light-gray) 100%);
+            z-index: 1;
+            /* Width will be set dynamically via JavaScript */
+        }
+
+        .timeline-items {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            width: 100%;
+            min-width: max-content;
+            padding: 0;
+        }
+
+        .timeline-item {
+            flex: 0 0 auto;
+            min-width: 180px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            margin: 0 15px;
+        }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background: var(--medium-gray);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+            border: 4px solid #f8f9fa;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .timeline-item:hover .timeline-dot,
+        .timeline-item.active .timeline-dot {
+            background: var(--accent-blue);
+            transform: scale(1.4);
+            border-color: #f8f9fa;
+        }
+
+        .timeline-date {
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.3s ease, max-height 0.3s ease;
+            text-align: left;
+        }
+
+        .timeline-item.active .timeline-content {
+            opacity: 1;
+            max-height: 300px;
+        }
+
+        /* Publications */
+        .publication-item {
+            background: white;
+            border-left: 4px solid var(--primary-dark);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .publication-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+        }
+
+        .publication-title {
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+
+        .publication-meta {
+            color: var(--medium-gray);
+            font-size: 0.9rem;
+        }
+
+        .year-badge {
+            background: var(--primary-dark);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .year-badge:hover {
+            background: var(--secondary-dark);
+            transform: scale(1.05);
+        }
+
+        .year-badge.active {
+            background: var(--accent-blue);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Globe Section */
+        #globeViz {
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        #globeViz canvas {
+            max-width: 100%;
+            max-height: 600px;
+        }
+
+        .location-info {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            height: auto;
+            align-self: center;
+        }
+
+        .location-info h4 {
+            color: var(--primary-dark);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        /* Section Dividers with Gradient */
+        .section-divider {
+            height: 80px;
+            width: 100%;
+        }
+
+        .divider-hero-to-timeline {
+            background: linear-gradient(to bottom, #2d2d2d 0%, #f8f9fa 100%);
+        }
+
+        .divider-timeline-to-research {
+            background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .divider-research-to-publications {
+            background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        .divider-publications-to-globe {
+            background: linear-gradient(to bottom, #f8f9fa 0%, #1a1a1a 100%);
+        }
+
+        .divider-globe-to-contact {
+            background: linear-gradient(to bottom, #1a1a1a 0%, #e3e8ed 100%);
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, var(--light-gray) 0%, #e3e8ed 100%);
+        }
+
+        .testimonial {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            font-style: italic;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary-dark);
+        }
+
+        .testimonial:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .footer-custom {
+            background: var(--primary-dark);
+            color: white;
+            padding: 20px 0 20px;
+        }
+
+        .social-icon {
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .btn-dark-custom {
+            background: var(--primary-dark);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: white;
+        }
+
+        .btn-dark-custom:hover {
+            background: var(--secondary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 40px 0;
+            }
+            
+            .timeline-items {
+                flex-direction: column;
+                padding: 0;
+                align-items: center;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                max-width: 300px;
+                margin-bottom: 30px;
+            }
+            
+            .timeline-line {
+                display: none;
+            }
+
+            .timeline-content {
+                position: relative;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/globe.gl"></script>
 </head>
 
 <body>
-
-    <!-- Navigation -->
-    <div class="container">
-        <header
-            class="d-flex flex-wrap align-items-center justify-content-between py-3 border-bottom sticky-top bg-white">
-            <!-- Left section: Name -->
-            <div class="d-flex align-items-center">
-                <a href="#" class="d-flex align-items-center me-md-auto link-body-emphasis text-decoration-none">
-                    <span class="fs-4">Maciej Spiegel, MPharm PhD</span>
-                </a>
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a href="#" class="navbar-brand fw-bold">Maciej Spiegel, MPharm PhD</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <nav class="navbar-nav">
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#timeline" class="nav-link">Timeline</a>
+                    <a href="#research" class="nav-link">Research</a>
+                    <a href="#publications" class="nav-link">Publications</a>
+                    <a href="#internationalization" class="nav-link">Internationalization</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </nav>
             </div>
+        </div>
+    </nav>
 
-            <!-- Right section: Navigation -->
-            <nav class="col-12 col-md-auto d-flex">
-                <a href="#" class="nav-link px-2">Home</a>
-                <a href="#about" class="nav-link px-2">About Me</a>
-                <a href="#research" class="nav-link px-2">Research</a>
-                <a href="#internships" class="nav-link px-2">Internships</a>
-                <a href="#publications" class="nav-link px-2">Publications</a>
-                <a href="#contact" class="nav-link px-2">Let's Connect</a>
-            </nav>
-        </header>
-    </div>
-
-
-    <!-- About Me Section -->
-    <section id="about" class="py-5 position-relative">
-        <div class="jumbotron position-relative">
-
-            <!-- About Me Text -->
-            <div class="container text-center position-relative">
-                <div class="row align-items-center">
-                    <div class="col-lg-3 text-center text-sm-end mb-3 mb-lg-0">
-                        <!-- Add a rectangular image with descriptive alt text -->
-                        <img src="JAJA.jpeg" alt="Maciej Spiegel's profile picture" class="img-fluid rounded"
-                            style="max-width: 100%;">
+    <section id="about" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4 text-center mb-4 mb-lg-0 fade-in-up">
+                    <img src="https://via.placeholder.com/400x500/2d2d2d/ffffff?text=Maciej+Spiegel" 
+                         alt="Maciej Spiegel's profile picture" class="profile-img">
+                </div>
+                <div class="col-lg-8 fade-in-up">
+                    <h1 class="display-3 fw-bold mb-4">Welcome!</h1>
+                    <p class="lead fs-4 mb-4">I am a passionate researcher dedicated to computational aided drug design. With a strong background in radical reactions, I aim to contribute valuable insights to the scientific community.</p>
+                    <p class="fs-5 mb-4">Explore my website to learn more about my journey, research endeavors, and collaborations across leading institutions worldwide.</p>
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        <span class="metrics-badge"><i class="bi bi-file-earmark-text"></i> <strong>35+</strong> Publications</span>
+                        <span class="metrics-badge"><i class="bi bi-award"></i> <strong>800+</strong> Citations</span>
+                        <span class="metrics-badge"><i class="bi bi-graph-up"></i> <strong>h-index: 14</strong></span>
                     </div>
-                    <div class="col-lg-9 text-center text-md-start d-flex flex-column">
-                        <h2 class="display-4">About Me</h2>
-                        <p class="lead">Welcome to my website! I am a passionate researcher
-                            dedicated to the computational aided drug design. With a strong background in radical
-                            reactions, I aim
-                            to contribute valuable insights to the scientific community. Explore my website to learn
-                            more about my journey and research endeavors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <div class="col">
-                            <!--
-                            <div class="timeline-steps">
-                                <div class="timeline-step">
-                                    <div class="timeline-content">
-                                        <div class="inner-circle"></div>
-                                        <p class="h6 mt-3 mb-1">2019</p>
-                                        <p class="h6 text-muted mb-0 mb-lg-0">Master of Pharmacy</p>
-                                    </div>
-                                </div>
-                                <div class="timeline-step">
-                                    <div class="timeline-content">
-                                        <div class="inner-circle"></div>
-                                        <p class="h6 mt-3 mb-1">2023</p>
-                                        <p class="h6 text-muted mb-0 mb-lg-0">Doctor of Pharmaceutical Sciences</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <img src="https://www.umw.edu.pl/sites/default/files/znak_ze_skrotem_nazwy_wersja_POL_wersja_jednobarwna_pozytywowa_0.jpg"
-                                alt="University Logo"
-                                class="position-absolute top-50 end-0 translate-middle-y img-fluid max-logo-size"
-                                style="opacity: 0.10; z-index: -1; max-width: 150%; max-height: 150%;">-->
+    <div class="divider-hero-to-timeline"></div>
+
+    <section id="timeline" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="display-5 fw-bold mb-4 text-center fade-in-up">Timeline</h2>
+
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                <div class="timeline-items">
+                    <div class="timeline-item" data-date="2019">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">2019</div>
+                        <div class="timeline-content">
+                            <h6 class="fw-bold">🌍 International Collaborations Begin</h6>
+                            <p class="text-muted small mb-0">Started research partnerships across multiple institutions worldwide.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item active" data-date="June 2020">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">June 2020</div>
+                        <div class="timeline-content">
+                            <h6 class="fw-bold">🎓 Outstanding Graduate Award</h6>
+                            <p class="text-muted small mb-0">Wroclaw Medical University, top graduate in pharmaceutical sciences.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" data-date="March 2021">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">March 2021</div>
+                        <div class="timeline-content">
+                            <h6 class="fw-bold">👨‍🏫 Peer Review Contributions</h6>
+                            <p class="text-muted small mb-0">Regular reviewer for leading computational chemistry journals.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" data-date="Nov 2022">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Nov 2022</div>
+                        <div class="timeline-content">
+                            <h6 class="fw-bold">💰 NCN PRELUDIUM Grant</h6>
+                            <p class="text-muted small mb-0">National Science Centre funding for senotherapeutic studies.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" data-date="Sep 2023">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Sep 2023</div>
+                        <div class="timeline-content">
+                            <h6 class="fw-bold">🏆 Best Paper Award</h6>
+                            <p class="text-muted small mb-0">Computational Chemistry Conference recognition.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" data-date="06/02/2024">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">06/02/2024</div>
+                        <div class="timeline-content">
+                            <h6 class="fw-bold">📊 Citation Milestone</h6>
+                            <p class="text-muted small mb-0">Achieved 800+ citations recognized internationally.</p>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </section>
 
+    <div class="divider-timeline-to-research"></div>
 
-
-    <!-- Divier -->
-    <div class="divider"></div>
-
-    <!-- Research Section -->
     <section id="research" class="py-5">
         <div class="container">
-            <h2 class="mb-4 pb-2 border-bottom">Research Areas</h2>
-
-            <!-- Custom Cards Section -->
-            <div class="container px-md-5 py-4" id="custom-cards">
-                <div class="row align-items-stretch g-4 py-3">
-                    <!-- Card 1: Senotherapeutic Agents -->
-                    <div class="col">
-                        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
-                            data-bs-toggle="collapse" data-bs-target="#senoBox"
-                            style="background-image: url('https://www.lifespan.io/wp-content/uploads/2017/02/shutterstock_1615272484.jpg'); background-size: cover; background-position: center; cursor:pointer">
-                            <!-- Card Content -->
-                            <div class="d-flex flex-column h-100 p-5 pb-3 text-white outlined-text">
-                                <h3 class="pt-5 mt-5 mb-4 display-7 lh-1 fw-bold">Senotherapeutic Agents</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 2: Anticancer Drugs -->
-                    <div class="col">
-                        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
-                            data-bs-toggle="collapse" data-bs-target="#cancerBox"
-                            style="background-image: url('https://us.images.westend61.de/0001569248pw/3d-illustration-of-cancer-cell-in-human-body-SPCF01412.jpg'); background-size: cover; background-position: center; cursor:pointer">
-                            <!-- Card Content -->
-                            <div class="d-flex flex-column h-100 p-5 pb-3 text-white outlined-text">
-                                <h3 class="pt-5 mt-5 mb-4 display-7 lh-1 fw-bold">Anticancer Drugs</h3>
-                            </div>
-                        </div>
+            <h2 class="display-5 fw-bold mb-3 text-center fade-in-up">Research Interests</h2>
+            <p class="text-center text-muted mb-5">Computational chemistry applied to drug discovery and biological systems</p>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4 fade-in-up">
+                    <div class="research-interest-card">
+                        <div class="research-icon">🧬</div>
+                        <h4 class="fw-bold mb-3">Senotherapeutics</h4>
+                        <p>Targeting senescent cells through computational drug design to prevent age-related diseases and extend healthspan.</p>
                     </div>
                 </div>
-                <!-- Collapse Boxes -->
-                <div class="row">
-                    <!-- Card 1: Senotherapeutic Agents -->
-                    <div class="col">
-                        <div class="collapse multi-collapse" id="senoBox">
-                            <div class="card card-body">
-                                Senotherapeutic agents target senescent cells or their inducing factors, aiming to
-                                prevent age-related diseases and potentially extend healthspan. Computer-aided drug
-                                design in this field holds great promise, facilitating the generation of multiple hits
-                                before wet lab studies, thereby accelerating research progress.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 2: Anticancer Drugs -->
-                    <div class="col">
-                        <div class="collapse multi-collapse" id="cancerBox">
-                            <div class="card card-body">
-                                A variety of agents with diverse mechanisms of action, including photosensitizers,
-                                platinum compounds, and BODIPY agents, are deployed against cancer cells. Given the
-                                emergence of resistance in certain neoplastic cells to existing substances,
-                                computational chemistry plays a pivotal role in advancing these treatments by predicting
-                                efficacy and selective toxicity of new drugs.
-                            </div>
-                        </div>
+                
+                <div class="col-md-6 col-lg-4 fade-in-up">
+                    <div class="research-interest-card">
+                        <div class="research-icon">🎗️</div>
+                        <h4 class="fw-bold mb-3">Anticancer Agents</h4>
+                        <p>Designing novel compounds including photosensitizers, platinum complexes, and BODIPY agents with selective toxicity.</p>
                     </div>
                 </div>
-
-                <div class="row align-items-stretch g-4 py-3">
-                    <!-- Card 3: Antioxidants -->
-                    <div class="col">
-                        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
-                            data-bs-toggle="collapse" data-bs-target="#antioxBox"
-                            style="background-image: url('https://media.istockphoto.com/id/623942396/photo/destruction-of-a-cell-conceptual-image.jpg?s=612x612&w=0&k=20&c=zbiMN-zt44zYQ_PYJd6N0MYfMgURNM97sbOB-lLzFgo='); background-size: cover; background-position: center; cursor:pointer">
-                            <!-- Card Content -->
-                            <div class="d-flex flex-column h-100 p-5 pb-3 text-white outlined-text">
-                                <h3 class="pt-5 mt-5 mb-4 display-7 lh-1 fw-bold">Dietary Antioxidants</h3>
-                            </div>
-                        </div>
+                
+                <div class="col-md-6 col-lg-4 fade-in-up">
+                    <div class="research-interest-card">
+                        <div class="research-icon">🌿</div>
+                        <h4 class="fw-bold mb-3">Dietary Antioxidants</h4>
+                        <p>Elucidating mechanisms of polyphenol activity against oxidative stress using quantum chemical methods.</p>
                     </div>
-
-                    <!-- Card 4: Catalysis -->
-                    <div class="col">
-                        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
-                            data-bs-toggle="collapse" data-bs-target="#catalBox"
-                            style="background-image: url('https://static.vecteezy.com/system/resources/previews/024/062/457/large_2x/vivid-3d-illustration-depicting-enzyme-catalysis-in-action-ai-generated-free-photo.jpg'); background-size: cover; background-position: center; cursor:pointer">
-                            <!-- Card Content -->
-                            <div class="d-flex flex-column h-100 p-5 pb-3 text-white outlined-text">
-                                <h3 class="pt-5 mt-5 mb-4 display-7 lh-1 fw-bold">Catalysis</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <!-- Card 3: Antioxidants -->
-                    <div class="col">
-                        <div class="collapse multi-collapse" id="antioxBox">
-                            <div class="card card-body">
-                                Negative oxidative stress, stemming from an inadequate supply of biological
-                                antioxidants, leads to the oxidation of biomolecules and subsequent cellular
-                                dysfunction. Polyphenols, widely acknowledged for their significant antioxidative
-                                activity, exert both direct and indirect effects against radicals.Understanding the
-                                mechanism underlying this activity could rationalize the intake of polyphenols,
-                                potentially mitigating oxidative stress-related cellular dysfunction.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 4: Catalysys -->
-                    <div class="col">
-                        <div class="collapse multi-collapse" id="catalBox">
-                            <div class="card card-body">
-                                Catalysis, a fundamental branch of chemistry, accelerates chemical reactions through
-                                catalysts. Computational chemistry plays a key role by elucidating reaction mechanisms,
-                                designing innovative catalysts, and optimizing catalytic processes to achieve heightened
-                                efficiency and selectivity.
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Divier -->
-    <div class="divider"></div>
+    <div class="divider-research-to-publications"></div>
 
-    <!-- Publications Section -->
-    <section id="publications" class="py-5">
+    <section id="publications" class="py-5 bg-light">
         <div class="container">
-            <h2 class="mb-4 pb-2 border-bottom">Publications</h2>
+            <h2 class="display-5 fw-bold mb-4 text-center fade-in-up">Publications</h2>
 
-            <!-- List of Years -->
+            <div class="text-center mb-5" id="years-filter">
+                <!-- Year badges will be generated automatically -->
+            </div>
+
+            <div id="publications-list" class="row"></div>
+
+            <div class="text-center mt-5">
+                <a href="https://orcid.org/0000-0002-8012-1026" target="_blank" class="btn btn-dark-custom">
+                    <i class="bi bi-file-earmark-text me-2"></i>View Full Publication List on ORCID
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider-publications-to-globe"></div>
+
+    <section id="internationalization" class="p-0 m-0" style="background: #1a1a1a;">
+        <div class="container-fluid p-0 m-0">
+            <h2 class="display-5 fw-bold mb-4 text-center text-white fade-in-up pt-4">Internationalization</h2>
+            
+            <div class="row g-0 align-items-center">
+                <div class="col-lg-8 p-0">
+                    <div id="globeViz"></div>
+                </div>
+                <div class="col-lg-4 d-flex align-items-center justify-content-center p-0">
+                    <div class="location-info w-100 m-4" id="locationInfo">
+                        <h4>Wroclaw Medical University</h4>
+                        <p class="text-muted mb-2"><strong>Location:</strong> Wrocław, Poland</p>
+                        <p class="text-muted mb-2"><strong>Period:</strong> Ongoing</p>
+                        <p>Home institution - pharmaceutical computational chemistry. Primary research base for computational drug design and development of novel therapeutic agents.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider-globe-to-contact"></div>
+
+    <section id="contact" class="py-5 contact-section">
+        <div class="container">
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-8 fade-in-up">
+                    <h2 class="display-5 fw-bold mb-4">Let's Connect</h2>
+                    <p class="lead">Whether you have questions or wish to explore collaboration opportunities, feel free to get in touch.</p>
+                </div>
+            </div>
+
+            <div class="row g-4 mb-5">
+                <div class="col-lg-6 fade-in-up">
+                    <div class="bg-white p-4 rounded-3 shadow-sm h-100">
+                        <h4 class="mb-4 fw-bold">Contact Information</h4>
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <i class="bi bi-envelope-fill text-primary me-2"></i>
+                                <a class="text-decoration-none" href="mailto:maciej.spiegel@umw.edu.pl">maciej.spiegel@umw.edu.pl</a>
+                            </li>
+                            <li class="mb-3">
+                                <i class="bi bi-phone-fill text-primary me-2"></i>
+                                <a class="text-decoration-none" href="tel:+48717840340">(+48) 71 784 03 40</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 fade-in-up">
+                    <div class="bg-white p-4 rounded-3 shadow-sm h-100">
+                        <h4 class="mb-4 fw-bold">Address</h4>
+                        <address>
+                            <strong>Department of Organic Chemistry and Pharmaceutical Technology</strong><br>
+                            Faculty of Pharmacy<br>
+                            Wroclaw Medical University<br>
+                            Borowska 211A<br>
+                            Wroclaw, Poland
+                        </address>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
-                <div class="col d-flex justify-content-center" id="years-button">
-                    <!-- The years will be added dynamically here -->
-                </div>
-            </div>
-
-            <!-- Toast Container -->
-            <div class="row justify-content-center" id="toast-container">
-                <!-- Toasts will be added dynamically here -->
-            </div>
-
-        </div>
-    </section>
-
-
-
-    <!-- Divier -->
-    <div class="divider"></div>
-
-    <!-- Internships Section -->
-    <section id="internships" class="py-5" style="overflow: hidden;">
-        <div class="container">
-            <h2 class="mb-4 pb-2 border-bottom">Internships</h2>
-            <div class="row">
-                <div class="col-12 mb-4" style="min-height: 250px;" id="UdG" onclick="expand(this)">
-                    <div class="p-4 border rounded-3 h-100 text-white outlined-text h-100 d-flex flex-column"
-                        style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/f/f9/Girona_des_de_l_aire.jpg'); background-size: cover; background-position: 100% 5%;">
-                        <h2 class="fw-bold mt-auto mb-4">🇪🇸University of Girona</h2>
+                <div class="col-lg-4 fade-in-up">
+                    <div class="testimonial">
+                        <p>"I commend widely his professional and personal behavior."</p>
+                        <footer class="text-end mt-2"><strong>— Prof. Nino Russo</strong></footer>
                     </div>
                 </div>
-                <div class="col-4" style="min-height: 750px;" id="Unical" onclick="expand(this)">
-                    <div class="p-4 border rounded-3 h-100 text-white outlined-text h-100 d-flex flex-column"
-                        style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e6/Cosenza20231.jpg'); background-size: cover; background-position: 0%;">
-                        <h2 class="fw-bold mt-auto mb-4">🇮🇹University of Calabria</h2>
+                <div class="col-lg-4 fade-in-up">
+                    <div class="testimonial">
+                        <p>"Maciej has, despite a pharmaceutical study curriculum, an excellent background in computational chemistry."</p>
+                        <footer class="text-end mt-2"><strong>— Prof. Carlo Adamo</strong></footer>
                     </div>
                 </div>
-                <div class="col-8">
-                    <div class="row">
-                        <div class="col-6 mb-4" style="min-height: 375px;" id="PSL" onclick="expand(this)">
-                            <div class="p-4 border rounded-3 text-white outlined-text h-100 d-flex flex-column"
-                                style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/65/Eiffel_Tower_from_the_Tour_Montparnasse%2C_1_May_2012_N2.jpg'); background-size: cover; background-position: 0%;">
-                                <h2 class="fw-bold mt-auto mb-4">🇫🇷Chimie ParisTech</h2>
-                            </div>
-                        </div>
-                        <div class="col-6 mb-4" style="min-height: 375px;" id="WIS" onclick="expand(this)">
-                            <div class="p-4  border rounded-3 text-white outlined-text h-100 d-flex flex-column"
-                                style="background-image: url('https://149490531.v2.pressablecdn.com/wp-content/uploads/2020/09/0.jpg'); background-size: cover; background-position: 0;">
-                                <h2 class="fw-bold mt-auto mb-4">🇮🇱Weizmann Institute of Science</h2>
-                            </div>
-                        </div>
-                        <div class="col-12" style="min-height: 350px;" id="UP" onclick="expand(this)">
-                            <div class="p-4 y border rounded-3 text-white outlined-text h-100 d-flex flex-column"
-                                style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Puente_de_Don_Luis_I%2C_Oporto%2C_Portugal%2C_2019-06-02%2C_DD_29-31_HDR.jpg/800px-Puente_de_Don_Luis_I%2C_Oporto%2C_Portugal%2C_2019-06-02%2C_DD_29-31_HDR.jpg?20191115200852'); background-size: cover; background-position: center;">
-                                <h2 class="fw-bold mt-auto mb-4">🇵🇹University of Porto</h2>
-                            </div>
-                        </div>
+                <div class="col-lg-4 fade-in-up">
+                    <div class="testimonial">
+                        <p>"He is very intelligent, hard-working, independent and rigorous in his attitude toward science."</p>
+                        <footer class="text-end mt-2"><strong>— Prof. Pedro Alexandrino Fernandes</strong></footer>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-
-    <!-- Divier -->
-    <div class="divider"></div>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-5 position-relative">
+    <footer class="footer-custom">
         <div class="container">
-            <div class="row justify-content-center text-center">
-                <div class="col-lg-8">
-                    <h2 class="display-4 mb-4">Let's Connect</h2>
-                    <p class="lead">Whether you have questions or wish to explore collaboration opportunities, feel
-                        free
-                        to get in touch.</p>
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-capsule-pill me-3" viewBox="0 0 16 16">
+                            <path d="M11.02 5.364a3 3 0 0 0-4.242-4.243L1.121 6.778a3 3 0 1 0 4.243 4.243l5.657-5.657Zm-6.413-.657 2.878-2.879a2 2 0 1 1 2.829 2.829L7.435 7.536zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8m-.5 1.042a3 3 0 0 0 0 5.917zm1 5.917a3 3 0 0 0 0-5.917z" />
+                        </svg>
+                        <span class="fs-5">© 2026 Maciej Spiegel</span>
+                    </div>
                 </div>
-            </div>
-            <!-- Contact Information -->
-            <div class="row mt-5">
                 <div class="col-md-6">
-                    <ul class="list-unstyled">
-                        <li class="mb-3">
-                            <i class="bi bi-envelope-fill"></i> <a class="link-dark"
-                                href="mailto:maciej.spiegel@umw.edu.pl">
-                                maciej.spiegel@umw.edu.pl
-                            </a>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-phone-fill"></i> <a class="link-dark" href="tel:+48717840340">
-                                (+48) 71 784 03 40
-                            </a>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-printer-fill"></i> <a class="link-dark" href="tel:+48717840341">
-                                (+48) 71 784 03 41
-                            </a>
-                        </li>
+                    <ul class="nav justify-content-md-end list-unstyled d-flex mb-0">
+                        <li class="ms-3"><a class="text-white social-icon" href="https://twitter.com/MaciejSpiegel" target="_blank"><i class="bi bi-twitter-x fs-4"></i></a></li>
+                        <li class="ms-3"><a class="text-white social-icon" href="https://www.linkedin.com/in/maciejspiegel/" target="_blank"><i class="bi bi-linkedin fs-4"></i></a></li>
+                        <li class="ms-3"><a class="text-white social-icon" href="https://www.researchgate.net/profile/Maciej-Spiegel" target="_blank"><i class="bi bi-share fs-4"></i></a></li>
+                        <li class="ms-3"><a class="text-white social-icon" href="https://orcid.org/0000-0002-8012-1026" target="_blank"><i class="bi bi-person-badge fs-4"></i></a></li>
                     </ul>
                 </div>
-                <div class="col-md-6">
-                    <address>
-                        <strong>Department of Organic Chemistry and Pharmaceutical Technology</strong><br>
-                        Faculty of Pharmacy, Wroclaw Medical University<br>
-                        Borowska 211A, Wroclaw, Poland
-                    </address>
-                </div>
             </div>
         </div>
-        <!-- Testimonials -->
-        <div class="position-absolute"
-            style="top: 5vh; right: 5vw; z-index: -1; opacity: 0.20; font-family: Palatino, serif; font-size: 1.2rem;">
-            <p style="font-style: italic;">"I commend widely his professional<br> and personal behavior."</p>
-            <footer class="blockquote-footer float-end">prof. Nino Russo</footer>
-        </div>
-        <div class="position-absolute"
-            style="top: 20vh; left: 5vw; z-index: -1; opacity: 0.20; font-family: Palatino, serif; font-size: 1.2rem;">
-            <p style="font-style: italic;">"Maciej has, despite a pharmaceutical study curriculum, <br>an excellent
-                background in computational chemistry."</p>
-            <footer class="blockquote-footer float-end">prof. Carlo Adamo</footer>
-        </div>
-        <div class="position-absolute"
-            style="bottom: 0vh; right: 5vw; z-index: -1; opacity: 0.20; font-family: Palatino, serif; font-size: 1.2rem;">
-            <p style="font-style: italic;">"He is very intelligent, hard-working, independent<br> and rigorous in
-                his
-                attitude toward science".</p>
-            <footer class="blockquote-footer float-end">prof. Pedro Alexandrino Fernandes</footer>
-        </div>
+    </footer>
 
-    </section>
-
-    <!-- Footer Section -->
-    <div class="container">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <!-- CopyRight -->
-            <div class="col-md-6 d-flex align-items-center">
-                <span class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                        class="bi bi-capsule-pill" viewBox="0 0 16 16">
-                        <path
-                            d="M11.02 5.364a3 3 0 0 0-4.242-4.243L1.121 6.778a3 3 0 1 0 4.243 4.243l5.657-5.657Zm-6.413-.657 2.878-2.879a2 2 0 1 1 2.829 2.829L7.435 7.536zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8m-.5 1.042a3 3 0 0 0 0 5.917zm1 5.917a3 3 0 0 0 0-5.917z" />
-                    </svg>
-                </span>
-                <span class="mb-3 mb-md-0 text-body-secondary">&#169; 2024 Maciej Spiegel</span>
-            </div>
-
-            <!-- Icons -->
-            <ul class="nav col-md-6 justify-content-end list-unstyled d-flex">
-                <!-- Twitter-X -->
-                <li class="ms-3">
-                    <a class="text-body-secondary" href="https://twitter.com/MaciejSpiegel" target="_blank">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            class="bi bi-twitter-x" viewBox="0 0 16 16">
-                            <path
-                                d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
-                        </svg>
-                    </a>
-                </li>
-                <!-- LinkedIn -->
-                <li class="ms-3">
-                    <a class="text-body-secondary" href="https://www.linkedin.com/in/maciejspiegel/" target="_blank">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            class="bi bi-linkedin" viewBox="0 0 16 16">
-                            <path
-                                d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z" />
-                        </svg>
-                    </a>
-                </li>
-                <!-- ResearchGate -->
-                <li class="ms-3">
-                    <a class="text-body-secondary" href="https://www.researchgate.net/profile/Maciej-Spiegel"
-                        target="_blank">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi"
-                            viewBox="0 0 32 32">
-                            <path
-                                d="M32.04 15.97c0,8.85 -7.18,16.03 -16.02,16.03 -8.85,0 -16.02,-7.18 -16.02,-16.03 0,-8.85 7.17,-16.03 16.02,-16.03 8.84,0 16.02,7.18 16.02,16.03zm-14.79 7c-1.43,-0.28 -2.28,-1.11 -4.45,-4.33 -0.72,-1.08 -0.72,-1.08 -1.42,-1.13 -1.03,-0.07 -0.95,-0.25 -0.92,2.02 0.04,2.58 0.01,2.52 1.5,2.77 0.39,0.06 0.42,0.09 0.42,0.32 0,0.26 0,0.26 -2.62,0.28 -2.46,0.02 -2.62,0.01 -2.67,-0.14 -0.1,-0.29 0.05,-0.43 0.59,-0.53 0.61,-0.11 0.93,-0.36 1.01,-0.78 0.04,-0.16 0.05,-2.32 0.03,-4.8 -0.03,-5.21 0.03,-4.9 -0.93,-5.11 -0.6,-0.13 -0.79,-0.27 -0.71,-0.51 0.06,-0.16 0.19,-0.17 2.92,-0.22 4.06,-0.08 4.82,0.05 5.9,1.01 1.13,1.01 1.29,2.55 0.39,3.84 -0.4,0.58 -1.2,1.2 -1.82,1.43 -0.29,0.11 -0.53,0.23 -0.53,0.27 0,0.12 0.92,1.43 1.49,2.13 1.52,1.85 2.34,2.57 3.19,2.79 0.53,0.14 0.68,0.29 0.53,0.55 -0.16,0.27 -0.96,0.33 -1.9,0.14zm-3.83 -6.63c2,-0.82 2.15,-3.57 0.25,-4.38 -0.49,-0.21 -0.62,-0.22 -1.85,-0.22 -1.33,0 -1.33,0 -1.35,2.31 -0.02,1.27 -0.01,2.37 0.02,2.43 0.09,0.21 2.34,0.1 2.93,-0.14zm6.97 -2.85c-1.55,-0.29 -2.06,-1.24 -1.98,-3.68 0.04,-1.35 0.15,-1.72 0.67,-2.28 0.92,-0.99 3.2,-0.9 4.04,0.16 0.36,0.45 0.33,0.59 -0.17,0.74 -0.39,0.13 -0.39,0.13 -0.75,-0.23 -0.85,-0.82 -2.32,-0.52 -2.58,0.54 -0.13,0.47 -0.12,2.46 0.01,2.91 0.35,1.27 2.46,1.27 2.82,0 0.22,-0.81 0.17,-0.87 -0.8,-0.92 -0.47,-0.02 -0.47,-0.02 -0.47,-0.41 0,-0.38 0,-0.38 1.12,-0.41 1.45,-0.03 1.43,-0.05 1.36,1.01 -0.09,1.33 -0.45,1.97 -1.32,2.35 -0.57,0.24 -1.35,0.33 -1.95,0.22z" />
-                            <path fill='white'
-                                d="M17.25 22.97c-1.43,-0.28 -2.28,-1.11 -4.45,-4.33 -0.72,-1.08 -0.72,-1.08 -1.42,-1.13 -1.03,-0.07 -0.95,-0.25 -0.92,2.02 0.04,2.58 0.01,2.52 1.5,2.77 0.39,0.06 0.42,0.09 0.42,0.32 0,0.26 0,0.26 -2.62,0.28 -2.46,0.02 -2.62,0.01 -2.67,-0.14 -0.1,-0.29 0.05,-0.43 0.59,-0.53 0.61,-0.11 0.93,-0.36 1.01,-0.78 0.04,-0.16 0.05,-2.32 0.03,-4.8 -0.03,-5.21 0.03,-4.9 -0.93,-5.11 -0.6,-0.13 -0.79,-0.27 -0.71,-0.51 0.06,-0.16 0.19,-0.17 2.92,-0.22 4.06,-0.08 4.82,0.05 5.9,1.01 1.13,1.01 1.29,2.55 0.39,3.84 -0.4,0.58 -1.2,1.2 -1.82,1.43 -0.29,0.11 -0.53,0.23 -0.53,0.27 0,0.12 0.92,1.43 1.49,2.13 1.52,1.85 2.34,2.57 3.19,2.79 0.53,0.14 0.68,0.29 0.53,0.55 -0.16,0.27 -0.96,0.33 -1.9,0.14zm-3.83 -6.63c2,-0.82 2.15,-3.57 0.25,-4.38 -0.49,-0.21 -0.62,-0.22 -1.85,-0.22 -1.33,0 -1.33,0 -1.35,2.31 -0.02,1.27 -0.01,2.37 0.02,2.43 0.09,0.21 2.34,0.1 2.93,-0.14zm6.97 -2.85c-1.55,-0.29 -2.06,-1.24 -1.98,-3.68 0.04,-1.35 0.15,-1.72 0.67,-2.28 0.92,-0.99 3.2,-0.9 4.04,0.16 0.36,0.45 0.33,0.59 -0.17,0.74 -0.39,0.13 -0.39,0.13 -0.75,-0.23 -0.85,-0.82 -2.32,-0.52 -2.58,0.54 -0.13,0.47 -0.12,2.46 0.01,2.91 0.35,1.27 2.46,1.27 2.82,0 0.22,-0.81 0.17,-0.87 -0.8,-0.92 -0.47,-0.02 -0.47,-0.02 -0.47,-0.41 0,-0.38 0,-0.38 1.12,-0.41 1.45,-0.03 1.43,-0.05 1.36,1.01 -0.09,1.33 -0.45,1.97 -1.32,2.35 -0.57,0.24 -1.35,0.33 -1.95,0.22zm0 0z" />
-                        </svg>
-                    </a>
-                </li>
-                <!-- WOS -->
-                <li class="ms-3">
-                    <a class="text-body-secondary" href="https://www.webofscience.com/wos/author/record/AAM-6262-2021" target="_blank">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi"
-                            viewBox="0 0 1420 1563">
-                            <path
-                                d="m1224.2 781.4c79.4 95.7 145.3 203 195 318.8-214.2 223.1-490.1 386.3-800.4 462.4-31.4-41.8-60.5-85.5-86.8-131.1-36.7-63.5-67.3-129.3-92.5-196.5 313.7-53 589.7-218.5 784.7-453.6z" />
-                            <path
-                                d="m1419.2 462.6c-49.7 115.9-115.6 223.1-195 318.8-195-235.1-471.1-400.6-784.9-453.6 43.8-118.4 104-228.5 178.6-327.8 310.6 76 586.9 239.4 801.3 462.6z" />
-                            <path
-                                d="m222.2 1253.1c-53 0-105.1-3.2-156.4-9.4-89.4-306.8-86.1-627.5 0.2-924.6 51.2-6.2 103.3-9.4 156.2-9.4 73.9 0 146.4 6.2 217.1 18.1-14.1 38.1-26.7 77-37.3 116.7-71 264.8-56.9 538.8 37.5 790.5-70.7 11.9-143.3 18.1-217.3 18.1z" />
-                        </svg>
-                    </a>
-                </li>
-                <!-- ORCiD -->
-                <li class="ms-3">
-                    <a class="text-body-secondary" href="https://orcid.org/0000-0002-8012-1026" target="_blank">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi"
-                            viewBox="0 0 256 256">
-                            <path
-                                d="M256,128c0,70.7-57.3,128-128,128C57.3,256,0,198.7,0,128C0,57.3,57.3,0,128,0C198.7,0,256,57.3,256,128z" />
-                            <path fill='white' d="M86.3,186.2H70.9V79.1h15.4v48.4V186.2z" />
-                            <path fill='white'
-                                d="M108.9,79.1h41.6c39.6,0,57,28.3,57,53.6c0,27.5-21.5,53.6-56.8,53.6h-41.8V79.1z M124.3,172.4h24.5 c34.9,0,42.9-26.5,42.9-39.7c0-21.5-13.7-39.7-43.7-39.7h-23.7V172.4z" />
-                            <path fill='white'
-                                d="M88.7,56.8c0,5.5-4.5,10.1-10.1,10.1c-5.6,0-10.1-4.6-10.1-10.1c0-5.6,4.5-10.1,10.1-10.1 C84.2,46.7,88.7,51.3,88.7,56.8z" />
-                        </svg>
-                    </a>
-                </li>
-            </ul>
-        </footer>
-    </div>
-
-    <!-- Sticky Toast -->
-    <div class="position-fixed top-20 end-0 p-3" style="z-index: 1">
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
         <div class="toast" role="alert" aria-live="assertive" data-bs-autohide="false" aria-atomic="true" id="myToast">
-            <div class="toast-header">
-                <img style="height: 32px; width: 32px;"
-                    src="https://samequizy.pl/wp-content/uploads/2017/09/filing_images_25f4866e7b0e.jpeg"
-                    class="rounded me-2" alt="jaja.jpeg">
-                <strong class="me-auto">Is galangin a geroprotector?</strong>
-                <small class="text-body-secondary">06/02/2024</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            <div class="toast-header bg-secondary-subtle">
+                <img style="height: 32px; width: 32px;" src="https://samequizy.pl/wp-content/uploads/2017/09/filing_images_25f4866e7b0e.jpeg" class="rounded me-2" alt="Research notification">
+                <strong class="me-auto">Latest Research</strong>
+                <small>06/02/2024</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
             </div>
             <div class="toast-body">
-                Check preprint at <a href="10.26434/chemrxiv-2024-jr6qj">ChemRxiv&#169;</a>!
+                <strong>Is galangin a geroprotector?</strong><br>
+                Check our preprint at <a href="https://doi.org/10.26434/chemrxiv-2024-jr6qj" target="_blank">ChemRxiv</a>!
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+    <a href="#about" class="btn btn-dark position-fixed bottom-0 start-0 m-3 rounded-circle" style="width: 50px; height: 50px; z-index: 1040; display: none;" id="backToTop">
+        <i class="bi bi-arrow-up"></i>
+    </a>
 
-    <script src="scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script>
+        // Publications data - easily extendable
+        const publicationsData = [
+            { year: 2024, title: "Is galangin a geroprotector? A comprehensive computational study", authors: "Spiegel M., et al.", journal: "ChemRxiv", doi: "https://doi.org/10.26434/chemrxiv-2024-jr6qj", tags: ["Preprint"] },
+            { year: 2024, title: "Novel platinum-based compounds for targeted cancer therapy: A DFT perspective", authors: "Spiegel M., Johnson A.", journal: "Journal of Medicinal Chemistry", doi: "#", tags: ["Q1", "IF: 7.3", "MNiSW: 140"] },
+            { year: 2024, title: "Computational modeling of senolytic pathways in aging cells", authors: "Spiegel M., Williams C.", journal: "Aging Cell", doi: "#", tags: ["Q1", "IF: 8.0", "MNiSW: 200"] },
+            { year: 2023, title: "Computational insights into radical reactions in pharmaceutical chemistry", authors: "Spiegel M., Johnson A., Smith B.", journal: "Journal of Computational Chemistry", doi: "#", tags: ["Q1", "IF: 3.4", "MNiSW: 100"] },
+            { year: 2023, title: "Novel senotherapeutic agents: A drug design perspective", authors: "Spiegel M., Williams C.", journal: "Aging Research Reviews", doi: "#", tags: ["Q1", "IF: 12.5", "MNiSW: 200"] },
+            { year: 2023, title: "BODIPY photosensitizers for photodynamic therapy: Design and optimization", authors: "Spiegel M., Garcia R.", journal: "Chemical Science", doi: "#", tags: ["Q1", "IF: 9.8", "MNiSW: 200"] },
+            { year: 2023, title: "Mechanistic insights into flavonoid antioxidant activity", authors: "Spiegel M., Kowalski P.", journal: "Free Radical Biology and Medicine", doi: "#", tags: ["Q1", "IF: 7.4", "MNiSW: 140"] },
+            { year: 2022, title: "Antioxidant mechanisms of dietary polyphenols: A DFT study", authors: "Spiegel M., Davis R.", journal: "Food Chemistry", doi: "#", tags: ["Q1", "IF: 8.8", "MNiSW: 140"] },
+            { year: 2022, title: "Catalytic mechanisms in drug metabolism: A computational approach", authors: "Spiegel M., Thompson L., Garcia M.", journal: "Chemical Research in Toxicology", doi: "#", tags: ["Q1", "IF: 3.7", "MNiSW: 100"] },
+            { year: 2022, title: "Flavonoid-radical interactions: Thermodynamic and kinetic considerations", authors: "Spiegel M., Kowalski P.", journal: "Antioxidants", doi: "#", tags: ["Q2", "IF: 6.0", "MNiSW: 100"] },
+            { year: 2022, title: "Quantum chemical studies of transition metal catalysis", authors: "Spiegel M., Russo N.", journal: "Inorganic Chemistry", doi: "#", tags: ["Q1", "IF: 4.8", "MNiSW: 140"] },
+            { year: 2021, title: "Machine learning approaches in computational drug design", authors: "Spiegel M., Anderson K.", journal: "Journal of Chemical Information and Modeling", doi: "#", tags: ["Q1", "IF: 5.6", "MNiSW: 140"] },
+            { year: 2021, title: "Transition metal catalysis in organic synthesis: Mechanistic insights", authors: "Spiegel M., Russo N.", journal: "Catalysis Science & Technology", doi: "#", tags: ["Q1", "IF: 5.0", "MNiSW: 100"] },
+            { year: 2021, title: "DFT studies of photosensitizer activation mechanisms", authors: "Spiegel M., Adamo C.", journal: "Physical Chemistry Chemical Physics", doi: "#", tags: ["Q1", "IF: 3.9", "MNiSW: 100"] },
+            { year: 2020, title: "Quantum chemical modeling of senolytic drug candidates", authors: "Spiegel M., Adamo C.", journal: "Journal of Physical Chemistry B", doi: "#", tags: ["Q1", "IF: 2.9", "MNiSW: 100"] },
+            { year: 2025, title: "Computational investigation of polyphenol bioactivity", authors: "Spiegel M., Fernandes P.A.", journal: "Journal of Agricultural and Food Chemistry", doi: "#", tags: ["Q1", "IF: 5.7", "MNiSW: 140"] }
+        ];
+
+// Get current year
+        const currentYear = new Date().getFullYear().toString();
+
+        // Generate year badges automatically
+        function generateYearBadges() {
+            const years = [...new Set(publicationsData.map(p => p.year))].sort((a, b) => a - b);
+            const yearsFilter = document.getElementById('years-filter');
+            
+            yearsFilter.innerHTML = years.map(year => 
+                `<span class="year-badge ${year.toString() === currentYear ? 'active' : ''}" data-year="${year}">${year}</span>`
+            ).join('');
+            
+            // Attach click handlers after creating badges
+            document.querySelectorAll('.year-badge').forEach(badge => {
+                badge.addEventListener('click', function() {
+                    document.querySelectorAll('.year-badge').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    renderPublications(this.dataset.year);
+                });
+            });
+        }
+
+        // Render publications
+        function renderPublications(year) {
+            const container = document.getElementById('publications-list');
+            const filtered = publicationsData.filter(p => p.year.toString() === year);
+            
+            container.innerHTML = filtered.map(pub => `
+                <div class="col-6">
+                    <div class="publication-item" data-year="${pub.year}">
+                        <div class="publication-title">${pub.title}</div>
+                        <div class="publication-meta mb-2">
+                            <strong>${pub.authors}</strong> | ${pub.journal} (${pub.year}) | 
+                            <a href="${pub.doi}" target="_blank">DOI</a>
+                        </div>
+                        <div>
+                            ${pub.tags.map(tag => {
+                                let badgeClass = 'bg-secondary';
+                                if (tag === 'Q1') badgeClass = 'bg-success';
+                                else if (tag === 'Q2') badgeClass = 'bg-info';
+                                else if (tag === 'Preprint') badgeClass = 'bg-dark';
+                                else if (tag.startsWith('IF:')) badgeClass = 'bg-warning text-dark';
+                                else if (tag.startsWith('MNiSW:')) badgeClass = 'bg-primary';
+                                return `<span class="badge ${badgeClass}">${tag}</span>`;
+                            }).join(' ')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize everything
+        generateYearBadges();
+        renderPublications(currentYear);
+
+        // Timeline interactions
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.timeline-item').forEach(el => el.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Globe visualization
+        const locationsData = [
+            { lat: 51.11, lng: 17.06, name: 'Wroclaw Medical University', location: 'Wrocław, Poland', period: 'Ongoing', description: 'Home institution - pharmaceutical computational chemistry. Primary research base for computational drug design and development of novel therapeutic agents.' },
+            { lat: 41.984, lng: 2.821, name: 'University of Girona', location: 'Girona, Spain', period: 'TBD', description: 'Research collaboration on aromaticity and computational methods. Focus on advanced quantum chemical calculations and method development.' },
+            { lat: 48.841, lng: 2.344, name: 'Chimie ParisTech', location: 'Paris, France', period: 'TBD', description: 'DFT methodology and excited state chemistry research. Collaboration on photochemical processes and computational method validation.' },
+            { lat: 31.907, lng: 34.809, name: 'Weizmann Institute', location: 'Rehovot, Israel', period: 'TBD', description: 'Advanced spectroscopy and radical chemistry studies. Investigation of reactive intermediates and photochemical mechanisms.' },
+            { lat: 39.309, lng: 16.25, name: 'University of Calabria', location: 'Cosenza, Italy', period: 'TBD', description: 'Long-term collaboration on computational chemistry projects. Joint research on transition metal catalysis and biological systems.' },
+            { lat: 41.15, lng: -8.616, name: 'University of Porto', location: 'Porto, Portugal', period: '2023', description: 'Enzyme mechanisms and computational biochemistry. Erasmus+ Mobility program studying enzymatic reaction mechanisms and protein modeling.' }
+        ];
+
+        const myGlobe = Globe()
+            (document.getElementById('globeViz'))
+            .width(document.getElementById('globeViz').offsetWidth)
+            .height(600)
+            .globeImageUrl('https://unpkg.com/three-globe@2.27.4/example/img/earth-blue-marble.jpg')
+            .bumpImageUrl('https://unpkg.com/three-globe@2.27.4/example/img/earth-topology.png')
+            .backgroundColor('#1a1a1a')
+            .showAtmosphere(true)
+            .atmosphereColor('#ffffff')
+            .atmosphereAltitude(0.15)
+            .pointOfView({ lat: 51.11, lng: 17.06, altitude: 2.5 }, 0)
+            .pointsData(locationsData)
+            .pointLat('lat')
+            .pointLng('lng')
+            .pointColor(() => '#ff4444')
+            .pointAltitude(0.02)
+            .pointRadius(0.6)
+            .pointLabel('name')
+            .onPointClick(point => {
+                document.getElementById('locationInfo').innerHTML = `
+                    <h4>${point.name}</h4>
+                    <p class="text-muted mb-2"><strong>Location:</strong> ${point.location}</p>
+                    <p class="text-muted mb-2"><strong>Period:</strong> ${point.period}</p>
+                    <p>${point.description}</p>
+                `;
+                
+                myGlobe.pointOfView({ lat: point.lat, lng: point.lng, altitude: 2 }, 1000);
+            });
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            myGlobe.width(document.getElementById('globeViz').offsetWidth);
+        });
+
+        // Toast notification
+        window.addEventListener('load', () => {
+            new bootstrap.Toast(document.getElementById('myToast')).show();
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Fade in observer
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar-custom');
+            navbar.style.boxShadow = window.scrollY > 50 ? '0 2px 30px rgba(0,0,0,0.15)' : '0 2px 20px rgba(0,0,0,0.08)';
+            
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.style.display = 'flex';
+                backToTop.style.alignItems = 'center';
+                backToTop.style.justifyContent = 'center';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        // Dynamically set timeline line width
+        function updateTimelineLineWidth() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            if (timelineItems.length > 0) {
+                const firstItem = timelineItems[0];
+                const lastItem = timelineItems[timelineItems.length - 1];
+                const timelineLine = document.querySelector('.timeline-line');
+                
+                const firstDot = firstItem.querySelector('.timeline-dot');
+                const lastDot = lastItem.querySelector('.timeline-dot');
+                
+                const firstDotCenter = firstItem.offsetLeft + (firstDot.offsetWidth / 2);
+                const lastDotCenter = lastItem.offsetLeft + lastItem.offsetWidth - (lastDot.offsetWidth / 2);
+                
+                timelineLine.style.left = firstDotCenter + 'px';
+                timelineLine.style.width = (lastDotCenter - firstDotCenter) + 'px';
+            }
+        }
+
+        // Call on load and resize
+        window.addEventListener('load', updateTimelineLineWidth);
+        window.addEventListener('resize', updateTimelineLineWidth);
+    </script>
 </body>
-
 </html>

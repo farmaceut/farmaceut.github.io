@@ -1,7 +1,6 @@
 /* WORKING - Outlined text of research areas */
 .outlined-text {
     font-size: 2rem;
-    /* Adjust the size as needed */
     line-height: 1.4;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     white-space: break-space;
@@ -17,7 +16,132 @@
     box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
 }
 
-/* 
-    UNDER CONSTRUCTION
-    * Scroll-up button
- */
+/* Achievements section */
+#achievements .position-relative {
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#achievements .achievement-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+/* This hover effect only reveals the label of the hovered image */
+#achievements .position-relative:hover .achievement-label {
+    transform: translateY(0);
+}
+
+/* Optional: Add a subtle zoom effect on hover */
+#achievements .position-relative img {
+    transition: transform 0.3s ease;
+}
+
+#achievements .position-relative:hover img {
+    transform: scale(1.05);
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Fix navbar on small screens */
+@media (max-width: 768px) {
+    .d-flex.align-items-center.justify-content-between {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+    
+    nav.d-flex {
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+}
+
+/* Improve toast styling */
+.toast {
+    max-width: 400px;
+    margin-bottom: 10px;
+}
+
+.toast-header {
+    background-color: #f8f9fa;
+}
+
+.toast-body {
+    background-color: white;
+}
+
+/* Better button hover effects */
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+}
+
+/* Fix card hover effects */
+.card-cover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-cover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3) !important;
+}
+
+/* Loading state for publications */
+.loading {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #6c757d;
+}
+
+/* Sticky navigation improvement */
+.sticky-top {
+    top: 0;
+    z-index: 1020;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Active state for internship cards */
+.active-internship {
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    z-index: 10;
+    position: relative;
+}
+
+/* Add focus states for accessibility */
+.card-cover:focus {
+    outline: 2px solid #0d6efd;
+    outline-offset: 2px;
+}
+
+/* Internship cards improvements */
+#internships [id] {
+    transition: all 0.3s ease;
+}
+
+/* Better responsive text */
+@media (max-width: 576px) {
+    .outlined-text {
+        font-size: 1.5rem;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+}
+
