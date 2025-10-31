@@ -806,40 +806,49 @@
             { lat: 41.15, lng: -8.616, name: 'University of Porto', location: 'Porto, Portugal', period: '2023', description: 'Enzyme mechanisms and computational biochemistry. Erasmus+ Mobility program studying enzymatic reaction mechanisms and protein modeling.' }
         ];
 
-        const myGlobe = Globe()
-            (document.getElementById('globeViz'))
-            .width(document.getElementById('globeViz').offsetWidth)
-            .height(600)
-            .globeImageUrl('https://unpkg.com/three-globe@2.27.4/example/img/earth-blue-marble.jpg')
-            .bumpImageUrl('https://unpkg.com/three-globe@2.27.4/example/img/earth-topology.png')
-            .backgroundColor('#1a1a1a')
-            .showAtmosphere(true)
-            .atmosphereColor('#ffffff')
-            .atmosphereAltitude(0.15)
-            .pointOfView({ lat: 51.11, lng: 17.06, altitude: 2.5 }, 0)
-            .pointsData(locationsData)
-            .pointLat('lat')
-            .pointLng('lng')
-            .pointColor(() => '#ff4444')
-            .pointAltitude(0.02)
-            .pointRadius(0.6)
-            .pointLabel('name')
-            .onPointClick(point => {
-                document.getElementById('locationInfo').innerHTML = `
-                    <h4>${point.name}</h4>
-                    <p class="text-muted mb-2"><strong>Location:</strong> ${point.location}</p>
-                    <p class="text-muted mb-2"><strong>Period:</strong> ${point.period}</p>
-                    <p>${point.description}</p>
-                `;
-                
-                myGlobe.pointOfView({ lat: point.lat, lng: point.lng, altitude: 2 }, 1000);
-            });
-        
-            myGlobe.lights([ 
-                new THREE.AmbientLight(0xffffff),     // low intensity ambient
-                new THREE.DirectionalLight(0xffffff) // directional with moderate intensity
-            ]);
-        
+        fetch('ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries =>
+        {
+            const myGlobe = Globe()
+                (document.getElementById('globeViz'))
+                .width(document.getElementById('globeViz').offsetWidth)
+                .height(600)
+                .globeImageUrl('https://unpkg.com/three-globe@2.27.4/example/img/earth-blue-marble.jpg')
+                .bumpImageUrl('https://unpkg.com/three-globe@2.27.4/example/img/earth-topology.png')
+                .backgroundColor('#1a1a1a')
+                .polygonsData(countries.features)
+                .polygonCapColor(() => 'rgba(0,0,0,0)')      // transparent fill
+                .polygonSideColor(() => 'rgba(0,0,0,0)')     // no sides
+                .polygonStrokeColor(() => 'black')         // visible border
+                .polygonAltitude(0.001)                      // slight elevation for visibility
+                .showAtmosphere(true)
+                .atmosphereColor('#ffffff')
+                .atmosphereAltitude(0.15)
+                .pointOfView({ lat: 51.11, lng: 17.06, altitude: 1.5 }, 0)
+                .pointsData(locationsData)
+                .pointLat('lat')
+                .pointLng('lng')
+                .pointColor(() => '#ff4444')
+                .pointAltitude(0.02)
+                .pointRadius(0.6)
+                .pointLabel('name')
+                .onPointClick(point => {
+                    document.getElementById('locationInfo').innerHTML = `
+                        <h4>${point.name}</h4>
+                        <p class="text-muted mb-2"><strong>Location:</strong> ${point.location}</p>
+                        <p class="text-muted mb-2"><strong>Period:</strong> ${point.period}</p>
+                        <p>${point.description}</p>
+                    `;
+                    
+                    myGlobe.pointOfView({ lat: point.lat, lng: point.lng, altitude: 0.5 }, 1000);
+                });
+
+            
+                myGlobe.lights([ 
+                    new THREE.AmbientLight(0xffffff),     // low intensity ambient
+                    new THREE.DirectionalLight(0xffffff) // directional with moderate intensity
+                ]);
+        });
+
         // Handle window resize
         window.addEventListener('resize', () => {
             myGlobe.width(document.getElementById('globeViz').offsetWidth);
