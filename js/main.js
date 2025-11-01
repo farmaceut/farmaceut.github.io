@@ -170,6 +170,7 @@ fetch('ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countrie
         });
 });
 
+
 // Handle window resize
 window.addEventListener('resize', () => {
     myGlobe.width(document.getElementById('globeViz').offsetWidth);
