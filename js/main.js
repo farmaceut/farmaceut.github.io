@@ -125,9 +125,12 @@ const locationsData = [
     { lat: 32.266, lng: -16.924, name: 'PSE 2025', location: 'Porto, Portugal', period: '2023', type: 'conference', description: '...' }
 ];
 
+
+let myGlobe;
+
 fetch('ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries =>
 {
-    const myGlobe = Globe()
+    myGlobe = Globe()
         (document.getElementById('globeViz'))
         .width(document.getElementById('globeViz').offsetWidth)
         .height(600)
@@ -165,12 +168,6 @@ fetch('ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countrie
             
             myGlobe.pointOfView({ lat: point.lat, lng: point.lng, altitude: 0.5 }, 2000);
         });
-
-    
-        myGlobe.lights([ 
-            new THREE.AmbientLight(0xffffff),     // low intensity ambient
-            new THREE.DirectionalLight(0xffffff) // directional with moderate intensity
-        ]);
 });
 
 // Handle window resize
