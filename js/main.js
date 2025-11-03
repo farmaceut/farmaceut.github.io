@@ -259,7 +259,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         const target = document.querySelector(anchor.getAttribute('href'));
         if (target) {
             const navbarHeight = document.querySelector('.navbar-custom').offsetHeight;
-            const offset = navbarHeight; // navbar height + 20px padding
+            const offset = navbarHeight; // navbar height
             const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
             
             window.scrollTo({
