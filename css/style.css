@@ -756,6 +756,11 @@ body {
 }
 
 /* Globe Section */
+#intl-header.shifted {
+    transform: translateX(30%) !important; /* force it */
+    transition: transform 0.5s ease;
+}
+
 #globeViz {
     position: absolute;
     top: 0;

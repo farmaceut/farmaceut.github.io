@@ -181,6 +181,14 @@ const locationsData = [
 
 let myGlobe;
 let isFirstClick = true;
+let headerShifted = false;
+
+function shiftIntlHeader() {
+    const header = document.getElementById('intl-header');
+    if (!header.classList.contains('shifted')) {
+        header.classList.add('shifted');
+    }
+}
 
 fetch('addons/ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries =>
 {
@@ -211,6 +219,7 @@ fetch('addons/ne_110m_admin_0_countries.geojson').then(res => res.json()).then(c
         .pointRadius(0.6)
         .pointLabel('name')
         .onPointClick(point => {
+            shiftIntlHeader();
             document.getElementById('locationInfo').innerHTML = `
                 <img src="${point.logo}" alt="Logo" style="max-height:90px; height:auto; width:auto; filter: grayscale(100%) invert(100%);" class="d-block mx-auto mb-5">
                 <h4 class="text-white" style="background: transparent;">${point.name}</h4>
