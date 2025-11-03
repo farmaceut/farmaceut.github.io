@@ -104,37 +104,91 @@ function renderPublications(year) {
 generateYearBadges();
 renderPublications(currentYear);
 
-// Timeline interactions
-document.querySelectorAll('.timeline-item').forEach(item => {
-    item.addEventListener('click', function() {
-        document.querySelectorAll('.timeline-item').forEach(el => el.classList.remove('active'));
-        this.classList.add('active');
+// Timeline Gallery Interactions
+var $timelineCont = document.querySelector('.timeline-gallery-cont');
+var $timelineElsArr = [].slice.call(document.querySelectorAll('.timeline-el'));
+var $timelineCloseBtnsArr = [].slice.call(document.querySelectorAll('.timeline-el__close-btn'));
+
+setTimeout(function () {
+    if ($timelineCont) {
+        $timelineCont.classList.remove('s--inactive');
+    }
+}, 200);
+
+$timelineElsArr.forEach(function ($el) {
+    $el.addEventListener('click', function () {
+        if (this.classList.contains('s--active')) return;
+        $timelineCont.classList.add('s--el-active');
+        
+        // Remove active from all
+        $timelineElsArr.forEach(function ($elem) {
+            $elem.classList.remove('s--active');
+        });
+        
+        // Add active to clicked
+        this.classList.add('s--active');
+        
+        // Scroll the expanded element into view
+        setTimeout(() => {
+            this.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }, 100);
     });
 });
 
+$timelineCloseBtnsArr.forEach(function ($btn) {
+    $btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        $timelineCont.classList.remove('s--el-active');
+        document.querySelector('.timeline-el.s--active').classList.remove('s--active');
+    });
+});
+
+// Optional: Touch/swipe support for mobile
+let timelineStartX = 0;
+let timelineScrollLeft = 0;
+
+if ($timelineCont) {
+    $timelineCont.addEventListener('touchstart', (e) => {
+        timelineStartX = e.touches[0].pageX - $timelineCont.offsetLeft;
+        timelineScrollLeft = $timelineCont.scrollLeft;
+    });
+
+    $timelineCont.addEventListener('touchmove', (e) => {
+        if (!timelineStartX) return;
+        const x = e.touches[0].pageX - $timelineCont.offsetLeft;
+        const walk = (x - timelineStartX) * 2;
+        $timelineCont.scrollLeft = timelineScrollLeft - walk;
+    });
+
+    $timelineCont.addEventListener('touchend', () => {
+        timelineStartX = 0;
+    });
+}
+
 // Globe visualization
 const locationsData = [
-    { lat: 51.11, lng: 17.06, name: 'Wroclaw Medical University', location: 'Wrocław, Poland', period: 'Ongoing', type: 'home', description: '...' },
-    { lat: 41.984, lng: 2.821, name: 'University of Girona', location: 'Girona, Spain', period: 'TBD', type: 'internship', description: '...' },
-    { lat: 48.841, lng: 2.344, name: 'Chimie ParisTech', location: 'Paris, France', period: 'TBD', type: 'internship', description: '...' },
-    { lat: 31.907, lng: 34.809, name: 'Weizmann Institute', location: 'Rehovot, Israel', period: 'TBD', type: 'internship', description: '...' },
-    { lat: 39.309, lng: 16.25, name: 'University of Calabria', location: 'Cosenza, Italy', period: 'TBD', type: 'internship', description: '...' },
-    { lat: 41.15, lng: -8.616, name: 'University of Porto', location: 'Porto, Portugal', period: '2023', type: 'internship', 
+    { lat: 51.11, lng: 17.06, name: 'Wroclaw Medical University', logo: 'https://upload.wikimedia.org/wikipedia/en/3/3e/Wrocław_Medical_University_Seal.png', location: 'Wrocław, Poland', period: 'Ongoing', type: 'home', description: '...' },
+    { lat: 41.984, lng: 2.821, name: 'University of Girona', location: 'Girona, Spain', logo:'https://upload.wikimedia.org/wikipedia/commons/d/da/Logo_de_la_universitat_de_girona.png', period: 'TBD', type: 'internship', description: '...' },
+    { lat: 48.841, lng: 2.344, name: 'Chimie ParisTech', location: 'Paris, France', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Logo_Chimie_ParisTech_PSL.svg/2560px-Logo_Chimie_ParisTech_PSL.svg.png', period: 'TBD', type: 'internship', description: '...' },
+    { lat: 31.907, lng: 34.809, name: 'Weizmann Institute of Science', logo: 'https://www.weizmann.ac.il/pages/sites/default/files/group_1262x_1.png', location: 'Rehovot, Israel', period: 'TBD', type: 'internship', description: '...' },
+    { lat: 39.309, lng: 16.25, name: 'University of Calabria', logo: 'https://www.uni-med.net/wp-content/uploads/2022/12/University-of-Calabria.png', location: 'Cosenza, Italy', period: 'TBD', type: 'internship', description: '...' },
+    { lat: 41.15, lng: -8.616, name: 'University of Porto', logo: 'https://logowik.com/content/uploads/images/university-of-porto7995.jpg', location: 'Porto, Portugal', period: '2023', type: 'internship', 
     description: '...' }, 
     { lat: 32.266, lng: -16.924, name: 'PSE 2025', location: 'Porto, Portugal', period: '2023', type: 'conference', description: '...' },
-    { lat: 32.266, lng: -16.924, name: 'PSE 2025', location: 'Porto, Portugal', period: '2023', type: 'conference', description: '...' }
+    { lat: 32.266, lng: -16.924, name: 'EuchemS 2025', location: 'Porto, Portugal', period: '2023', type: 'conference', description: '...' }
 ];
 
 
 let myGlobe;
+let isFirstClick = true;
 
-fetch('ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries =>
+fetch('addons/ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries =>
 {
     myGlobe = Globe()
         (document.getElementById('globeViz'))
         .width(document.getElementById('globeViz').offsetWidth)
         .height(600)
-        .globeImageUrl('https://unpkg.com/three-globe@2.27.4/example/img/earth-blue-marble.jpg')
+        .globeImageUrl('addons/world.topo.bathy.200407.3x5400x2700.png')
         .bumpImageUrl('https://unpkg.com/three-globe@2.27.4/example/img/earth-topology.png')
         .backgroundColor('#1a1a1a')
         .polygonsData(countries.features)
@@ -151,8 +205,6 @@ fetch('ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countrie
         .pointLng('lng')
         .pointColor(point => {
             if (point.type === 'home') return '#FFD700'; // Gold for home
-            if (point.type === 'internship') return '#00ff00'; // Green for internships
-            if (point.type === 'conference') return '#ff4444'; // Red for conferences
             return '#ff4444'; // Default
         })
         .pointAltitude(0.02)
@@ -160,15 +212,25 @@ fetch('ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countrie
         .pointLabel('name')
         .onPointClick(point => {
             document.getElementById('locationInfo').innerHTML = `
-                <h4>${point.name}</h4>
-                <p class="text-muted mb-2"><strong>Location:</strong> ${point.location}</p>
-                <p class="text-muted mb-2"><strong>Period:</strong> ${point.period}</p>
-                <p>${point.description}</p>
+                <img src="${point.logo}" alt="Logo" style="max-height:90px; height:auto; width:auto; filter: grayscale(100%) invert(100%);" class="d-block mx-auto mb-5">
+                <h4 class="text-white" style="background: transparent;">${point.name}</h4>
+                <p class="text-light mb-2" style="background: transparent;"><strong>Location:</strong> ${point.location}</p>
+                <p class="text-light mb-2" style="background: transparent;"><strong>Period:</strong> ${point.period}</p>
+                <p class="text-white" style="background: transparent;">${point.description}</p>
             `;
+            
+            // Slide header and zoom simultaneously
+            if (isFirstClick) {
+                const header = document.getElementById('intl-header');
+                header.style.transform = 'translateX(30%)';
+                isFirstClick = false;
+            }
             
             myGlobe.pointOfView({ lat: point.lat, lng: point.lng, altitude: 0.5 }, 2000);
         });
 });
+
+
 
 
 // Handle window resize
@@ -231,28 +293,5 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Dynamically set timeline line width
-function updateTimelineLineWidth() {
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    if (timelineItems.length > 0) {
-        const firstItem = timelineItems[0];
-        const lastItem = timelineItems[timelineItems.length - 1];
-        const timelineLine = document.querySelector('.timeline-line');
-        
-        const firstDot = firstItem.querySelector('.timeline-dot');
-        const lastDot = lastItem.querySelector('.timeline-dot');
-        
-        const firstDotCenter = firstItem.offsetLeft + (firstDot.offsetWidth / 2);
-        const lastDotCenter = lastItem.offsetLeft + lastItem.offsetWidth - (lastDot.offsetWidth / 2);
-        
-        timelineLine.style.left = firstDotCenter + 'px';
-        timelineLine.style.width = (lastDotCenter - firstDotCenter) + 'px';
-    }
-}
-
-// Call on load and resize
-window.addEventListener('load', updateTimelineLineWidth);
-window.addEventListener('resize', updateTimelineLineWidth);
-
 // Update copyright year dynamically
-document.getElementById('copyright-year').textContent = `© ${new Date().getFullYear()} Maciej Spiegel`;
+document.getElementById('copyright-year').textContent = `${new Date().getFullYear()} © Copyright`;
