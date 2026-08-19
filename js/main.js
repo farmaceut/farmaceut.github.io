@@ -43,15 +43,15 @@ const PortfolioApp = {
         { year: 2022, publisher: 'Springer', title: "Natural dihydroisobenzofuran derivatives as a template for promising radical scavengers: theoretical insights into structure–activity relationships, thermochemistry and kinetics", authors: "Spiegel M.*, Sroka Z.", journal: "Theoretical Chemistry Accounts", doi: "10.1007/s00214-022-02922-5", tags: ["Q4", "IF: 1.7", "Ministerial Score: 70", "Article"] },
         { year: 2022, publisher: 'Elsevier', title: "Primary and secondary antioxidant properties of scutellarin and scutellarein in water and lipid-like environments: A theoretical investigation", authors: "Spiegel M.*, Marino T., Prejanò M., Russo N.*", journal: "Journal of Molecular Liquids", doi: "10.1016/j.molliq.2022.120343", tags: ["Q1", "IF: 6.0", "Ministerial Score: 100", "Article"] },
         { year: 2022, publisher: 'Elsevier', title: "Interference of malvidin and its mono- and di-glucosides on the membrane — Combined in vitro and computational chemistry study", authors: "Strugała-Danak P.*, Spiegel M., Hurynowicz K., Gabrielska J.", journal: "Journal of Functional Foods", doi: "10.1016/j.jff.2022.105340", tags: ["Q1", "IF: 5.6", "Ministerial Score: 100", "Article"] },
-        { year: 2022, publisher: 'MDPI', title: "The Appliance of A-PRF and CGF in the Treatment of Impacted Mandibular Third Molar Extraction Sockets—Narrative Review", authors: "Selahi D.⁺, Spiegel M.⁺*, Hadzik J.*, Pitułaj A., Michalak F., Kubasiewicz-Ross P., Dominiak M.", journal: "Applied Sciences", doi: "10.3390/app13010165", tags: ["Q2", "IF: 2.7", "Ministerial Score: 100", "Review"] },
+        { year: 2023, publisher: 'MDPI', title: "The Appliance of A-PRF and CGF in the Treatment of Impacted Mandibular Third Molar Extraction Sockets—Narrative Review", authors: "Selahi D.⁺, Spiegel M.⁺*, Hadzik J.*, Pitułaj A., Michalak F., Kubasiewicz-Ross P., Dominiak M.", journal: "Applied Sciences", doi: "10.3390/app13010165", tags: ["Q2", "IF: 2.7", "Ministerial Score: 100", "Review"] },
         { year: 2023, publisher: 'RSC', title: "Computational assessment of the primary and secondary antioxidant potential of alkylresorcinols in physiological media", authors: "Boulebd H.*, Spiegel M.", journal: "RSC Advances", doi: "10.1039/D3RA05967G", tags: ["Q2", "IF: 3.9", "Ministerial Score: 100", "Article"] },
         { year: 2023, publisher: 'Elsevier', title: "Quantum-mechanical characteristics of apigenin: Antiradical, metal chelation and inhibitory properties in physiologically relevant media", authors: "Spiegel M.*, Sroka Z.", journal: "Fitoterapia", doi: "10.1016/j.fitote.2022.105352", tags: ["Q3", "IF: 2.5", "Ministerial Score: 100", "Article"], cycle: "D" },
         { year: 2023, publisher: 'Frontiers', title: "Computational investigation on the antioxidant activities and on the Mpro SARS-CoV-2 non-covalent inhibition of isorhamnetin", authors: "Spiegel M., Ciardullo G., Marino T., Russo N.", journal: "Frontiers in Chemistry", doi: "10.3389/fchem.2023.1122880", tags: ["Q2", "IF: 3.8", "Ministerial Score: 100", "Article"] },
         { year: 2023, publisher: 'ACS', title: "Tuning the Photophysical Properties of Ru(II) Photosensitizers for PDT by Protonation and Metallation: A DFT Study", authors: "Spiegel M.*, Adamo C.", journal: "The Journal of Physical Chemistry A", doi: "10.1021/acs.jpca.3c00839", tags: ["Q2", "IF: 2.7", "Ministerial Score: 100", "Article"] },
         { year: 2023, publisher: 'Elsevier', title: "The mechanistic insights into the role of pH and solvent on antiradical and prooxidant properties of polyphenols — Nine compounds case study", authors: "Spiegel M.*, Cel K., Sroka Z.", journal: "Food Chemistry", doi: "10.1016/j.foodchem.2022.134677", tags: ["Q1", "IF: 8.5", "Ministerial Score: 200", "Article"] },
-        { year: 2023, publisher: 'Taylor & Francis', title: "Post-CCSD(T) corrections to bond distances and vibrational frequencies: the power of Λ", authors: "Spiegel M.⁺, Semidalas E.⁺, Martin J.M.L.*, Bentley M.R., Stanton J.F.", journal: "Molecular Physics", doi: "10.1080/00268976.2023.2252114", tags: ["Q3", "IF: 1.6", "Ministerial Score: 70", "Article"] },
         { year: 2023, publisher: 'ACS', title: "Theoretical Insights into the Oxidative Stress-Relieving Properties of Pinocembrin─An Isolated Flavonoid from Honey and Propolis", authors: "Spiegel M.*", journal: "The Journal of Physical Chemistry B", doi: "10.1021/acs.jpcb.3c03545", tags: ["Q3", "IF: 2.8", "Ministerial Score: 140", "Article"] },
         { year: 2023, publisher: 'MDPI', title: "Malvidin and Its Mono- and Di-Glucosides Forms: A Study of Combining Both In Vitro and Molecular Docking Studies Focused on Cholinesterase, Butyrylcholinesterase, COX-1 and COX-2 Activities", authors: "Strugała-Danak P.*, Spiegel M.*, Gabrielska J.", journal: "Molecules", doi: "10.3390/molecules28237872", tags: ["Q2", "IF: 4.2", "Ministerial Score: 140", "Article"] },
+        { year: 2024, publisher: 'Taylor & Francis', title: "Post-CCSD(T) corrections to bond distances and vibrational frequencies: the power of Λ", authors: "Spiegel M.⁺, Semidalas E.⁺, Martin J.M.L.*, Bentley M.R., Stanton J.F.", journal: "Molecular Physics", doi: "10.1080/00268976.2023.2252114", tags: ["Q3", "IF: 1.6", "Ministerial Score: 70", "Article"] },
         { year: 2024, publisher: 'Wiley', title: "Primary Antioxidant Power and Mpro SARS‐CoV‐2 Non‐Covalent Inhibition Capabilities of Miquelianin", authors: "Spiegel M., Prejanò M., Russo N.*, Marino T.", journal: "Chemistry – An Asian Journal", doi: "10.1002/asia.202400079", tags: ["Q2", "IF: 3.5", "Ministerial Score: 100", "Article"] },
         { year: 2024, publisher: 'ACS', title: "Unveiling the Antioxidative Potential of Galangin: Complete and Detailed Mechanistic Insights through Density Functional Theory Studies", authors: "Spiegel M.*", journal: "The Journal of Organic Chemistry", doi: "10.1021/acs.joc.4c00611", tags: ["Q1", "IF: 3.6", "Ministerial Score: 140", "Article"] },
         { year: 2024, publisher: 'Elsevier', title: "A green approach to synthesize polybutene lubricants from mixed C4 monomers using supported dendritic ionic liquids", authors: "Ghavampoor A., Bahri-Laleh N.*, Sadjadi S.*, Nekoomanesh M., Vahid A., Duran J., Spiegel M., Poater A.*", journal: "Journal of Molecular Liquids", doi: "10.1016/j.molliq.2024.125814", tags: ["Q1", "IF: 5.2", "Ministerial Score: 100", "Article"] },
@@ -72,7 +72,10 @@ const PortfolioApp = {
         { year: 2026, publisher: 'Elsevier', title: "Mechanistic and kinetic insights into rubiadin phototoxicity: linking theory to photodynamic efficiency", authors: "Spiegel M.*", journal: "Dyes and Pigments", doi: "10.1016/j.dyepig.2025.113387", tags: ["IF: 4.2", "Ministerial Score: 100", "Article"], cycle: "H" },
         { year: 2026, publisher: 'Elsevier', title: "In silico design of anthraquinone-based two-photon photosensitisers for NIR-activated photodynamic therapy in hypoxic tumors", authors: "Spiegel M.*", journal: "Dyes and Pigments", doi: "10.1016/j.dyepig.2025.113507", tags: ["IF: 4.2", "Ministerial Score: 100", "Article"], cycle: "H" },
         { year: 2026, publisher: 'MDPI', title: "Two–photon absorption properties and structure–property relationships of natural 9,10–anthraquinones: a curated RI–CC2 dataset", authors: "Spiegel M.*", journal: "International Journal of Molecular Sciences", doi: "10.3390/ijms27010087", tags: ["IF: 4.9", "Ministerial Score: 140", "Article"], cycle: "H" },
-        { year: 2026, publisher: 'Elsevier', title: "Mechanistic insights into NOBA hydrolysis by viper venom secreted phospholipase A2", authors: "Calixto A.R.⁺, Pinto R.⁺, Spiegel M., Ramos M.J., Fernandes P.A.*", journal: "Biochimie", doi: "10.1016/j.biochi.2025.12.003", tags: ["IF: 3.0", "Ministerial Score: 100", "Article"] }
+        { year: 2026, publisher: 'Elsevier', title: "Mechanistic insights into NOBA hydrolysis by viper venom secreted phospholipase A2", authors: "Calixto A.R.⁺, Pinto R.⁺, Spiegel M., Ramos M.J., Fernandes P.A.*", journal: "Biochimie", doi: "10.1016/j.biochi.2025.12.003", tags: ["IF: 3.0", "Ministerial Score: 100", "Article"] },
+        { year: 2026, publisher: 'Elsevier', title: "Synthesis of low molecular weight polyisobutylene using a sulfonated polyionic liquid as coinitiator", authors: "Ahmadvandi S.H., Haghighi M.N., Spiegel M., Duran J., Yousefi F.K., Bahri-Laleh N., Sadjadi S., Poater A.*", journal: "Results in Chemistry", doi: "10.1016/j.rechem.2026.103217", tags: ["IF: 5.8", "Ministerial Score: 20", "Article"] },
+        { year: 2026, publisher: 'Elsevier', title: "Halogenation and chalcogenation of coumarin as a reliable strategy to design more efficient PDT photosensitizers: insights from theory", authors: "Spiegel M.*, Russo N.*", journal: "Dyes and Pigments", doi: "10.1016/j.dyepig.2026.113860", tags: ["IF: 4.2", "Ministerial Score: 100", "Article"] },
+        { year: 2026, publisher: 'Elsevier', title: "Experimental and Computational Study on the Properties of a Synthesized Luminescent Neutral Cu(I) Complex with Diphosphine and Diimine ligands", authors: "Sun X., Sheng R.*, Spiegel M., Wang Z.*", journal: "Optical Materials", doi: "10.1016/j.optmat.2026.118390", tags: ["IF: 4.3", "Ministerial Score: 70", "Article"] },
     ],
 
     // ---- INSTITUTIONAL PARTNERS FOR LOGO STRIP -----------------------------
@@ -435,11 +438,35 @@ const PortfolioApp = {
         `;
     },
 
+    getImpactFactor(pub) {
+        const ifTag = pub.tags.find(t => t.startsWith('IF:'));
+        if (!ifTag) return -1;            // brak IF -> praca na końcu
+        const ifVal = parseFloat(ifTag.replace('IF:', '').trim());
+        return isNaN(ifVal) ? -1 : ifVal;
+    },
+
+    normalizeTitle(title) {
+        // Zapisuje tytuł jako sentence case, ale nie psuje skrótów/nazw własnych
+        // które są zapisane wielkimi literami (COVID, SARS, Mpro, DFT, Ru, itd.)
+        return title
+            .split(' ')
+            .map((word, i) => {
+                const lower = word.toLowerCase();
+                // Akronimy i nazwy zostawiamy bez zmian
+                if (word === word.toUpperCase() && word.length <= 5) return word;
+                // Pierwsze słowo: pierwsza litera wielka
+                if (i === 0) return lower.charAt(0).toUpperCase() + lower.slice(1);
+                // Reszta: małe litery, o ile nie są akronimami
+                return lower;
+            })
+            .join(' ');
+    },
+
     renderPublications(year) {
         const container = document.getElementById('publications-list');
         const filtered = this.publications
             .filter(p => p.year.toString() === year)
-            .sort((a, b) => (a.cycle ? -1 : 0) - (b.cycle ? -1 : 0));
+            .sort((a, b) => this.getImpactFactor(b) - this.getImpactFactor(a));
 
         container.style.opacity = '0';
         container.style.transition = 'opacity .25s ease';
@@ -453,7 +480,7 @@ const PortfolioApp = {
                     : `<span class="publisher-logo-text">${pub.publisher}</span>`}
                     </div>
                     <div class="publication-content">
-                        <div class="publication-title">${pub.title}</div>
+                        <div class="publication-title">${this.normalizeTitle(pub.title)}</div>
                         <div class="publication-meta">
                             ${pub.authors} · ${pub.journal} (${pub.year})
                             <a href="https://doi.org/${pub.doi}" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right"></i></a>

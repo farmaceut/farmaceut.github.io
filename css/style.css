@@ -602,8 +602,11 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon{ display:block; }
 .sp-award-grid{ display:grid; gap:1px; background:var(--ink-line); border:1px solid var(--ink-line); margin-top:20px; }
 @media (min-width:700px){ .sp-award-grid{ grid-template-columns:repeat(2,1fr); } }
 .sp-award{ background:var(--ink); padding:20px 24px; display:flex; gap:16px; align-items:flex-start; }
-.sp-award-year{ font-family:var(--f-mono); font-size:.78rem; color:var(--gold); white-space:nowrap; padding-top:2px; }
-.sp-award h5{ font-family:var(--f-body); font-weight:600; font-size:.95rem; margin:0 0 3px; color:var(--tx-on-ink); }
+.sp-award-year{
+    font-family:var(--f-mono); font-size:.78rem; color:var(--gold);
+    white-space:nowrap; padding-top:2px;
+    text-align:right;       /* tekst wyrównany do prawej */
+}.sp-award h5{ font-family:var(--f-body); font-weight:600; font-size:.95rem; margin:0 0 3px; color:var(--tx-on-ink); }
 .sp-award p{ font-size:.82rem; color:var(--tx-on-ink-dim); margin:0; }
 
 /* ---------------------------------------------------------------------- */
@@ -854,8 +857,21 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon{ display:block; }
 /* Collaboration / students CTA                                          */
 /* ---------------------------------------------------------------------- */
 .sp-collab{ background:var(--paper); }
-.sp-collab-grid{ display:grid; gap:1px; background:var(--paper-line); border:1px solid var(--paper-line); margin-top:46px; }
-@media (min-width:820px){ .sp-collab-grid{ grid-template-columns:1fr 1fr; } }
+.sp-collab-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--paper-line);
+    border: 1px solid var(--paper-line);
+    margin-top: 46px;
+    grid-template-columns: 1fr;               /* domyślnie jedna kolumna */
+}
+
+@media (min-width: 900px) {
+    .sp-collab-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 .sp-collab-panel{ 
     background:var(--paper-2); 
     padding:34px; 
@@ -934,10 +950,6 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon{ display:block; }
 
 
 /* Sekcja "Working together" – trzecia kolumna + sieć partnerów */
-.sp-collab-grid {
-    grid-template-columns: repeat(3, 1fr);
-}
-
 .sp-collab-network {
     margin-top: 48px;
     border-top: 1px solid var(--paper-line);
@@ -979,3 +991,4 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon{ display:block; }
     color: var(--gold-dim);
     margin-bottom: 30px;
 }
+
