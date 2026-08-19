@@ -37,170 +37,224 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Maciej Spiegel, PharmD, PhD — Computational &amp; Pharmaceutical Chemistry</title>
-<meta name="description" content="Maciej Spiegel, PharmD PhD — computational chemist at Wrocław Medical University working on antioxidant mechanisms, photodynamic therapy design and senotherapeutics. 44 publications, h-index 14 (WoS).">
-<meta name="keywords" content="computational chemistry, quantum chemistry, DFT, antioxidants, photodynamic therapy, photosensitizers, senotherapeutics, drug design, Wroclaw Medical University">
-<meta name="author" content="Maciej Spiegel">
-<meta property="og:title" content="Maciej Spiegel, PharmD PhD — Computational Chemist">
-<meta property="og:description" content="In silico drug design across antioxidant chemistry, photodynamic therapy and senotherapeutics.">
-<meta property="og:image" content="https://www.umw.edu.pl/sites/default/files/2024-12/Maciej%20Spiegel.png">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="css/style.css">
-<!-- Sets the colour theme synchronously, before first paint, so day-mode
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Maciej Spiegel, PharmD, PhD — Computational &amp; Pharmaceutical Chemistry</title>
+    <meta name="description"
+        content="Maciej Spiegel, PharmD PhD — computational chemist at Wrocław Medical University working on antioxidant mechanisms, photodynamic therapy design and senotherapeutics. 44 publications, h-index 14 (WoS).">
+    <meta name="keywords"
+        content="computational chemistry, quantum chemistry, DFT, antioxidants, photodynamic therapy, photosensitizers, senotherapeutics, drug design, Wroclaw Medical University">
+    <meta name="author" content="Maciej Spiegel">
+    <meta property="og:title" content="Maciej Spiegel, PharmD PhD — Computational Chemist">
+    <meta property="og:description"
+        content="In silico drug design across antioxidant chemistry, photodynamic therapy and senotherapeutics.">
+    <meta property="og:image" content="https://www.umw.edu.pl/sites/default/files/2024-12/Maciej%20Spiegel.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Sets the colour theme synchronously, before first paint, so day-mode
      visitors don't see a flash of the (default) night theme. The real
      toggle logic + persistence lives in js/main.js -> initTheme(). -->
-<script>
-(function(){
-    try{
-        var t = localStorage.getItem('sp_theme');
-        if(!t){ t = (window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches) ? 'day' : 'night'; }
-        document.documentElement.setAttribute('data-theme', t);
-    }catch(e){}
-})();
-</script>
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('sp_theme');
+                if (!t) { t = (window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches) ? 'day' : 'night'; }
+                document.documentElement.setAttribute('data-theme', t);
+            } catch (e) { }
+        })();
+    </script>
 </head>
+
 <body>
 
-<!-- ============================== NAV ==============================
+    <!-- ============================== NAV ==============================
      To add a nav item: add an <li><a href="#your-id">Label</a></li> below
      AND set that same id="your-id" on the target <section>. -->
-<nav class="sp-nav">
-    <div class="sp-container sp-nav-inner">
-        <!-- Brand mark: the dot is a custom gradient (ties to the orbit-ring
+    <nav class="sp-nav">
+        <div class="sp-container sp-nav-inner">
+            <!-- Brand mark: the dot is a custom gradient (ties to the orbit-ring
              motif in the hero portrait), not a generic icon-font glyph — if
              you'd rather have a literal logo/wordmark image later, swap the
              <span class="sp-brand-mark"> for an <img>. -->
-        <a href="#top" class="sp-brand"><span class="sp-brand-mark"></span>personal website</a>
-        <ul class="sp-navlinks">
-            <li><a href="#about">About</a></li>
-            <li><a href="#research">Research</a></li>
-            <li><a href="#journey">Journey</a></li>
-            <li><a href="#awards">Awards</a></li>
-            <li><a href="#publications">Publications</a></li>
-            <li><a href="#media">Media</a></li>
-            <li><a href="#global">Collaborations</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <div class="sp-nav-right">
-            <!-- ADD COMMENT -->
-            <button class="sp-menu-toggle" id="menuToggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false">
-                <span class="sp-menu-bar"></span>
-                <span class="sp-menu-bar"></span>
-                <span class="sp-menu-bar"></span>
-            </button>
-            <!-- theme toggle: cycles night -> day -> night. Logic lives in
+            <a href="#top" class="sp-brand"><span class="sp-brand-mark"></span>personal website</a>
+            <ul class="sp-navlinks">
+                <li><a href="#about">About</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#journey">Journey</a></li>
+                <li><a href="#awards">Awards</a></li>
+                <li><a href="#publications">Publications</a></li>
+                <li><a href="#media">Media</a></li>
+                <li><a href="#global">Collaborations</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="sp-nav-right">
+                <!-- ADD COMMENT -->
+                <button class="sp-menu-toggle" id="menuToggle" type="button" aria-label="Toggle navigation menu"
+                    aria-expanded="false">
+                    <span class="sp-menu-bar"></span>
+                    <span class="sp-menu-bar"></span>
+                    <span class="sp-menu-bar"></span>
+                </button>
+                <!-- theme toggle: cycles night -> day -> night. Logic lives in
                  js/main.js under initTheme(). Icon shown = the state you'll
                  switch INTO (sun visible in night mode = "tap for day"). -->
-            <button class="sp-theme-toggle" id="themeToggle" type="button" aria-label="Toggle day/night colour theme">
-                <svg class="sp-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
-                <svg class="sp-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"/></svg>
-            </button>
-        </div>
-    </div>
-</nav>
-
-
-<!-- ============================== HERO ============================== -->
-<header id="top" class="sp-hero">
-    <div class="sp-container sp-hero-grid">
-        <div>
-            <span class="sp-kicker">Pharmacist · Computational Chemist · MPharm, PhD</span>
-            <h1>Maciej <em>Spiegel</em></h1>
-            <p class="sp-hero-role">Assistant Professor at Department of Organic Chemistry and Pharmaceutical Technology, Wrocław Medical University.</p>
-
-            <blockquote class="sp-hero-thesis">
-                "Combining the precision of quantum chemistry with the complexity of biological systems, to architect the next generation of therapeutic agents."
-                <span>— on why <i>in silico</i> chemistry matters for pharmacy</span>
-            </blockquote>
-
-            <div class="sp-stats">
-                <div class="sp-stat"><b>50</b><span>Publications</span></div>
-                <div class="sp-stat"><b>1,013</b><span>Citations</span></div>
-                <div class="sp-stat"><b>15</b><span>h-index</span></div>
-                <div class="sp-stat"><b>214.6</b><span>Cumulative IF</span></div>
+                <button class="sp-theme-toggle" id="themeToggle" type="button"
+                    aria-label="Toggle day/night colour theme">
+                    <svg class="sp-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <circle cx="12" cy="12" r="4.2" />
+                        <path
+                            d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7" />
+                    </svg>
+                    <svg class="sp-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z" />
+                    </svg>
+                </button>
             </div>
+        </div>
+    </nav>
 
-            <!-- Social links: real inline SVG where a brand mark is easy to
+
+    <!-- ============================== HERO ============================== -->
+    <header id="top" class="sp-hero">
+        <div class="sp-container sp-hero-grid">
+            <div>
+                <span class="sp-kicker">Pharmacist · Computational Chemist · MPharm, PhD</span>
+                <h1>Maciej <em>Spiegel</em></h1>
+                <p class="sp-hero-role">Assistant Professor at Department of Organic Chemistry and Pharmaceutical
+                    Technology, Wrocław Medical University.</p>
+
+                <blockquote class="sp-hero-thesis">
+                    "Combining the precision of quantum chemistry with the complexity of biological systems, to
+                    architect the next generation of therapeutic agents."
+                    <span>— on why <i>in silico</i> chemistry matters for pharmacy</span>
+                </blockquote>
+
+                <div class="sp-stats">
+                    <div class="sp-stat"><b>50</b><span>Publications</span></div>
+                    <div class="sp-stat"><b>1,013</b><span>Citations</span></div>
+                    <div class="sp-stat"><b>15</b><span>h-index</span></div>
+                    <div class="sp-stat"><b>214.6</b><span>Cumulative IF</span></div>
+                </div>
+
+                <!-- Social links: real inline SVG where a brand mark is easy to
                  draw cleanly (Scholar/X/Bluesky); a circular monogram badge
                  where it isn't (ORCID/ResearchGate/Mastodon) — same visual
                  family either way, and neither depends on an icon-font, so
                  nothing can render as a blank glyph. Sits at the same
                  height as the stats row on purpose, so it doesn't compete
                  with the orbit rings around the portrait on the right. -->
-            <div class="sp-social-rail">
-                <!-- ORCID (Oficjalne logo iD) -->
-                <a class="sp-social-icon" href="https://orcid.org/0000-0002-8012-1026" target="_blank" rel="noopener" title="ORCID" aria-label="ORCID">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.303v7.444h2.297c3.272 0 4.022-2.484 4.022-3.722 0-2.016-1.284-3.722-4.097-3.722h-2.222z"/></svg>
-                </a>
+                <div class="sp-social-rail">
+                    <!-- ORCID (Oficjalne logo iD) -->
+                    <a class="sp-social-icon" href="https://orcid.org/0000-0002-8012-1026" target="_blank"
+                        rel="noopener" title="ORCID" aria-label="ORCID">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.303v7.444h2.297c3.272 0 4.022-2.484 4.022-3.722 0-2.016-1.284-3.722-4.097-3.722h-2.222z" />
+                        </svg>
+                    </a>
 
-                <!-- Google Scholar -->
-                <a class="sp-social-icon" href="https://scholar.google.com/citations?user=G_K5_CMAAAAJ" target="_blank" rel="noopener" title="Google Scholar" aria-label="Google Scholar">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
-                </a>
+                    <!-- Google Scholar -->
+                    <a class="sp-social-icon" href="https://scholar.google.com/citations?user=G_K5_CMAAAAJ"
+                        target="_blank" rel="noopener" title="Google Scholar" aria-label="Google Scholar">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" />
+                        </svg>
+                    </a>
 
-                <!-- LinkedIn -->
-                <a class="sp-social-icon" href="https://www.linkedin.com/in/maciejspiegel/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
-                </a>
+                    <!-- LinkedIn -->
+                    <a class="sp-social-icon" href="https://www.linkedin.com/in/maciejspiegel/" target="_blank"
+                        rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z" />
+                        </svg>
+                    </a>
 
-                <!-- ResearchGate -->
-                <a class="sp-social-icon" href="https://www.researchgate.net/profile/Maciej-Spiegel" target="_blank" rel="noopener" title="ResearchGate" aria-label="ResearchGate">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.586 0c-.818 0-1.508.19-2.073.565-.563.377-.97.936-1.213 1.68a3.193 3.193 0 0 0-.112.437 8.365 8.365 0 0 0-.078.53 9 9 0 0 0-.05.727c-.01.282-.013.621-.013 1.016a31.121 31.123 0 0 0 .014 1.017 9 9 0 0 0 .05.727 7.946 7.946 0 0 0 .077.53h-.005a3.334 3.334 0 0 0 .113.438c.245.743.65 1.303 1.214 1.68.565.376 1.256.564 2.075.564.8 0 1.536-.213 2.105-.603.57-.39.94-.916 1.175-1.65.076-.235.135-.558.177-.93a10.9 10.9 0 0 0 .043-1.207v-.82c0-.095-.047-.142-.14-.142h-3.064c-.094 0-.14.047-.14.141v.956c0 .094.046.14.14.14h1.666c.056 0 .084.03.084.086 0 .36 0 .62-.036.865-.038.244-.1.447-.147.606-.108.385-.348.664-.638.876-.29.212-.738.35-1.227.35-.545 0-.901-.15-1.21-.353-.306-.203-.517-.454-.67-.915a3.136 3.136 0 0 1-.147-.762 17.366 17.367 0 0 1-.034-.656c-.01-.26-.014-.572-.014-.939a26.401 26.403 0 0 1 .014-.938 15.821 15.822 0 0 1 .035-.656 3.19 3.19 0 0 1 .148-.76 1.89 1.89 0 0 1 .742-1.01c.344-.244.593-.352 1.137-.352.508 0 .815.096 1.144.303.33.207.528.492.764.925.047.094.111.118.198.07l1.044-.43c.075-.048.09-.115.042-.199a3.549 3.549 0 0 0-.466-.742 3 3 0 0 0-.679-.607 3.313 3.313 0 0 0-.903-.41A4.068 4.068 0 0 0 19.586 0zM8.217 5.836c-1.69 0-3.036.086-4.297.086-1.146 0-2.291 0-3.007-.029v.831l1.088.2c.744.144 1.174.488 1.174 2.264v11.288c0 1.777-.43 2.12-1.174 2.263l-1.088.2v.832c.773-.029 2.12-.086 3.465-.086 1.29 0 2.951.057 3.667.086v-.831l-1.49-.2c-.773-.115-1.174-.487-1.174-2.264v-4.784c.688.057 1.29.057 2.206.057 1.748 3.123 3.41 5.472 4.355 6.56.86 1.032 2.177 1.691 3.839 1.691.487 0 1.003-.086 1.318-.23v-.744c-1.031 0-2.063-.716-2.808-1.518-1.26-1.376-2.95-3.582-4.355-6.074 2.32-.545 4.04-2.722 4.04-4.9 0-3.208-2.492-4.698-5.758-4.698zm-.515 1.29c2.406 0 3.839 1.26 3.839 3.552 0 2.263-1.547 3.782-4.097 3.782-.974 0-1.404-.03-2.063-.086v-7.19c.66-.059 1.547-.059 2.32-.059z"/></svg>
-                </a>
+                    <!-- ResearchGate -->
+                    <a class="sp-social-icon" href="https://www.researchgate.net/profile/Maciej-Spiegel" target="_blank"
+                        rel="noopener" title="ResearchGate" aria-label="ResearchGate">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M19.586 0c-.818 0-1.508.19-2.073.565-.563.377-.97.936-1.213 1.68a3.193 3.193 0 0 0-.112.437 8.365 8.365 0 0 0-.078.53 9 9 0 0 0-.05.727c-.01.282-.013.621-.013 1.016a31.121 31.123 0 0 0 .014 1.017 9 9 0 0 0 .05.727 7.946 7.946 0 0 0 .077.53h-.005a3.334 3.334 0 0 0 .113.438c.245.743.65 1.303 1.214 1.68.565.376 1.256.564 2.075.564.8 0 1.536-.213 2.105-.603.57-.39.94-.916 1.175-1.65.076-.235.135-.558.177-.93a10.9 10.9 0 0 0 .043-1.207v-.82c0-.095-.047-.142-.14-.142h-3.064c-.094 0-.14.047-.14.141v.956c0 .094.046.14.14.14h1.666c.056 0 .084.03.084.086 0 .36 0 .62-.036.865-.038.244-.1.447-.147.606-.108.385-.348.664-.638.876-.29.212-.738.35-1.227.35-.545 0-.901-.15-1.21-.353-.306-.203-.517-.454-.67-.915a3.136 3.136 0 0 1-.147-.762 17.366 17.367 0 0 1-.034-.656c-.01-.26-.014-.572-.014-.939a26.401 26.403 0 0 1 .014-.938 15.821 15.822 0 0 1 .035-.656 3.19 3.19 0 0 1 .148-.76 1.89 1.89 0 0 1 .742-1.01c.344-.244.593-.352 1.137-.352.508 0 .815.096 1.144.303.33.207.528.492.764.925.047.094.111.118.198.07l1.044-.43c.075-.048.09-.115.042-.199a3.549 3.549 0 0 0-.466-.742 3 3 0 0 0-.679-.607 3.313 3.313 0 0 0-.903-.41A4.068 4.068 0 0 0 19.586 0zM8.217 5.836c-1.69 0-3.036.086-4.297.086-1.146 0-2.291 0-3.007-.029v.831l1.088.2c.744.144 1.174.488 1.174 2.264v11.288c0 1.777-.43 2.12-1.174 2.263l-1.088.2v.832c.773-.029 2.12-.086 3.465-.086 1.29 0 2.951.057 3.667.086v-.831l-1.49-.2c-.773-.115-1.174-.487-1.174-2.264v-4.784c.688.057 1.29.057 2.206.057 1.748 3.123 3.41 5.472 4.355 6.56.86 1.032 2.177 1.691 3.839 1.691.487 0 1.003-.086 1.318-.23v-.744c-1.031 0-2.063-.716-2.808-1.518-1.26-1.376-2.95-3.582-4.355-6.074 2.32-.545 4.04-2.722 4.04-4.9 0-3.208-2.492-4.698-5.758-4.698zm-.515 1.29c2.406 0 3.839 1.26 3.839 3.552 0 2.263-1.547 3.782-4.097 3.782-.974 0-1.404-.03-2.063-.086v-7.19c.66-.059 1.547-.059 2.32-.059z" />
+                        </svg>
+                    </a>
 
-                <!-- X / Twitter (Oficjalne logo X z prawidłowymi grubościami) -->
-                <a class="sp-social-icon" href="https://twitter.com/MaciejSpiegel" target="_blank" rel="noopener" title="X (Twitter)" aria-label="X (Twitter)">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                </a>
+                    <!-- X / Twitter (Oficjalne logo X z prawidłowymi grubościami) -->
+                    <a class="sp-social-icon" href="https://twitter.com/MaciejSpiegel" target="_blank" rel="noopener"
+                        title="X (Twitter)" aria-label="X (Twitter)">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
 
-                <!-- Bluesky (Oficjalny motyl Bluesky) -->
-                <a class="sp-social-icon" href="https://bsky.app/profile/maciejspiegel.bsky.social" target="_blank" rel="noopener" title="Bluesky" aria-label="Bluesky">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/></svg>
-                </a>
+                    <!-- Bluesky (Oficjalny motyl Bluesky) -->
+                    <a class="sp-social-icon" href="https://bsky.app/profile/maciejspiegel.bsky.social" target="_blank"
+                        rel="noopener" title="Bluesky" aria-label="Bluesky">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026" />
+                        </svg>
+                    </a>
 
-                <!-- Mastodon -->
-                <a class="sp-social-icon" href="https://mastodon.social/@maciej_spiegel" target="_blank" rel="noopener" title="Mastodon" aria-label="Mastodon">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 0 0 .023-.043v-1.809a.052.052 0 0 0-.02-.041.053.053 0 0 0-.046-.01 20.282 20.282 0 0 1-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 0 1-.319-1.433.053.053 0 0 1 .066-.054c1.517.363 3.072.546 4.632.546.376 0 .75 0 1.125-.01 1.57-.044 3.224-.124 4.768-.422.038-.008.077-.015.11-.024 2.435-.464 4.753-1.92 4.989-5.604.008-.145.03-1.52.03-1.67.002-.512.167-3.63-.024-5.545zm-3.748 9.195h-2.561V8.29c0-1.309-.55-1.976-1.67-1.976-1.23 0-1.846.79-1.846 2.35v3.403h-2.546V8.663c0-1.56-.617-2.35-1.848-2.35-1.112 0-1.668.668-1.67 1.977v6.218H4.822V8.102c0-1.31.337-2.35 1.011-3.12.696-.77 1.608-1.164 2.74-1.164 1.311 0 2.302.5 2.962 1.498l.638 1.06.638-1.06c.66-.999 1.65-1.498 2.96-1.498 1.13 0 2.043.395 2.74 1.164.675.77 1.012 1.81 1.012 3.12z"/></svg>
-                </a>
+                    <!-- Mastodon -->
+                    <a class="sp-social-icon" href="https://mastodon.social/@maciej_spiegel" target="_blank"
+                        rel="noopener" title="Mastodon" aria-label="Mastodon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 0 0 .023-.043v-1.809a.052.052 0 0 0-.02-.041.053.053 0 0 0-.046-.01 20.282 20.282 0 0 1-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 0 1-.319-1.433.053.053 0 0 1 .066-.054c1.517.363 3.072.546 4.632.546.376 0 .75 0 1.125-.01 1.57-.044 3.224-.124 4.768-.422.038-.008.077-.015.11-.024 2.435-.464 4.753-1.92 4.989-5.604.008-.145.03-1.52.03-1.67.002-.512.167-3.63-.024-5.545zm-3.748 9.195h-2.561V8.29c0-1.309-.55-1.976-1.67-1.976-1.23 0-1.846.79-1.846 2.35v3.403h-2.546V8.663c0-1.56-.617-2.35-1.848-2.35-1.112 0-1.668.668-1.67 1.977v6.218H4.822V8.102c0-1.31.337-2.35 1.011-3.12.696-.77 1.608-1.164 2.74-1.164 1.311 0 2.302.5 2.962 1.498l.638 1.06.638-1.06c.66-.999 1.65-1.498 2.96-1.498 1.13 0 2.043.395 2.74 1.164.675.77 1.012 1.81 1.012 3.12z" />
+                        </svg>
+                    </a>
+                </div>
             </div>
-        </div>
 
-        <div>
-            <div class="sp-portrait-wrap">
-                <div class="sp-orbit sp-orbit-1"></div>
-                <div class="sp-orbit sp-orbit-2"></div>
-                <div class="sp-orbit sp-orbit-3"></div>
-                <div class="sp-portrait">
-                    <img src="https://www.umw.edu.pl/sites/default/files/2024-12/Maciej%20Spiegel.png" alt="Portrait of Maciej Spiegel">
+            <div>
+                <div class="sp-portrait-wrap">
+                    <div class="sp-orbit sp-orbit-1"></div>
+                    <div class="sp-orbit sp-orbit-2"></div>
+                    <div class="sp-orbit sp-orbit-3"></div>
+                    <div class="sp-portrait">
+                        <img src="https://www.umw.edu.pl/sites/default/files/2024-12/Maciej%20Spiegel.png"
+                            alt="Portrait of Maciej Spiegel">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<!-- ============================== ABOUT ============================== -->
-<section id="about" class="sp-about sp-section">
-    <div class="sp-container sp-about-grid">
-        <div class="sp-reveal">
-            <span class="sp-eyebrow">About</span>
-            <h2 class="sp-section-title">A pharmacist who works on the other side of the screen.</h2>
+    <!-- ============================== ABOUT ============================== -->
+    <section id="about" class="sp-about sp-section">
+        <div class="sp-container sp-about-grid">
+            <div class="sp-reveal">
+                <span class="sp-eyebrow">About</span>
+                <h2 class="sp-section-title">A pharmacist who works on the other side of the screen.</h2>
+            </div>
+            <div class="sp-about-copy sp-reveal">
+                <p>I'm a pharmacist by training (Wrocław Medical University), but my academic path took a sharp turn
+                    early on—by the third year of my master's, I had already swapped the pharmacy counter for
+                    computational chemistry algorithms.</p>
+                <p>Looking for a fixed roster of projects? You won't find one—they change faster than I can update this
+                    website. My scientific toolbox is just as restless, continuously evolving and currently split across
+                    the four pillars you'll find below.</p>
+                <p>Antioxidants make up the bulk of my publication record—they were my launching pad. Photosensitisers,
+                    meanwhile, are steering my habilitation journey. But if there's one constant in my work, it's a
+                    relentless curiosity and a hunger for the next big idea, collaboration, or unexpected opportunity.
+                </p>
+            </div>
         </div>
-        <div class="sp-about-copy sp-reveal">
-            <p>I'm a pharmacist by training (Wrocław Medical University), but my academic path took a sharp turn early on—by the third year of my master's, I had already swapped the pharmacy counter for computational chemistry algorithms.</p>
-            <p>Looking for a fixed roster of projects? You won't find one—they change faster than I can update this website. My scientific toolbox is just as restless, continuously evolving and currently split across the four pillars you'll find below.</p>
-            <p>Antioxidants make up the bulk of my publication record—they were my launching pad. Photosensitisers, meanwhile, are steering my habilitation journey. But if there's one constant in my work, it's a relentless curiosity and a hunger for the next big idea, collaboration, or unexpected opportunity.</p>
-        </div>
-    </div>
 
-    <!-- Methods breakdown: deliberately by TECHNIQUE, not by topic — the
+        <!-- Methods breakdown: deliberately by TECHNIQUE, not by topic — the
          topical pillars live in Research below and only cover the 3
          biggest clusters. This is the "no really, I do more than
          antioxidants + PDT" evidence, and it lives here (About) rather
@@ -208,201 +262,243 @@
          "Open to collaboration on" used to be a second list right here —
          cut it, since it just repeated the Collaboration CTA section
          (Working together, further down) with less specificity. -->
-    <div class="sp-container">
-        <div class="sp-methods sp-reveal">
-            <h4>What that toolbox actually looks like</h4>
-            <div class="sp-methods-grid">
-                <div class="sp-methods-item">
-                    <div class="sp-methods-icon" aria-hidden="true">
-                        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
-                            <ellipse cx="24" cy="24" rx="20" ry="8"/>
-                            <ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(60 24 24)"/>
-                            <ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(120 24 24)"/>
-                            <circle cx="24" cy="24" r="3" fill="currentColor" stroke="none"/>
-                        </svg>
+        <div class="sp-container">
+            <div class="sp-methods sp-reveal">
+                <h4>What that toolbox actually looks like</h4>
+                <div class="sp-methods-grid">
+                    <div class="sp-methods-item">
+                        <div class="sp-methods-icon" aria-hidden="true">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7"
+                                stroke-linecap="round">
+                                <ellipse cx="24" cy="24" rx="20" ry="8" />
+                                <ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(60 24 24)" />
+                                <ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(120 24 24)" />
+                                <circle cx="24" cy="24" r="3" fill="currentColor" stroke="none" />
+                            </svg>
+                        </div>
+                        <h5>Quantum mechanics</h5>
+                        <p>DFT, TD-DFT and ab initio methods — detailed thermochemistry, kinetics, and excited states
+                            analyses.</p>
                     </div>
-                    <h5>Quantum mechanics</h5>
-                    <p>DFT, TD-DFT and ab initio methods — detailed thermochemistry, kinetics, and excited states analyses.</p>
-                </div>
-                <div class="sp-methods-item">
-                    <div class="sp-methods-icon" aria-hidden="true">
-                        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 34 Q12 14 20 28 T36 20 T44 30"/>
-                            <circle cx="4" cy="34" r="2.3" fill="currentColor" stroke="none"/>
-                            <circle cx="20" cy="28" r="2.3" fill="currentColor" stroke="none"/>
-                            <circle cx="36" cy="20" r="2.3" fill="currentColor" stroke="none"/>
-                            <circle cx="44" cy="30" r="2.3" fill="currentColor" stroke="none"/>
-                        </svg>
+                    <div class="sp-methods-item">
+                        <div class="sp-methods-icon" aria-hidden="true">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 34 Q12 14 20 28 T36 20 T44 30" />
+                                <circle cx="4" cy="34" r="2.3" fill="currentColor" stroke="none" />
+                                <circle cx="20" cy="28" r="2.3" fill="currentColor" stroke="none" />
+                                <circle cx="36" cy="20" r="2.3" fill="currentColor" stroke="none" />
+                                <circle cx="44" cy="30" r="2.3" fill="currentColor" stroke="none" />
+                            </svg>
+                        </div>
+                        <h5>Molecular dynamics</h5>
+                        <p>Membrane systems and protein–drug binding dynamics including umbrella sampling and steered
+                            MD.</p>
                     </div>
-                    <h5>Molecular dynamics</h5>
-                    <p>Membrane systems and protein–drug binding dynamics including umbrella sampling and steered MD.</p>
-                </div>
-                <div class="sp-methods-item">
-                    <div class="sp-methods-icon" aria-hidden="true">
-                        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M10 14 C6 20 6 28 10 34 M38 14 C42 20 42 28 38 34"/>
-                            <path d="M10 14 C16 10 32 10 38 14"/>
-                            <path d="M10 34 C16 38 32 38 38 34"/>
-                            <circle cx="24" cy="24" r="5" fill="currentColor" stroke="none" opacity=".85"/>
-                        </svg>
+                    <div class="sp-methods-item">
+                        <div class="sp-methods-icon" aria-hidden="true">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M10 14 C6 20 6 28 10 34 M38 14 C42 20 42 28 38 34" />
+                                <path d="M10 14 C16 10 32 10 38 14" />
+                                <path d="M10 34 C16 38 32 38 38 34" />
+                                <circle cx="24" cy="24" r="5" fill="currentColor" stroke="none" opacity=".85" />
+                            </svg>
+                        </div>
+                        <h5>Enzymatic docking</h5>
+                        <p>Structure-based virtual screening for enzyme targets.</p>
                     </div>
-                    <h5>Enzymatic docking</h5>
-                    <p>Structure-based virtual screening for enzyme targets.</p>
-                </div>
-                <div class="sp-methods-item">
-                    <div class="sp-methods-icon" aria-hidden="true">
-                        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                            <!-- Sfera Blocha -->
-                            <circle cx="24" cy="24" r="16"/>
-                            <!-- Równik -->
-                            <ellipse cx="24" cy="24" rx="16" ry="5"/>
-                            <!-- Oś Z (góra-dół) -->
-                            <line x1="24" y1="8" x2="24" y2="40"/>
-                            <!-- Wektor / stan kwantowy (strzałka na sferze) -->
-                            <line x1="24" y1="24" x2="36" y2="16"/>
-                            <circle cx="36" cy="16" r="2" fill="currentColor" stroke="none"/>
-                            <!-- Oś X (poziomo) -->
-                            <line x1="10" y1="24" x2="38" y2="24" stroke-dasharray="2 2" opacity="0.4"/>
-                        </svg>
+                    <div class="sp-methods-item">
+                        <div class="sp-methods-icon" aria-hidden="true">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <!-- Sfera Blocha -->
+                                <circle cx="24" cy="24" r="16" />
+                                <!-- Równik -->
+                                <ellipse cx="24" cy="24" rx="16" ry="5" />
+                                <!-- Oś Z (góra-dół) -->
+                                <line x1="24" y1="8" x2="24" y2="40" />
+                                <!-- Wektor / stan kwantowy (strzałka na sferze) -->
+                                <line x1="24" y1="24" x2="36" y2="16" />
+                                <circle cx="36" cy="16" r="2" fill="currentColor" stroke="none" />
+                                <!-- Oś X (poziomo) -->
+                                <line x1="10" y1="24" x2="38" y2="24" stroke-dasharray="2 2" opacity="0.4" />
+                            </svg>
+                        </div>
+                        <h5>Quantum computing</h5>
+                        <p>Exploring ansatz-based algorithms for molecular Hamiltonians — early days, but the
+                            perspective shift is electrifying.</p>
                     </div>
-                    <h5>Quantum computing</h5>
-                    <p>Exploring ansatz-based algorithms for molecular Hamiltonians — early days, but the perspective shift is electrifying.</p>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ============================== RESEARCH PILLARS ============================== -->
-<section id="research" class="sp-pillars sp-section">
-    <div class="sp-container">
-        <div class="sp-reveal">
-            <span class="sp-eyebrow">Research</span>
-            <h2 class="sp-section-title">Three questions I keep coming back to</h2>
-            <p class="sp-section-lede">Roughly fifty publications cluster around the three themes below — antioxidants, photodynamic therapy, and drug &amp; method design. They're the three biggest clusters, not an exhaustive map.</p>
-        </div>
+    <!-- ============================== RESEARCH PILLARS ============================== -->
+    <section id="research" class="sp-pillars sp-section">
+        <div class="sp-container">
+            <div class="sp-reveal">
+                <span class="sp-eyebrow">Research</span>
+                <h2 class="sp-section-title">Three questions I keep coming back to</h2>
+                <p class="sp-section-lede">Roughly fifty publications cluster around the three themes below —
+                    antioxidants, photodynamic therapy, and drug &amp; method design. They're the three biggest
+                    clusters, not an exhaustive map.</p>
+            </div>
 
-        <div class="sp-pillar-grid sp-reveal">
-            <article class="sp-pillar sp-pillar-gold">
-                <span class="sp-pillar-num">Pillar I</span>
-                <div class="sp-pillar-icon" aria-hidden="true">
-                    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M32 8 L48 17.8 V37.4 L32 47.2 L16 37.4 V17.8 Z"/>
-                        <path d="M32 47.2 V56"/>
-                        <circle cx="32" cy="60" r="2" fill="currentColor" stroke="none"/>
-                        <path d="M40 12 q6 4 6 10" opacity=".6"/>
-                    </svg>
-                </div>
-                <h3>Antioxidant &amp; free-radical chemistry</h3>
-                <p>Unpicking how flavonoids, phenolic acids, and anthocyanidins actually neutralise reactive oxygen species — acid–base speciation, competing HAT/SET/RAF mechanisms, metal chelation, and even the repair of biomolecules that have already been oxidised. Includes the senolytic and geroprotective properties.</p>
-            </article>
+            <div class="sp-pillar-grid sp-reveal">
+                <article class="sp-pillar sp-pillar-gold">
+                    <span class="sp-pillar-num">Pillar I</span>
+                    <div class="sp-pillar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M32 8 L48 17.8 V37.4 L32 47.2 L16 37.4 V17.8 Z" />
+                            <path d="M32 47.2 V56" />
+                            <circle cx="32" cy="60" r="2" fill="currentColor" stroke="none" />
+                            <path d="M40 12 q6 4 6 10" opacity=".6" />
+                        </svg>
+                    </div>
+                    <h3>Antioxidant &amp; free-radical chemistry</h3>
+                    <p>Unpicking how flavonoids, phenolic acids, and anthocyanidins actually neutralise reactive oxygen
+                        species — acid–base speciation, competing HAT/SET/RAF mechanisms, metal chelation, and even the
+                        repair of biomolecules that have already been oxidised. Includes the senolytic and
+                        geroprotective properties.</p>
+                </article>
 
-            <article class="sp-pillar sp-pillar-violet">
-                <span class="sp-pillar-num">Pillar II</span>
-                <div class="sp-pillar-icon" aria-hidden="true">
-                    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="8" y1="48" x2="30" y2="48"/>
-                        <line x1="8" y1="26" x2="26" y2="26"/>
-                        <line x1="34" y1="34" x2="52" y2="34"/>
-                        <path d="M14 48 L18 26" stroke-dasharray="1 4"/>
-                        <path d="M18 26 L43 34"/>
-                        <path d="M43 34 L20 48" stroke-dasharray="3 3" opacity=".7"/>
-                    </svg>
-                </div>
-                <h3>Photodynamic &amp; photophysical design</h3>
-                <p>Using TD-DFT to decode photosensitiser efficiency — intersystem crossing, spin–orbit coupling, and the ability to generate singlet oxygen. Natural dyes (hypericin, anthraquinones) and metal complexes (Ru, Ir, Pd/Pt) each offer a distinct photophysical pathway to exploit.</p>
-            </article>
+                <article class="sp-pillar sp-pillar-violet">
+                    <span class="sp-pillar-num">Pillar II</span>
+                    <div class="sp-pillar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="8" y1="48" x2="30" y2="48" />
+                            <line x1="8" y1="26" x2="26" y2="26" />
+                            <line x1="34" y1="34" x2="52" y2="34" />
+                            <path d="M14 48 L18 26" stroke-dasharray="1 4" />
+                            <path d="M18 26 L43 34" />
+                            <path d="M43 34 L20 48" stroke-dasharray="3 3" opacity=".7" />
+                        </svg>
+                    </div>
+                    <h3>Photodynamic &amp; photophysical design</h3>
+                    <p>Using TD-DFT to decode photosensitiser efficiency — intersystem crossing, spin–orbit coupling,
+                        and the ability to generate singlet oxygen. Natural dyes (hypericin, anthraquinones) and metal
+                        complexes (Ru, Ir, Pd/Pt) each offer a distinct photophysical pathway to exploit.</p>
+                </article>
 
-            <article class="sp-pillar sp-pillar-teal">
-                <span class="sp-pillar-num">Pillar III</span>
-                <div class="sp-pillar-icon" aria-hidden="true">
-                    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="32" cy="32" r="5" fill="currentColor" stroke="none"/>
-                        <line x1="32" y1="27" x2="32" y2="12"/>
-                        <line x1="32" y1="37" x2="32" y2="52"/>
-                        <line x1="27" y1="32" x2="12" y2="32"/>
-                        <line x1="37" y1="32" x2="52" y2="32"/>
-                        <circle cx="32" cy="10" r="2.4"/><circle cx="32" cy="54" r="2.4"/>
-                        <circle cx="10" cy="32" r="2.4"/><circle cx="54" cy="32" r="2.4"/>
-                    </svg>
-                </div>
-                <h3>Computational craftsmanship for drug design</h3>
-                <p>The methodological engine that ensures every prediction holds up. Benchmarking methods, developing computational tools, and providing reproducible workflows and Python‑driven automation that inform drug design. Enclosed within the other research projects for now — but gradually crystallizing into a pillar of its own</p>
-            </article>
-        </div>
+                <article class="sp-pillar sp-pillar-teal">
+                    <span class="sp-pillar-num">Pillar III</span>
+                    <div class="sp-pillar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="32" cy="32" r="5" fill="currentColor" stroke="none" />
+                            <line x1="32" y1="27" x2="32" y2="12" />
+                            <line x1="32" y1="37" x2="32" y2="52" />
+                            <line x1="27" y1="32" x2="12" y2="32" />
+                            <line x1="37" y1="32" x2="52" y2="32" />
+                            <circle cx="32" cy="10" r="2.4" />
+                            <circle cx="32" cy="54" r="2.4" />
+                            <circle cx="10" cy="32" r="2.4" />
+                            <circle cx="54" cy="32" r="2.4" />
+                        </svg>
+                    </div>
+                    <h3>Computational craftsmanship for drug design</h3>
+                    <p>The methodological engine that ensures every prediction holds up. Benchmarking methods,
+                        developing computational tools, and providing reproducible workflows and Python‑driven
+                        automation that inform drug design. Enclosed within the other research projects for now — but
+                        gradually crystallizing into a pillar of its own</p>
+                </article>
+            </div>
 
-        <!-- Habilitation cycle: folded in here (not a top-level section) since
+            <!-- Habilitation cycle: folded in here (not a top-level section) since
              it's really a close-up on Pillar II above, not a separate topic.
              "Habilitation" is the Central/Eastern-European postdoctoral
              qualification for independent research leadership — the intro
              line below exists for readers unfamiliar with the term. Six
              fixed cards (Z1-Z6); this set isn't expected to grow. -->
-        <!-- Not the habilitation cycle anymore (moved out per your feedback —
+            <!-- Not the habilitation cycle anymore (moved out per your feedback —
              it just duplicated the Publications list below without adding
              anything). Repurposed the same card-grid construction as a
              curated "start here" shortcut instead: five papers picked for
              five different reasons, not just the most recent ones. Swap
              any of these out any time — just keep one tag + one reason. -->
-        <div class="sp-spotlight sp-reveal">
-            <div class="sp-spotlight-head">
-                <span class="sp-eyebrow" style="margin-bottom:.6em;">Selected work</span>
-                <h3>Six papers, if that's all you have time for</h3>
-                <p>Picked for different reasons — highest impact factor, an award, a mentee's first paper, a stretch outside the usual topics, and a cornerstone of the senolytics thread. The full, chronological list of all is further down, under Publications.</p>
-            </div>
+            <div class="sp-spotlight sp-reveal">
+                <div class="sp-spotlight-head">
+                    <span class="sp-eyebrow" style="margin-bottom:.6em;">Selected work</span>
+                    <h3>Six papers, if that's all you have time for</h3>
+                    <p>Picked for different reasons — highest impact factor, an award, a mentee's first paper, a stretch
+                        outside the usual topics, and a cornerstone of the senolytics thread. The full, chronological
+                        list of all is further down, under Publications.</p>
+                </div>
 
-            <div class="sp-spotlight-grid">
-                <div class="sp-spotlight-card">
-                    <span class="sp-spotlight-tag">Expertise</span>
-                    <h4>Current Trends in Computational Quantum Chemistry Studies on Antioxidant Radical Scavenging Activity</h4>
-                    <div class="sp-spotlight-meta">J. Chem. Inf. Model. · 2022 · IF 6.162 — cover article; sole author</div>
-                    <a href="https://doi.org/10.1021/acs.jcim.2c00104" target="_blank" rel="noopener">doi.org/10.1021/acs.jcim.2c00104 ↗</a>
-                </div>
-                <div class="sp-spotlight-card">
-                    <span class="sp-spotlight-tag">Award</span>
-                    <h4>Post-CCSD(T) corrections to bond distances and vibrational frequencies: the power of Λ</h4>
-                    <div class="sp-spotlight-meta">Molecular Physics · 2023 — Early Career Researcher Prize 2024</div>
-                    <a href="https://doi.org/10.1080/00268976.2023.2252114" target="_blank" rel="noopener">doi.org/10.1080/00268976.2023.2252114 ↗</a>
-                </div>
-                <div class="sp-spotlight-card">
-                    <span class="sp-spotlight-tag">Recognition</span>
-                    <h4>Aggregation suppresses internal conversion and enhances triplet yield in π-rich natural dyes: hypericin supramolecular assembly</h4>
-                    <div class="sp-spotlight-meta">J. Nat. Prod. · 2026 — ACS Early Career Collection; Beal Award nominee</div>
-                    <a href="https://doi.org/10.1021/acs.jnatprod.5c01289" target="_blank" rel="noopener">doi.org/10.1021/acs.jnatprod.5c01289 ↗</a>
-                </div>
-                <div class="sp-spotlight-card">
-                    <span class="sp-spotlight-tag">Mentorship</span>
-                    <h4>The mechanistic insights into the role of pH and solvent on antiradical and prooxidant properties of polyphenols</h4>
-                    <div class="sp-spotlight-meta">Food Chemistry · 2023 · IF 8.5 — with MPharm student</div>
-                    <a href="https://doi.org/10.1016/j.foodchem.2022.134677" target="_blank" rel="noopener">doi.org/10.1016/j.foodchem.2022.134677 ↗</a>
-                </div>
+                <div class="sp-spotlight-grid">
+                    <div class="sp-spotlight-card">
+                        <span class="sp-spotlight-tag">Expertise</span>
+                        <h4>Current Trends in Computational Quantum Chemistry Studies on Antioxidant Radical Scavenging
+                            Activity</h4>
+                        <div class="sp-spotlight-meta">J. Chem. Inf. Model. · 2022 · IF 6.162 — cover article; sole
+                            author</div>
+                        <a href="https://doi.org/10.1021/acs.jcim.2c00104" target="_blank"
+                            rel="noopener">doi.org/10.1021/acs.jcim.2c00104 ↗</a>
+                    </div>
+                    <div class="sp-spotlight-card">
+                        <span class="sp-spotlight-tag">Award</span>
+                        <h4>Post-CCSD(T) corrections to bond distances and vibrational frequencies: the power of Λ</h4>
+                        <div class="sp-spotlight-meta">Molecular Physics · 2023 — Early Career Researcher Prize 2024
+                        </div>
+                        <a href="https://doi.org/10.1080/00268976.2023.2252114" target="_blank"
+                            rel="noopener">doi.org/10.1080/00268976.2023.2252114 ↗</a>
+                    </div>
+                    <div class="sp-spotlight-card">
+                        <span class="sp-spotlight-tag">Recognition</span>
+                        <h4>Aggregation suppresses internal conversion and enhances triplet yield in π-rich natural
+                            dyes: hypericin supramolecular assembly</h4>
+                        <div class="sp-spotlight-meta">J. Nat. Prod. · 2026 — ACS Early Career Collection; Beal Award
+                            nominee</div>
+                        <a href="https://doi.org/10.1021/acs.jnatprod.5c01289" target="_blank"
+                            rel="noopener">doi.org/10.1021/acs.jnatprod.5c01289 ↗</a>
+                    </div>
+                    <div class="sp-spotlight-card">
+                        <span class="sp-spotlight-tag">Mentorship</span>
+                        <h4>The mechanistic insights into the role of pH and solvent on antiradical and prooxidant
+                            properties of polyphenols</h4>
+                        <div class="sp-spotlight-meta">Food Chemistry · 2023 · IF 8.5 — with MPharm student</div>
+                        <a href="https://doi.org/10.1016/j.foodchem.2022.134677" target="_blank"
+                            rel="noopener">doi.org/10.1016/j.foodchem.2022.134677 ↗</a>
+                    </div>
                     <div class="sp-spotlight-card">
                         <span class="sp-spotlight-tag">Breakthrough</span>
-                        <h4>Antioxidant and copper-chelating power of new molecules as multiple target agents against Alzheimer's disease</h4>
-                        <div class="sp-spotlight-meta">Phys. Chem. Chem. Phys. · 2022 · IF 3.3 — first paper with Prof. Nino Russo; opened many doors</div>
-                        <a href="https://doi.org/10.1039/D2CP01918C" target="_blank" rel="noopener">doi.org/10.1039/D2CP01918C ↗</a>
+                        <h4>Antioxidant and copper-chelating power of new molecules as multiple target agents against
+                            Alzheimer's disease</h4>
+                        <div class="sp-spotlight-meta">Phys. Chem. Chem. Phys. · 2022 · IF 3.3 — first paper with Prof.
+                            Nino Russo; opened many doors</div>
+                        <a href="https://doi.org/10.1039/D2CP01918C" target="_blank"
+                            rel="noopener">doi.org/10.1039/D2CP01918C ↗</a>
                     </div>
-                <div class="sp-spotlight-card">
-                    <span class="sp-spotlight-tag">Senolytics</span>
-                    <h4>Fisetin as a blueprint for senotherapeutic agents – elucidating geroprotective and senolytic properties with molecular modeling</h4>
-                    <div class="sp-spotlight-meta">Chem. Eur. J. · 2025 · IF 5.9 — first in its class, cornerstone of the senolytics thread</div>
-                    <a href="https://doi.org/10.1002/chem.202403755" target="_blank" rel="noopener">doi.org/10.1002/chem.202403755 ↗</a>
+                    <div class="sp-spotlight-card">
+                        <span class="sp-spotlight-tag">Senolytics</span>
+                        <h4>Fisetin as a blueprint for senotherapeutic agents – elucidating geroprotective and senolytic
+                            properties with molecular modeling</h4>
+                        <div class="sp-spotlight-meta">Chem. Eur. J. · 2025 · IF 5.9 — first in its class, cornerstone
+                            of the senolytics thread</div>
+                        <a href="https://doi.org/10.1002/chem.202403755" target="_blank"
+                            rel="noopener">doi.org/10.1002/chem.202403755 ↗</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ============================== JOURNEY / TIMELINE ============================== -->
-<section id="journey" class="sp-section" style="background:var(--paper)">
-    <div class="sp-container">
-        <div class="sp-reveal">
-            <span class="sp-eyebrow">Journey</span>
-            <h2 class="sp-section-title">A reaction coordinate, more or less</h2>
-            <p class="sp-section-lede">Career progress rarely runs downhill in a straight line — closer, maybe, to a potential energy surface: exploratory steps early on, a deep and stable minimum at the doctorate, and a climb toward the next one now.</p>
-        </div>
+    <!-- ============================== JOURNEY / TIMELINE ============================== -->
+    <section id="journey" class="sp-section" style="background:var(--paper)">
+        <div class="sp-container">
+            <div class="sp-reveal">
+                <span class="sp-eyebrow">Journey</span>
+                <h2 class="sp-section-title">A reaction coordinate, more or less</h2>
+                <p class="sp-section-lede">Career progress rarely runs downhill in a straight line — closer, maybe, to a
+                    potential energy surface: exploratory steps early on, a deep and stable minimum at the doctorate,
+                    and a climb toward the next one now.</p>
+            </div>
 
-        <div class="sp-timeline-wrap sp-reveal">
-            <!-- DNA-helix spine — geometria liczona i wstrzykiwana przez
+            <div class="sp-timeline-wrap sp-reveal">
+                <!-- DNA-helix spine — geometria liczona i wstrzykiwana przez
                  initTimelineHelix() w main.js, nie zaszyta tu jako statyczny
                  <pattern>. Powód: kafelek stałego rozmiaru powtarzany od
                  y=0 układa się równo tylko wtedy, gdy wysokość boksu jest
@@ -426,283 +522,380 @@
                  gotowego boksu. Złota nić = wątek wcześniejszy/formacyjny,
                  fioletowa = obecny — zawsze spletione. Celowo pusty tu;
                  zobacz main.js. -->
-            <div class="sp-timeline-helix-wrap" aria-hidden="true">
-                <svg class="sp-timeline-helix"></svg>
-            </div>
+                <div class="sp-timeline-helix-wrap" aria-hidden="true">
+                    <svg class="sp-timeline-helix"></svg>
+                </div>
 
 
-            <!-- TEMPLATE — copy this whole <li> to add a new milestone.
+                <!-- TEMPLATE — copy this whole <li> to add a new milestone.
                  data-phase="gold" (early/formative) or "violet" (current/
                  independent) just controls the dot/tag colour — pick
                  whichever reads right. Add class="is-open" on the <li> if
                  you want it expanded by default (usually just the most
                  recent one). -->
-            <ol class="sp-timeline">
-                <li class="sp-tl-item" data-phase="gold">
-                    <span class="sp-tl-dot"></span>
-                    <button class="sp-tl-toggle" type="button" aria-expanded="false">
-                        <span class="sp-tl-period">2015 – 2019</span>
-                        <h3>Pharmacy studies &amp; first steps in modelling</h3>
-                        <span class="sp-tl-tag">Foundations</span>
-                        <svg class="sp-tl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-                    </button>
-                    <div class="sp-tl-panel"><div class="sp-tl-panel-inner">
-                        <ul class="sp-tl-list">
-                            <li>MSc in Pharmacy; thesis on computational modelling of the reducing properties of phenolic acids, under Prof. Zbigniew Sroka.</li>
-                            <li>Student Scientific Circle "Peregrinus" — secretary, then chair.</li>
-                            <li>First conference talks on computational antioxidant chemistry, from 2016 onward.</li>
-                        </ul>
-                    </div></div>
-                </li>
-                <li class="sp-tl-item" data-phase="gold">
-                    <span class="sp-tl-dot"></span>
-                    <button class="sp-tl-toggle" type="button" aria-expanded="false">
-                        <span class="sp-tl-period">2019 – 2023</span>
-                        <h3>Doctoral School, Wrocław Medical University</h3>
-                        <span class="sp-tl-tag">Doctorate</span>
-                        <svg class="sp-tl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-                    </button>
-                    <div class="sp-tl-panel"><div class="sp-tl-panel-inner">
-                        <ul class="sp-tl-list">
-                            <li>PhD project: <em>in silico</em> antioxidant activity of phytochemical compounds.</li>
-                            <li>Own NCN <b>Preludium</b> grant awarded (2022) as principal investigator.</li>
-                            <li>Four Erasmus+ research stays: Italy, France, Israel, Portugal.</li>
-                            <li>Doctorate defended with distinction, October 2023 — before turning 30.</li>
-                        </ul>
-                    </div></div>
-                </li>
-                <li class="sp-tl-item is-open" data-phase="violet">
-                    <span class="sp-tl-dot"></span>
-                    <button class="sp-tl-toggle" type="button" aria-expanded="true">
-                        <span class="sp-tl-period">Nov 2023 – present</span>
-                        <h3>Assistant Professor</h3>
-                        <span class="sp-tl-tag">Independent research</span>
-                        <svg class="sp-tl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-                    </button>
-                    <div class="sp-tl-panel"><div class="sp-tl-panel-inner">
-                        <ul class="sp-tl-list">
-                            <li>Habilitation cycle on photosensitiser photophysics underway.</li>
-                            <li>Guest Editor of two <em>IJMS</em> special issues; ~85 peer reviews completed since the doctorate.</li>
-                            <li>Member, Council of the Pharmaceutical Sciences Discipline, UMW.</li>
-                        </ul>
-                    </div></div>
-                </li>
-                <li class="sp-tl-item" data-phase="violet">
-                    <span class="sp-tl-dot"></span>
-                    <button class="sp-tl-toggle" type="button" aria-expanded="false">
-                        <span class="sp-tl-period">2024 – 2025</span>
-                        <h3>Recognition &amp; international momentum</h3>
-                        <span class="sp-tl-tag">Recognition</span>
-                        <svg class="sp-tl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-                    </button>
-                    <div class="sp-tl-panel"><div class="sp-tl-panel-inner">
-                        <ul class="sp-tl-list">
-                            <li>World's Top 2% Scientists list, Stanford University &amp; Elsevier — 2023 <em>and</em> 2024 rankings.</li>
-                            <li>Golden OTIS Trust Award, PAN Medal "Iuvenes Wratislaviae" (2024 &amp; 2025), Molecular Physics Early Career Researcher Prize.</li>
-                            <li>Talks at EuChemS CompChem2025 (Naples), Phytochemical Society of Europe (Wrocław), PSE Meeting (Madeira).</li>
-                        </ul>
-                    </div></div>
-                </li>
-                <li class="sp-tl-item" data-phase="violet">
-                    <span class="sp-tl-dot"></span>
-                    <button class="sp-tl-toggle" type="button" aria-expanded="false">
-                        <span class="sp-tl-period">2026</span>
-                        <h3>Habilitation &amp; what's next</h3>
-                        <span class="sp-tl-tag">Ahead</span>
-                        <svg class="sp-tl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-                    </button>
-                    <div class="sp-tl-panel"><div class="sp-tl-panel-inner">
-                        <ul class="sp-tl-list">
-                            <li>Six-paper habilitation cycle completed; nominated for the Jack L. Beal Award (ASP).</li>
-                            <li>Upcoming stays: Visegrad Fellowship (Prague), Erasmus+ STT (Calabria), IDUB mobility (Istanbul).</li>
-                            <li>Next targets: ERC Starting Grant, NCN Sonata/Opus.</li>
-                        </ul>
-                    </div></div>
-                </li>
-            </ol>
-        </div>
-    </div>
-</section>
-
-<!-- ============================== GRANTS & AWARDS ============================== -->
-<section id="awards" class="sp-awards sp-section">
-    <div class="sp-container">
-        <div class="sp-reveal">
-            <span class="sp-eyebrow">Funding &amp; recognition</span>
-            <h2 class="sp-section-title">Grants and awards</h2>
-        </div>
-
-        <div class="sp-grant-card sp-reveal">
-            <span class="sp-grant-tag">NCN · PRELUDIUM 21</span>
-            <div>
-                <h4>Artificial intelligence in the search for new natural medicinal substances that lower free-radical concentration in the body</h4>
-                <p>Principal investigator, project 2022/45/N/NZ7/02264, National Science Centre (Poland). Combines experimental antioxidant assays with theoretical chemistry and Python-based QSAR models — the seed of Pillar I and III above.</p>
+                <ol class="sp-timeline">
+                    <li class="sp-tl-item" data-phase="gold">
+                        <span class="sp-tl-dot"></span>
+                        <button class="sp-tl-toggle" type="button" aria-expanded="false">
+                            <span class="sp-tl-period">2015 – 2019</span>
+                            <h3>Pharmacy studies &amp; first steps in modelling</h3>
+                            <span class="sp-tl-tag">Foundations</span>
+                            <svg class="sp-tl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M6 9l6 6 6-6" />
+                            </svg>
+                        </button>
+                        <div class="sp-tl-panel">
+                            <div class="sp-tl-panel-inner">
+                                <ul class="sp-tl-list">
+                                    <li>MSc in Pharmacy; thesis on computational modelling of the reducing properties of
+                                        phenolic acids, under Prof. Zbigniew Sroka.</li>
+                                    <li>Student Scientific Circle "Peregrinus" — secretary, then chair.</li>
+                                    <li>First conference talks on computational antioxidant chemistry, from 2016 onward.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sp-tl-item" data-phase="gold">
+                        <span class="sp-tl-dot"></span>
+                        <button class="sp-tl-toggle" type="button" aria-expanded="false">
+                            <span class="sp-tl-period">2019 – 2023</span>
+                            <h3>Doctoral School, Wrocław Medical University</h3>
+                            <span class="sp-tl-tag">Doctorate</span>
+                            <svg class="sp-tl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M6 9l6 6 6-6" />
+                            </svg>
+                        </button>
+                        <div class="sp-tl-panel">
+                            <div class="sp-tl-panel-inner">
+                                <ul class="sp-tl-list">
+                                    <li>PhD project: <em>in silico</em> antioxidant activity of phytochemical compounds.
+                                    </li>
+                                    <li>Own NCN <b>Preludium</b> grant awarded (2022) as principal investigator.</li>
+                                    <li>Four Erasmus+ research stays: Italy, France, Israel, Portugal.</li>
+                                    <li>Doctorate defended with distinction, October 2023 — before turning 30.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sp-tl-item is-open" data-phase="violet">
+                        <span class="sp-tl-dot"></span>
+                        <button class="sp-tl-toggle" type="button" aria-expanded="true">
+                            <span class="sp-tl-period">Nov 2023 – present</span>
+                            <h3>Assistant Professor</h3>
+                            <span class="sp-tl-tag">Independent research</span>
+                            <svg class="sp-tl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M6 9l6 6 6-6" />
+                            </svg>
+                        </button>
+                        <div class="sp-tl-panel">
+                            <div class="sp-tl-panel-inner">
+                                <ul class="sp-tl-list">
+                                    <li>Habilitation cycle on photosensitiser photophysics underway.</li>
+                                    <li>Guest Editor of two <em>IJMS</em> special issues; ~85 peer reviews completed
+                                        since the doctorate.</li>
+                                    <li>Member, Council of the Pharmaceutical Sciences Discipline, UMW.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sp-tl-item" data-phase="violet">
+                        <span class="sp-tl-dot"></span>
+                        <button class="sp-tl-toggle" type="button" aria-expanded="false">
+                            <span class="sp-tl-period">2024 – 2025</span>
+                            <h3>Recognition &amp; international momentum</h3>
+                            <span class="sp-tl-tag">Recognition</span>
+                            <svg class="sp-tl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M6 9l6 6 6-6" />
+                            </svg>
+                        </button>
+                        <div class="sp-tl-panel">
+                            <div class="sp-tl-panel-inner">
+                                <ul class="sp-tl-list">
+                                    <li>World's Top 2% Scientists list, Stanford University &amp; Elsevier — 2023
+                                        <em>and</em> 2024 rankings.
+                                    </li>
+                                    <li>Golden OTIS Trust Award, PAN Medal "Iuvenes Wratislaviae" (2024 &amp; 2025),
+                                        Molecular Physics Early Career Researcher Prize.</li>
+                                    <li>Talks at EuChemS CompChem2025 (Naples), Phytochemical Society of Europe
+                                        (Wrocław), PSE Meeting (Madeira).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sp-tl-item" data-phase="violet">
+                        <span class="sp-tl-dot"></span>
+                        <button class="sp-tl-toggle" type="button" aria-expanded="false">
+                            <span class="sp-tl-period">2026</span>
+                            <h3>Habilitation &amp; what's next</h3>
+                            <span class="sp-tl-tag">Ahead</span>
+                            <svg class="sp-tl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M6 9l6 6 6-6" />
+                            </svg>
+                        </button>
+                        <div class="sp-tl-panel">
+                            <div class="sp-tl-panel-inner">
+                                <ul class="sp-tl-list">
+                                    <li>Six-paper habilitation cycle completed; nominated for the Jack L. Beal Award
+                                        (ASP).</li>
+                                    <li>Upcoming stays: Visegrad Fellowship (Prague), Erasmus+ STT (Calabria), IDUB
+                                        mobility (Istanbul).</li>
+                                    <li>Next targets: ERC Starting Grant, NCN Sonata/Opus.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
             </div>
         </div>
+    </section>
 
-        <!-- Award grid: each entry is one <div class="sp-award">. Copy-paste
+    <!-- ============================== GRANTS & AWARDS ============================== -->
+    <section id="awards" class="sp-awards sp-section">
+        <div class="sp-container">
+            <div class="sp-reveal">
+                <span class="sp-eyebrow">Funding &amp; recognition</span>
+                <h2 class="sp-section-title">Grants and awards</h2>
+            </div>
+
+            <div class="sp-grant-card sp-reveal">
+                <span class="sp-grant-tag">NCN · PRELUDIUM 21</span>
+                <div>
+                    <h4>Artificial intelligence in the search for new natural medicinal substances that lower
+                        free-radical concentration in the body</h4>
+                    <p>Principal investigator, project 2022/45/N/NZ7/02264, National Science Centre (Poland). Combines
+                        experimental antioxidant assays with theoretical chemistry and Python-based QSAR models — the
+                        seed of Pillar I and III above.</p>
+                </div>
+            </div>
+
+            <!-- Award grid: each entry is one <div class="sp-award">. Copy-paste
              one below to add a new item; grid re-wraps automatically. -->
-        <!-- Roughly chronological, most recent first (each combined-year card
+            <!-- Roughly chronological, most recent first (each combined-year card
              sorted by its most recent instance). "Editorial & peer review"
              doesn't have a single date so it sits last as an ongoing item —
              moved here from the old About fact-list, which was cut. -->
-        <div class="sp-award-grid sp-reveal">
-            <div class="sp-award"><span class="sp-award-year">Jan 2026</span><div><h5>Early Career Collection 2025 &amp; Beal Award nomination</h5><p>Journal of Natural Products (ACS) / American Society of Pharmacognosy — for the hypericin habilitation paper.</p></div></div>
-            <div class="sp-award"><span class="sp-award-year">Dec 2024 / 2025</span><div><h5>Polish Academy of Sciences Medal "Iuvenes Wratislaviae"</h5><p>Wrocław Branch — for scientific achievement, awarded in two consecutive editions.</p></div></div>
-            <div class="sp-award"><span class="sp-award-year">2024 &amp; 2025</span><div><h5>World's Top 2% Scientists</h5><p>Stanford University &amp; Elsevier — single-year impact ranking, for the 2023 and 2024 editions.</p></div></div>
-            <div class="sp-award"><span class="sp-award-year">Jul 2025</span><div><h5>Molecular Physics Early Career Researcher Prize 2024</h5><p>Taylor &amp; Francis, for "Post-CCSD(T) corrections to bond distances and vibrational frequencies: the power of Λ".</p></div></div>
-            <div class="sp-award"><span class="sp-award-year">2024 &amp; 2025</span><div><h5>Rector's First-Degree Individual Award</h5><p>Wrocław Medical University — for significant and creative scientific work, in consecutive years.</p></div></div>
-            <div class="sp-award"><span class="sp-award-year">Apr 2024</span><div><h5>Golden OTIS Trust Award — "Scientific Debuts"</h5><p>Scholarship and distinction for early-career research achievement.</p></div></div>
+            <div class="sp-award-grid sp-reveal">
+                <div class="sp-award"><span class="sp-award-year">Jan 2026</span>
+                    <div>
+                        <h5>Early Career Collection 2025 &amp; Beal Award nomination</h5>
+                        <p>Journal of Natural Products (ACS) / American Society of Pharmacognosy — for the hypericin
+                            habilitation paper.</p>
+                    </div>
+                </div>
+                <div class="sp-award"><span class="sp-award-year">Dec 2024 / 2025</span>
+                    <div>
+                        <h5>Polish Academy of Sciences Medal "Iuvenes Wratislaviae"</h5>
+                        <p>Wrocław Branch — for scientific achievement, awarded in two consecutive editions.</p>
+                    </div>
+                </div>
+                <div class="sp-award"><span class="sp-award-year">2024 &amp; 2025</span>
+                    <div>
+                        <h5>World's Top 2% Scientists</h5>
+                        <p>Stanford University &amp; Elsevier — single-year impact ranking, for the 2023 and 2024
+                            editions.</p>
+                    </div>
+                </div>
+                <div class="sp-award"><span class="sp-award-year">Jul 2025</span>
+                    <div>
+                        <h5>Molecular Physics Early Career Researcher Prize 2024</h5>
+                        <p>Taylor &amp; Francis, for "Post-CCSD(T) corrections to bond distances and vibrational
+                            frequencies: the power of Λ".</p>
+                    </div>
+                </div>
+                <div class="sp-award"><span class="sp-award-year">2024 &amp; 2025</span>
+                    <div>
+                        <h5>Rector's First-Degree Individual Award</h5>
+                        <p>Wrocław Medical University — for significant and creative scientific work, in consecutive
+                            years.</p>
+                    </div>
+                </div>
+                <div class="sp-award"><span class="sp-award-year">Apr 2024</span>
+                    <div>
+                        <h5>Golden OTIS Trust Award — "Scientific Debuts"</h5>
+                        <p>Scholarship and distinction for early-career research achievement.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ============================== PUBLICATIONS ============================== -->
-<section id="publications" class="sp-pubs sp-section">
-    <div class="sp-container">
-        <div class="sp-reveal">
-            <span class="sp-eyebrow">Bibliography</span>
-            <h2 class="sp-section-title">Publications</h2>
-            <p class="sp-section-lede">Consider this the full archive of entries charting a trajectory through different research topics that were undertaken. Papers belonging to the <strong>doctoral cycle</strong> are marked with a <strong style="color:var(--violet);">violet edge</strong> and papers belonging to the <strong>habilitation cycle</strong> are marked with a <strong style="color:var(--gold);">golden edge</strong>.</p>
-        </div>
+    <!-- ============================== PUBLICATIONS ============================== -->
+    <section id="publications" class="sp-pubs sp-section">
+        <div class="sp-container">
+            <div class="sp-reveal">
+                <span class="sp-eyebrow">Bibliography</span>
+                <h2 class="sp-section-title">Publications</h2>
+                <p class="sp-section-lede">Consider this the full archive of entries charting a trajectory through
+                    different research topics that were undertaken. Papers belonging to the <strong>doctoral
+                        cycle</strong> are marked with a <strong style="color:var(--violet);">violet edge</strong> and
+                    papers belonging to the <strong>habilitation cycle</strong> are marked with a <strong
+                        style="color:var(--gold);">golden edge</strong>.</p>
+            </div>
 
-        <div class="sp-pub-controls">
-            <span class="sp-mono">Filter by year</span>
-            <div id="years-filter"></div>
-        </div>
+            <div class="sp-pub-controls">
+                <span class="sp-mono">Filter by year</span>
+                <div id="years-filter"></div>
+            </div>
 
-        <div id="publications-list"></div>
+            <div id="publications-list"></div>
 
-        <!-- Removed the "Full list on ORCID" button that used to be here:
+            <!-- Removed the "Full list on ORCID" button that used to be here:
              this section already shows the complete 44-paper list (year
              filters, not a curated subset), so a "see the full list"
              link was actively misleading. ORCID is still linked from the
              hero social row for anyone who wants the canonical registry
              record instead. -->
-    </div>
-</section>
-
-<!-- ============================== MEDIA / OUTREACH ============================== -->
-<section id="media" class="sp-media sp-section">
-    <div class="sp-container">
-        <div class="sp-reveal">
-            <span class="sp-eyebrow">Media &amp; Outreach</span>
-            <h2 class="sp-section-title">In the press and public</h2>
-            <p class="sp-section-lede">Interviews, popular-science features and university news about my research.</p>
         </div>
+    </section>
 
-        <div class="sp-media-layout sp-reveal" id="mediaLayout">
-            <!-- Rendered dynamically by main.js (renderMedia) -->
+    <!-- ============================== MEDIA / OUTREACH ============================== -->
+    <section id="media" class="sp-media sp-section">
+        <div class="sp-container">
+            <div class="sp-reveal">
+                <span class="sp-eyebrow">Media &amp; Outreach</span>
+                <h2 class="sp-section-title">In the press and public</h2>
+                <p class="sp-section-lede">Interviews, popular-science features and university news about my research.
+                </p>
+            </div>
+
+            <div class="sp-media-layout sp-reveal" id="mediaLayout">
+                <!-- Rendered dynamically by main.js (renderMedia) -->
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ============================== GLOBE / COLLABORATIONS ==============================
+    <!-- ============================== GLOBE / COLLABORATIONS ==============================
      Both halves sit in one CSS grid (.sp-globe-grid) inside the normal
      container flow. Do NOT go back to viewport-width (vw) absolute
      positioning for #globeViz — that's what caused the old overlap bug.
      Marker data (locations[]) lives in js/main.js, not here — to add a
      new collaboration/conference marker, add an object to that array. -->
-<section id="global" class="sp-globe-section sp-section">
-    <div class="sp-container">
-        <div class="sp-reveal">
-            <span class="sp-eyebrow">Internationalization</span>
-            <h2 class="sp-section-title">Research stays and conferences</h2>
-            <p class="sp-section-lede">Click a marker to read about the group and the work that came out of it.</p>
-        </div>
-
-        <div class="sp-globe-grid sp-reveal">
-            <div class="sp-globe-stage">
-                <div id="globeViz"></div>
+    <section id="global" class="sp-globe-section sp-section">
+        <div class="sp-container">
+            <div class="sp-reveal">
+                <span class="sp-eyebrow">Internationalization</span>
+                <h2 class="sp-section-title">Research stays and conferences</h2>
+                <p class="sp-section-lede">Click a marker to read about the group and the work that came out of it.</p>
             </div>
-            <div class="sp-globe-copy">
-                <div class="sp-legend">
-                    <span><i style="background:#FFD700"></i> Home institution</span>
-                    <span><i style="background:#9d8cff"></i> Research stay</span>
-                    <span><i style="background:#1fe0b0"></i> Conference</span>
+
+            <div class="sp-globe-grid sp-reveal">
+                <div class="sp-globe-stage">
+                    <div id="globeViz"></div>
                 </div>
-                <div class="sp-location-info" id="locationInfo">
-                    <p class="sp-location-placeholder">— select a marker on the globe —</p>
+                <div class="sp-globe-copy">
+                    <div class="sp-legend">
+                        <span><i style="background:#FFD700"></i> Home institution</span>
+                        <span><i style="background:#9d8cff"></i> Research stay</span>
+                        <span><i style="background:#1fe0b0"></i> Conference</span>
+                    </div>
+                    <div class="sp-location-info" id="locationInfo">
+                        <p class="sp-location-placeholder">— select a marker on the globe —</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ============================== LOGO STRIP ==============================
-     Institution logos, not people — see the maintenance-guide comment at
-     the top of this file for why (collaborator photos scraped off the web
-     without asking is a real no: right-of-publicity/likeness issues aside,
-     it's just not something to do to someone who agreed to work with you).
-     If you'd rather have actual people here later, ask each collaborator
-     for a headshot + permission — most academics have one on their own
-     university page they'd be fine having reused with credit.
-     Data source: js/main.js `locations[]` (auto-generated, not hardcoded —
-     add a location with a logo there and it shows up here too). -->
-<section class="sp-logostrip">
-    <div class="sp-container">
-        <span class="sp-eyebrow" style="justify-content:center;">Collaborating institutions</span>
-    </div>
-    <div class="sp-logostrip-track" id="logoStrip"></div>
-</section>
-
-<!-- ============================== COLLABORATION CTA ============================== -->
-<section class="sp-collab sp-section">
-    <div class="sp-container">
-        <div class="sp-reveal">
-            <span class="sp-eyebrow">Working together</span>
-            <h2 class="sp-section-title">For students, and for industry</h2>
-        </div>
-        <div class="sp-collab-grid sp-reveal">
-            <div class="sp-collab-panel">
-                <h4>If you are a student</h4>
-                <ul>
-                    <li>MSc and thesis supervision in molecular modelling and computational antioxidant/photophysical chemistry.</li>
-                    <li>Mentoring through the Student Scientific Circle "Peregrinus" tradition I came up through myself.</li>
-                    <li>Co-authorship is the norm, not the exception — my last MSc student ended up published in <em>Food Chemistry</em>.</li>
-                </ul>
-                <a href="mailto:maciej.spiegel@umw.edu.pl?subject=Student%20project%20inquiry" class="sp-btn sp-btn-ghost-paper">Ask about a project</a>
+    <!-- ============================== COLLABORATION CTA ============================== -->
+    <section class="sp-collab sp-section">
+        <div class="sp-container">
+            <div class="sp-reveal">
+                <span class="sp-eyebrow">Working together</span>
+                <h2 class="sp-section-title">For students, for researchers, and for industry</h2>
             </div>
-            <div class="sp-collab-panel">
-                <h4>If you work in pharma / biotech</h4>
-                <ul>
-                    <li>Computer-aided design and triage of drug candidates before synthesis — antioxidants, photosensitisers, metal-based anticancer agents.</li>
-                    <li>Method benchmarking and QSAR pipeline development in Python.</li>
-                    <li>Reviewer / consulting experience across ACS, RSC, Elsevier and Springer Nature journals.</li>
-                </ul>
-                <a href="mailto:maciej.spiegel@umw.edu.pl?subject=Industry%20collaboration%20inquiry" class="sp-btn sp-btn-ghost-paper">Start a conversation</a>
-            </div>
-        </div>
-    </div>
-</section>
+            <div class="sp-collab-grid sp-reveal">
+                <div class="sp-collab-panel">
+                    <h4>If you are a student</h4>
+                    <ul>
+                        <li>MSc and thesis supervision in molecular modelling and computational
+                            antioxidant/photophysical chemistry.</li>
+                        <li>Mentoring through the Student Scientific Circle "Peregrinus" tradition I came up through
+                            myself.</li>
+                        <li>Co-authorship is the norm, not the exception — my most recent MSc student co-authored a
+                            paper published in <em>Food Chemistry</em>.
+                        </li>
+                    </ul>
+                    <a href="mailto:maciej.spiegel@umw.edu.pl?subject=Student%20project%20inquiry"
+                        class="sp-btn sp-btn-ghost-paper">Ask about a project</a>
+                </div>
 
-<!-- ============================== CONTACT ============================== -->
-<section id="contact" class="sp-contact sp-section">
-    <div class="sp-container">
-        <div class="sp-reveal">
-            <span class="sp-eyebrow">Contact</span>
-            <h2 class="sp-section-title">Let's talk</h2>
-        </div>
+                <div class="sp-collab-panel">
+                    <h4>If you are a researcher</h4>
+                    <ul>
+                        <li>Joint computational–experimental projects on scientifically interesting problems.</li>
+                        <li>Research visits, Erasmus+ exchanges, and joint MSc/PhD supervision.</li>
+                        <li>Scientific committee service, guest editing, peer review, and grant proposal development
+                            (NCN, Horizon Europe, COST).
+                        </li>
+                    </ul>
+                    <a href="mailto:maciej.spiegel@umw.edu.pl?subject=Research%20collaboration%20inquiry"
+                        class="sp-btn sp-btn-ghost-paper">Propose a collaboration</a>
+                </div>
 
-        <div class="sp-contact-grid sp-reveal">
-            <div class="sp-contact-panel">
-                <h4>Direct</h4>
-                <ul>
-                    <li><i class="bi bi-envelope-fill"></i><a href="mailto:maciej.spiegel@umw.edu.pl">maciej.spiegel@umw.edu.pl</a></li>
-                    <li><i class="bi bi-telephone-fill"></i><a href="tel:+48717840340">(+48) 71 784 03 40</a></li>
-                </ul>
+                <div class="sp-collab-panel">
+                    <h4>If you work in pharma / biotech</h4>
+                    <ul>
+                        <li>Computer-aided design and triage of drug candidates before synthesis — antioxidants,
+                            photosensitisers, metal-based anticancer agents.</li>
+                        <li>Method benchmarking and QSAR pipeline development in Python.</li>
+                        <li>Scientific consulting on computational chemistry, molecular modelling, and
+                            structure–activity relationships.</li>
+                    </ul>
+                    <a href="mailto:maciej.spiegel@umw.edu.pl?subject=Industry%20collaboration%20inquiry"
+                        class="sp-btn sp-btn-ghost-paper">Start a conversation</a>
+                </div>
             </div>
-            <div class="sp-contact-panel">
-                <h4>Address</h4>
-                <address>
-                    Department of Organic Chemistry and Pharmaceutical Technology<br>
-                    Faculty of Pharmacy, Wrocław Medical University<br>
-                    Borowska 211A, 50-556 Wrocław, Poland
-                </address>
+            <!-- ============================== LOGO STRIP ==============================
+            Institution logos, not people — see the maintenance-guide comment at
+            the top of this file for why (collaborator photos scraped off the web
+            without asking is a real no: right-of-publicity/likeness issues aside,
+            it's just not something to do to someone who agreed to work with you).
+            If you'd rather have actual people here later, ask each collaborator
+            for a headshot + permission — most academics have one on their own
+            university page they'd be fine having reused with credit.
+            Data source: js/main.js `institutions[]` ( — add a location 
+            with a logo there and it shows up here too). -->
+            <div class="sp-collab-network sp-reveal">
+                <h4>Institutions I’ve had the privilege to work with</h4>
+                <div class="sp-logostrip-track" id="logoStrip"></div>
             </div>
         </div>
+    </section>
 
-        <!-- Testimonials — add a new <div class="sp-testimonial"> block below
+    <!-- ============================== CONTACT ============================== -->
+    <section id="contact" class="sp-contact sp-section">
+        <div class="sp-container">
+            <div class="sp-reveal">
+                <span class="sp-eyebrow">Contact</span>
+                <h2 class="sp-section-title">Let's talk</h2>
+            </div>
+
+            <div class="sp-contact-grid sp-reveal">
+                <div class="sp-contact-panel">
+                    <h4>Direct</h4>
+                    <ul>
+                        <li><i class="bi bi-envelope-fill"></i><a
+                                href="mailto:maciej.spiegel@umw.edu.pl">maciej.spiegel@umw.edu.pl</a></li>
+                        <li><i class="bi bi-telephone-fill"></i><a href="tel:+48717840340">(+48) 71 784 03 40</a></li>
+                    </ul>
+                </div>
+                <div class="sp-contact-panel">
+                    <h4>Address</h4>
+                    <address>
+                        Department of Organic Chemistry and Pharmaceutical Technology<br>
+                        Faculty of Pharmacy, Wrocław Medical University<br>
+                        Borowska 211A, 50-556 Wrocław, Poland
+                    </address>
+                </div>
+            </div>
+
+            <!-- Testimonials — add a new <div class="sp-testimonial"> block below
              to add a 4th/5th quote (you mentioned 2-3 more to add). Grid
              wraps automatically at 3-per-row on desktop, 1-per-row on mobile. 
         <div class="sp-testimonials">
@@ -711,38 +904,47 @@
             <div class="sp-testimonial"><p>"He is very intelligent, hard-working, independent and rigorous in his attitude toward science."</p><footer>— Prof. Pedro Alexandrino Fernandes, University of Porto</footer></div>
             <div class="sp-testimonial"><p>"Quote text here."</p><footer>— Name, Institution</footer></div> 
         </div>-->
-    </div>
-</section>
+        </div>
+    </section>
 
-<footer class="sp-footer">
-    <div class="sp-container">
-        <p id="footer-tagline">Optimized at the B3LYP/6-31G* level of theory.</p>
-        <p id="copyright-year"></p>
-    </div>
-</footer>
+    <footer class="sp-footer">
+        <div class="sp-container">
+            <p id="footer-tagline">Optimized at the B3LYP/6-31G* level of theory.</p>
+            <p id="copyright-year"></p>
+        </div>
+    </footer>
 
-<!-- toast: dismiss is remembered in localStorage (won't re-show once closed) -->
-<div class="sp-toast" id="myToast" style="display:none;">
-    <div class="sp-toast-head">
-        <span class="sp-toast-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2h7l4 4v16H7z"/><path d="M14 2v4h4"/><path d="M9.5 13h5M9.5 16.5h5"/></svg>
-        </span>
-        <strong>Latest preprints</strong>
-        <small>31/10/2025</small>
-        <button class="sp-toast-close" id="toastClose" aria-label="Close">×</button>
+    <!-- toast: dismiss is remembered in localStorage (won't re-show once closed) -->
+    <div class="sp-toast" id="myToast" style="display:none;">
+        <div class="sp-toast-head">
+            <span class="sp-toast-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M7 2h7l4 4v16H7z" />
+                    <path d="M14 2v4h4" />
+                    <path d="M9.5 13h5M9.5 16.5h5" />
+                </svg>
+            </span>
+            <strong>Latest preprints</strong>
+            <small>31/10/2025</small>
+            <button class="sp-toast-close" id="toastClose" aria-label="Close">×</button>
+        </div>
+        <div class="sp-toast-body">
+            <ul>
+                <li><span>Aggregation of hypericin</span><a href="https://doi.org/10.26434/chemrxiv-2025-5bcs5"
+                        target="_blank" rel="noopener"><i class="bi bi-link-45deg"></i></a></li>
+                <li><span>Rubiadin phototoxicity, ODE model</span><a href="https://doi.org/10.26434/chemrxiv-2025-539xw"
+                        target="_blank" rel="noopener"><i class="bi bi-link-45deg"></i></a></li>
+                <li><span>Anthraquinone NIR photoactivity</span><a href="https://doi.org/10.26434/chemrxiv-2025-t61jj"
+                        target="_blank" rel="noopener"><i class="bi bi-link-45deg"></i></a></li>
+            </ul>
+        </div>
     </div>
-    <div class="sp-toast-body">
-        <ul>
-            <li><span>Aggregation of hypericin</span><a href="https://doi.org/10.26434/chemrxiv-2025-5bcs5" target="_blank" rel="noopener"><i class="bi bi-link-45deg"></i></a></li>
-            <li><span>Rubiadin phototoxicity, ODE model</span><a href="https://doi.org/10.26434/chemrxiv-2025-539xw" target="_blank" rel="noopener"><i class="bi bi-link-45deg"></i></a></li>
-            <li><span>Anthraquinone NIR photoactivity</span><a href="https://doi.org/10.26434/chemrxiv-2025-t61jj" target="_blank" rel="noopener"><i class="bi bi-link-45deg"></i></a></li>
-        </ul>
-    </div>
-</div>
 
-<a href="#top" class="sp-backtotop" id="backToTop" aria-label="Back to top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#top" class="sp-backtotop" id="backToTop" aria-label="Back to top"><i class="bi bi-arrow-up"></i></a>
 
-<script src="https://unpkg.com/globe.gl"></script>
-<script src="js/main.js"></script>
+    <script src="https://unpkg.com/globe.gl"></script>
+    <script src="js/main.js"></script>
 </body>
+
 </html>

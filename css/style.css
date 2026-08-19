@@ -620,6 +620,14 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon{ display:block; }
 }
 .year-badge:hover{ border-color:var(--tx-on-paper); }
 .year-badge.active{ background:var(--ink-solid); border-color:var(--ink-solid); color:var(--cream-solid); }
+#years-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
 
 #publications-list{ display:flex; flex-direction:column; gap:1px; background:var(--paper-line); border:1px solid var(--paper-line); }
 .publication-item{
@@ -683,6 +691,10 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon{ display:block; }
     width:4px;
 }
 .sp-media-featured.is-violet::after{ background:var(--violet); }
+.sp-media-featured.is-violet {
+    background: #fff;
+}
+
 .sp-media-featured.is-gold::after{ background:var(--gold); }
 .sp-media-featured.is-teal::after{ background:var(--teal); }
 
@@ -811,7 +823,7 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon{ display:block; }
 .sp-location-info{ min-height:200px; margin-top:24px; padding-top:22px; border-top:1px solid var(--ink-line); }
 .sp-location-info img{ max-height:52px; max-width:190px; margin-bottom:14px; background:#fff; padding:8px 14px; border-radius:4px; object-fit:contain; }
 .sp-location-info h4{ font-size:1.2rem; margin-bottom:2px; }
-.sp-location-info h6{ font-family:var(--f-mono); font-size:.72rem; color:var(--gold); letter-spacing:.04em; margin-bottom:14px; }
+.sp-location-info h6{ font-family:var(--f-mono); font-size:.72rem;     color:var(--tx-on-ink-dim); letter-spacing:.04em; margin-bottom:14px; }
 .sp-location-info p{ color:var(--tx-on-ink-dim); font-size:.92rem; }
 .sp-location-placeholder{ color:var(--tx-on-ink-dim); font-size:.9rem; font-style:italic; }
 .sp-legend{ display:flex; gap:22px; margin-top:18px; font-family:var(--f-mono); font-size:.72rem; color:var(--tx-on-ink-dim); }
@@ -825,10 +837,10 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon{ display:block; }
 .sp-logostrip .sp-eyebrow{ display:flex; margin-bottom:28px; }
 .sp-logostrip-track{
     display:flex; align-items:center; gap:64px; width:max-content;
-    animation:sp-scroll 30s linear infinite;
+    animation:sp-scroll 75s linear infinite;
 }
 .sp-logostrip-track img{
-    height:32px; width:auto; max-width:150px; object-fit:contain;
+    height:40px; width:auto; max-width:180px; object-fit:contain;
     filter:grayscale(1); opacity:.5;
     transition:opacity .2s, filter .2s;
 }
@@ -844,12 +856,23 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon{ display:block; }
 .sp-collab{ background:var(--paper); }
 .sp-collab-grid{ display:grid; gap:1px; background:var(--paper-line); border:1px solid var(--paper-line); margin-top:46px; }
 @media (min-width:820px){ .sp-collab-grid{ grid-template-columns:1fr 1fr; } }
-.sp-collab-panel{ background:var(--paper-2); padding:34px; }
+.sp-collab-panel{ 
+    background:var(--paper-2); 
+    padding:34px; 
+    display:flex; 
+    flex-direction:column; 
+}
+.sp-collab-panel .sp-btn{ 
+    margin-top:auto; 
+    align-self: flex-start;
+}
 .sp-collab-panel h4{ font-size:1.1rem; margin-bottom:16px; }
 .sp-collab-panel ul{ list-style:none; margin:0 0 20px; padding:0; }
 .sp-collab-panel li{ position:relative; padding-left:18px; margin-bottom:10px; font-size:.94rem; }
 .sp-collab-panel li::before{ content:''; position:absolute; left:0; top:.55em; width:6px; height:6px; background:var(--gold); }
-.sp-collab-panel:last-child li::before{ background:var(--violet); }
+.sp-collab-panel:nth-child(1) li::before{ background:var(--gold); }
+.sp-collab-panel:nth-child(2) li::before{ background:var(--teal); }
+.sp-collab-panel:nth-child(3) li::before{ background:var(--violet); }
 
 /* ---------------------------------------------------------------------- */
 /* Contact                                                                */
@@ -906,4 +929,53 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon{ display:block; }
 
 @media (max-width:520px){
     .sp-toast{ left:16px; right:16px; width:auto; bottom:76px; }
+}
+
+
+
+/* Sekcja "Working together" – trzecia kolumna + sieć partnerów */
+.sp-collab-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.sp-collab-network {
+    margin-top: 48px;
+    border-top: 1px solid var(--paper-line);
+    padding-top: 40px;
+    overflow: hidden;   /* przycina pasek do szerokości layoutu */
+}
+
+.sp-network-title {
+    font-family: var(--f-mono);
+    font-size: .78rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 30px;
+}
+
+.sp-network-intro h3 {
+    font-family: var(--f-display);
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+}
+
+.sp-network-intro p {
+    color: var(--tx-on-paper-dim);
+    font-size: .95rem;
+}
+
+/* Pasek logo w podsekcji */
+.sp-collab-network .sp-logostrip-track {
+    gap: 72px;
+    animation: sp-scroll 75s linear infinite;
+}
+
+.sp-collab-network h4 {
+    font-family: var(--f-mono);
+    font-size: .78rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 30px;
 }

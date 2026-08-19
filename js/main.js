@@ -75,6 +75,25 @@ const PortfolioApp = {
         { year: 2026, publisher: 'Elsevier', title: "Mechanistic insights into NOBA hydrolysis by viper venom secreted phospholipase A2", authors: "Calixto A.R.⁺, Pinto R.⁺, Spiegel M., Ramos M.J., Fernandes P.A.*", journal: "Biochimie", doi: "10.1016/j.biochi.2025.12.003", tags: ["IF: 3.0", "Ministerial Score: 100", "Article"] }
     ],
 
+    // ---- INSTITUTIONAL PARTNERS FOR LOGO STRIP -----------------------------
+    // Separate from locations[] on purpose: this is a curated set of
+    // institutions where real collaboration exists (home + research stays),
+    // not a list of every conference venue. Each entry requires a logo and
+    // a website; the logo will be rendered as a clickable link.
+    // Add / remove entries as collaborations evolve.
+    institutions: [
+        { name: 'Wrocław Medical University', logo: 'https://upload.wikimedia.org/wikipedia/en/3/3e/Wrocław_Medical_University_Seal.png', website: 'https://www.umw.edu.pl/' },
+        { name: 'University of Calabria', logo: 'https://apre.it/wp-content/uploads/2021/01/logo_Uni-calabria.jpg', website: 'https://www.unical.it/' },
+        { name: 'Chimie ParisTech, PSL University', logo: 'https://www.chimieparistech.psl.eu/wp-content/uploads/2018/11/logo-chimie-paristech-psl-w270.png', website: 'https://www.chimieparistech.psl.eu/' },
+        { name: 'Weizmann Institute of Science', logo: 'https://www.weizmann.ac.il/pages/sites/default/files/group_1262x_1.png', website: 'https://www.weizmann.ac.il/' },
+        { name: 'University of Porto', logo: 'https://sincronyproject.eu/wp-content/uploads/2024/02/uporto-e1603293443607.png', website: 'https://www.up.pt/' },
+        { name: 'University of Girona', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/da/Logo_de_la_universitat_de_girona.png', website: 'https://www.udg.edu/' },
+        { name: 'Altınbaş University', logo: 'https://altinbas.edu.tr/asset/awd/content/SC_IMAGE_20250120151444_1737375284.6598.jpeg', website: 'https://www.altinbas.edu.tr/' },
+        { name: 'Univerzita Karlova', logo: 'https://cdn.brandfetch.io/id725hbZju/idZjFHntey.svg', website: 'https://cuni.cz/' },
+        { name: 'University of Padova', logo: 'https://fundit.fr/sites/default/files/styles/max_650x650/public/actors/1583-universite-padoue.jpg?itok=XB3mRlKz', website: 'https://www.unipd.it/' },
+        { name: 'Universidade da Madeira', logo: 'https://www.uma.pt/wp-content/uploads/2021/09/uma-logo.png', website: 'https://www.uma.pt/' }
+    ],
+
     // ---- ADD NEW COLLABORATION / CONFERENCE MARKERS HERE -------------------
     // type: 'home' (gold, should stay just the one), 'internship' (violet —
     // research stays / ongoing collaborations), or 'conference' (teal).
@@ -90,27 +109,55 @@ const PortfolioApp = {
         // ============================================================
         // RESEARCH STAYS
         // ============================================================
-        { lat: 39.36209, lng: 16.22371, name: 'University of Calabria', logo: 'https://www.uni-med.net/wp-content/uploads/2022/12/University-of-Calabria.png', location: 'Rende, Italy', period: 'Jul–Aug 2021 (ongoing)', type: 'internship', description: 'A two-month stay with Prof. Nino Russo launched what is now my longest-running collaboration: eight joint papers on antioxidant mechanisms and metal-complex photosensitisers, with a further Erasmus+ visit planned for March 2026.' },
-        { lat: 48.84386, lng: 2.34360, name: 'Chimie ParisTech, PSL University', location: 'Paris, France', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Logo_Chimie_ParisTech_PSL.svg/2560px-Logo_Chimie_ParisTech_PSL.svg.png', period: 'Mar–May 2022', type: 'internship', description: 'Three months with Prof. Carlo Adamo, refining TD-DFT modelling of excited states — the methodological basis for the Ru(II) photosensitiser paper and, later, the whole photodynamic therapy pillar of my work.' },
+        { lat: 39.36209, lng: 16.22371, name: 'University of Calabria', logo: 'https://apre.it/wp-content/uploads/2021/01/logo_Uni-calabria.jpg', location: 'Rende, Italy', period: 'Jul–Aug 2021 (ongoing)', type: 'internship', description: 'A two-month stay with Prof. Nino Russo launched what is now my longest-running collaboration: eight joint papers on antioxidant mechanisms and metal-complex photosensitisers, with a further Erasmus+ visit planned for March 2026.' },
+        { lat: 48.84386, lng: 2.34360, name: 'Chimie ParisTech, PSL University', location: 'Paris, France', logo: 'https://www.chimieparistech.psl.eu/wp-content/uploads/2018/11/logo-chimie-paristech-psl-w270.png', period: 'Mar–May 2022', type: 'internship', description: 'Three months with Prof. Carlo Adamo, refining TD-DFT modelling of excited states — the methodological basis for the Ru(II) photosensitiser paper and, later, the whole photodynamic therapy pillar of my work.' },
         { lat: 31.90785, lng: 34.81334, name: 'Weizmann Institute of Science', logo: 'https://www.weizmann.ac.il/pages/sites/default/files/group_1262x_1.png', location: 'Rehovot, Israel', period: 'Feb–Mar 2023', type: 'internship', description: 'With Prof. Jan M. L. Martin, benchmarking coupled-cluster methods up to CCSDTQ for diatomic molecules and ozone — the paper that later won the Molecular Physics Early Career Researcher Prize 2024.' },
-        { lat: 41.15247, lng: -8.63968, name: 'University of Porto', logo: 'https://logowik.com/content/uploads/images/university-of-porto7995.jpg', location: 'Porto, Portugal', period: 'Jun–Jul 2023', type: 'internship', description: 'QM/MM modelling with Prof. Pedro A. Fernandes of the catalytic mechanism of a viper-venom phospholipase A2 — work on standardising toxicology substrate models for snake-venom research.' },
-        { lat: 41.96484, lng: 2.82941, name: 'University of Girona', location: 'Girona, Spain', logo:'https://upload.wikimedia.org/wikipedia/commons/d/da/Logo_de_la_universitat_de_girona.png', period: '15–29 May 2024', type: 'internship', description: 'A stay with Dr. Albert Poater that connected me to a wider catalysis network (Rutgers, RIKEN, Ghent, KAUST); resulted in two papers on NHC-catalysed cross-coupling and ionic-liquid lubricant chemistry.' },
+        { lat: 41.15247, lng: -8.63968, name: 'University of Porto', logo: 'https://sincronyproject.eu/wp-content/uploads/2024/02/uporto-e1603293443607.png', location: 'Porto, Portugal', period: 'Jun–Jul 2023', type: 'internship', description: 'QM/MM modelling with Prof. Pedro A. Fernandes of the catalytic mechanism of a viper-venom phospholipase A2 — work on standardising toxicology substrate models for snake-venom research.' },
+        { lat: 41.96484, lng: 2.82941, name: 'University of Girona', location: 'Girona, Spain', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/da/Logo_de_la_universitat_de_girona.png', period: '15–29 May 2024', type: 'internship', description: 'A stay with Dr. Albert Poater that connected me to a wider catalysis network (Rutgers, RIKEN, Ghent, KAUST); resulted in two papers on NHC-catalysed cross-coupling and ionic-liquid lubricant chemistry.' },
         { lat: 39.36209, lng: 16.22371, name: 'University of Calabria (2nd stay)', logo: 'https://www.uni-med.net/wp-content/uploads/2022/12/University-of-Calabria.png', location: 'Rende, Italy', period: 'Mar 2026 (Erasmus+)', type: 'internship', description: 'A second research stay with Prof. Nino Russo, deepening the collaboration on photophysical properties of metal-based photosensitisers and extending the TD-DFT toolkit developed during the first stay.' },
-        { lat: 40.98319, lng: 28.87226, name: 'Altınbaş University', location: 'Istanbul, Turkey', logo: '', period: '2026 (IDUB mobility)', type: 'internship', description: 'A funded mobility project with Prof. Ebru Özdemir Nath, applying computational chemistry to the biological activity of phytochemicals isolated by her group — a new collaboration bridging natural product chemistry and in silico pharmacology.' },
-        { lat: 50.06967, lng: 14.42821, name: 'Univerzita Karlova', location: 'Prague, Czech Republic', logo: '', period: '2026 (Visegrad Fellowship)', type: 'internship', description: 'QM/MM study with Prof. Jaroslav V. Burda on how Au(I) complexes inhibit thioredoxin reductase — work that touches directly on selenocysteine-containing active sites and expands my methodological toolkit into bioinorganic QM/MM.' },
-        { lat: 45.34603, lng: 11.95726, name: 'University of Padova', location: 'Padua, Italy', logo: '', period: '2026', type: 'internship', description: 'Collaboration with Dr. Massimiliano Magro on a nanogrant project bridging computational chemistry and nanoparticle design — a new methodological direction at the interface of materials science and pharmacy.' },
+        { lat: 40.98319, lng: 28.87226, name: 'Altınbaş University', location: 'Istanbul, Turkey', logo: 'https://altinbas.edu.tr/asset/awd/content/SC_IMAGE_20250120151444_1737375284.6598.jpeg', period: '2026 (IDUB mobility)', type: 'internship', description: 'A funded mobility project with Prof. Ebru Özdemir Nath, applying computational chemistry to the biological activity of phytochemicals isolated by her group — a new collaboration bridging natural product chemistry and in silico pharmacology.' },
+        { lat: 50.06967, lng: 14.42821, name: 'Univerzita Karlova', location: 'Prague, Czech Republic', logo: 'https://cdn.brandfetch.io/id725hbZju/idZjFHntey.svg', period: '2026 (Visegrad Fellowship)', type: 'internship', description: 'QM/MM study with Prof. Jaroslav V. Burda on how Au(I) complexes inhibit thioredoxin reductase — work that touches directly on selenocysteine-containing active sites and expands my methodological toolkit into bioinorganic QM/MM.' },
+        { lat: 45.34603, lng: 11.95726, name: 'University of Padova', location: 'Padua, Italy', logo: 'https://fundit.fr/sites/default/files/styles/max_650x650/public/actors/1583-universite-padoue.jpg?itok=XB3mRlKz', period: '2026', type: 'internship', description: 'Collaboration with Dr. Massimiliano Magro on a nanogrant project bridging computational chemistry and nanoparticle design — a new methodological direction at the interface of materials science and pharmacy.' },
         // ============================================================
         // CONFERENCES
         // ============================================================
         { lat: 48.84386, lng: 2.34360, name: '32nd SCT Young Research Fellows Meeting', location: 'Paris, France', logo: 'https://www.efmc.info/data/thumbnail/1669046799logo-sct-2022.png', period: '26–28 Feb 2025', type: 'conference', description: 'Presented in silico design of fisetin derivatives with enhanced senotherapeutic properties, and reconnected with Prof. Carlo Adamo at Chimie ParisTech after several years.' },
-        { lat: 40.83946, lng: 14.18525, name: 'EuChemS CompChem 2025', logo: 'https://www.eucompchem2025.unina.it/wp-content/uploads/2025/02/comchem25_logo.png', location: 'Naples, Italy', period: '15–18 Sep 2025', type: 'conference', description: 'A poster on antisense-oligonucleotide binding-affinity optimisation at one of Europe\'s leading computational chemistry forums, alongside a brief exchange with the ORCA developer team.' },
+        { lat: 40.83946, lng: 14.18525, name: 'EuChemS CompChem 2025', logo: 'https://www.eucompchem2025.unina.it/wp-content/uploads/2025/03/cropped-Picture1.png', location: 'Naples, Italy', period: '15–18 Sep 2025', type: 'conference', description: 'A poster on antisense-oligonucleotide binding-affinity optimisation at one of Europe\'s leading computational chemistry forums, alongside a brief exchange with the ORCA developer team.' },
         { lat: 32.65891, lng: -16.92465, name: 'PSE Meeting 2025: Phytochemicals as Drugs, Foods, and Biocommunicators', logo: 'https://new.phytochemicalsociety.org/wp-content/uploads/2021/12/PSE287x120.png', location: 'Funchal, Madeira, Portugal', period: '22–24 Oct 2025', type: 'conference', description: 'Presented preliminary QSAR results from the NCN Preludium grant on the antioxidant activity of dietary polyphenols in FRAP, DPPH and ABTS assays.' },
-        { lat: 43.30555, lng: -2.01047, name: 'DFT 2026 Conference', location: 'San Sebastián, Spain', logo: '', period: '2026', type: 'conference', description: 'Presenting recent work on benchmarking DFT methods for excited-state properties of natural photosensitisers — a key forum for the computational chemistry community.', url: 'https://dft2026.com' },
-        { lat: 32.65891, lng: -16.92465, name: 'TheoBio 2026', location: 'Funchal, Madeira, Portugal', logo: '', period: '2026', type: 'conference', description: 'Presenting the latest results from the NCN Preludium grant on QSAR modelling of antioxidant activity — an extension of the work first shown at PSE 2025.', url: 'https://theobio2026.com' },
-        { lat: 39.90571, lng: 116.39130, name: 'MDMM 2026 (MDPI Conference)', location: 'Beijing, China', logo: '', period: '2026', type: 'conference', description: 'Modeling and Design of Molecular Materials — presenting a contribution on computational methods for photodynamic therapy agents at this MDPI-sponsored conference.', url: 'https://mdmm2026.com' },
-        { lat: 51.10974, lng: 17.07193, name: 'Wrocławskie Dni Modelowania Molekularnego 2026', location: 'Wrocław, Poland', logo: '', period: '2026', type: 'conference', description: 'A local flagship event — presenting recent work on quantum-chemical modelling of photosensitiser photophysics to the Polish computational chemistry community.' },
-        { lat: 51.25056, lng: 22.57010, name: 'XVIII Interdyscyplinarna Konferencja Naukowa TYGIEL 2026', location: 'Lubling (remote), Poland', logo: '', period: '2026', type: 'conference', description: 'An interdisciplinary forum bringing together young researchers from across Poland — presenting work at the intersection of computational chemistry and pharmaceutical sciences.' },
+        { lat: 43.30555, lng: -2.01047, name: 'DFT 2026', location: 'San Sebastián, Spain', logo: 'https://dft2026.com/wp-content/uploads/2025/01/gris-e1739989919790.png', period: '2026', type: 'conference', description: 'Presenting recent work on benchmarking DFT methods for excited-state properties of natural photosensitisers — a key forum for the computational chemistry community.', url: 'https://dft2026.com' },
+        { lat: 32.65891, lng: -16.92465, name: 'TheoBio 2026', location: 'Funchal, Madeira, Portugal', logo: 'https://theobio2026.com/wp-content/uploads/2026/03/cropped-Logo_TheoBio2026horiz_noBG-1-scaled-1-600x156.png', period: '2026', type: 'conference', description: 'Presenting the latest results from the NCN Preludium grant on QSAR modelling of antioxidant activity — an extension of the work first shown at PSE 2025.', url: 'https://theobio2026.com' },
+        { lat: 39.90571, lng: 116.39130, name: 'MMCS 2026', location: 'Beijing, China', logo: 'https://api.sciforum.net/events_files/1319/MMCS%202026-Banner-hero.jpg', period: '2026', type: 'conference', description: 'Modeling and Design of Molecular Materials — presenting a contribution on computational methods for photodynamic therapy agents at this MDPI-sponsored conference.', url: 'https://mdmm2026.com' },
+        { lat: 51.10974, lng: 17.07193, name: 'Wrocławskie Dni Modelowania Molekularnego 2026', location: 'Wrocław, Poland', logo: 'https://makromol.chem.uni.wroc.pl/assets/basic/img/UWr-logo.svg', period: '2026', type: 'conference', description: 'A local flagship event — presenting recent work on quantum-chemical modelling of photosensitiser photophysics to the Polish computational chemistry community.' },
+        { lat: 51.10974, lng: 17.07193, name: 'International Conference Modeling and Design of Molecular Materials 2026', location: 'Wrocław, Poland', logo: 'https://study.gov.pl/sites/default/files/logo_ucz_wiz/88/logo_pwr_kolor_poziom_ang.png', period: '2026', type: 'conference', description: 'A local flagship event — presenting recent work on quantum-chemical modelling of photosensitiser photophysics to the Polish computational chemistry community.' },
+        { lat: 51.25056, lng: 22.57010, name: 'XVIII Interdyscyplinarna Konferencja Naukowa TYGIEL 2026', location: 'Lubling (remote), Poland', logo: 'https://konferencja-tygiel.pl/wp-content/uploads/sites/15/2025/09/baner-KT18-2026_1920x480pc.jpg', period: '2026', type: 'conference', description: 'An interdisciplinary forum bringing together young researchers from across Poland — presenting work at the intersection of computational chemistry and pharmaceutical sciences.' },
     ],
+
+    // Odstęp (w stopniach) między rozstawionymi punktami, gdy w jednym
+    // miejscu nakłada się 2-3 różne typy (np. home + conference w tym
+    // samym mieście). Przy 2 typach wychodzi para punktów naprzeciw siebie;
+    // dopiero od 3 w górę robi się z tego właściwa rozeta. To NIE jest
+    // wartość z dokumentacji globe.gl (biblioteka nie ma pojęcia "rozety"
+    // ani "pary") - to czysto wizualny dobór, dostrojony pod altitude:1.6
+    // używane w pointOfView() po kliknięciu. Zwiększ, jeśli punkty się
+    // nachodzą na Twoim ekranie; zmniejsz, jeśli wyglądają na rozjechane.
+    MIXED_MARKER_OFFSET_DEG: 0.15,
+
+    // Promienie walców na globusie - subiektywny dobór wizualny (nie ma
+    // "poprawnej" wartości w dokumentacji globe.gl), zmniejszone względem
+    // poprzedniej wersji (0.55 / 0.8) na Twoją prośbę. SINGLE dotyczy
+    // zwykłego pojedynczego punktu i pojedynczego typu w parze/rozecie;
+    // MERGED dotyczy scalonych wielokrotności (ten sam typ >1 razy w tym
+    // samym miejscu) - dostrój obie wartości do gustu, zachowując
+    // MERGED > SINGLE, żeby "więcej wydarzeń" nadal było widoczne.
+    POINT_RADIUS_SINGLE: 0.5,
+    POINT_RADIUS_MERGED: 0.65,
+
+    getTypeColor(type) {
+        if (type === 'home') return '#FFD700';
+        if (type === 'conference') return '#1fe0b0';
+        return '#9d8cff'; // internship / inne
+    },
+
 
     groupLocations(locs) {
         const map = new Map();
@@ -120,13 +167,11 @@ const PortfolioApp = {
             map.get(key).push(loc);
         });
 
-        return Array.from(map.entries()).map(([key, group]) => {
+        return Array.from(map.entries()).flatMap(([key, group]) => {
             const [lat, lng] = key.split(',').map(Number);
-            if (group.length === 1) return group[0];
+            if (group.length === 1) return [group[0]];
 
-            // Spłaszczamy grupę – zachowujemy dane pierwszego punktu jako bazę
-            const base = { ...group[0], lat, lng };
-            base.combined = group.map(g => ({
+            const combined = group.map(g => ({
                 name: g.name,
                 location: g.location,
                 period: g.period,
@@ -135,11 +180,52 @@ const PortfolioApp = {
                 logo: g.logo,
                 url: g.url || ''
             }));
-            // Jeśli w grupie są różne typy, ustawiamy typ "mixed"
-            const types = new Set(group.map(g => g.type));
-            base.type = types.size > 1 ? 'mixed' : group[0].type;
-            base._groupSize = group.length;
-            return base;
+            // Grupujemy PO TYPIE, nie po pojedynczym wpisie - liczy się, ile
+            // RÓŻNYCH kategorii (home/internship/conference) jest w tym
+            // miejscu, nie ile surowych wydarzeń. Dwa wydarzenia TEGO
+            // SAMEGO typu w tym samym miejscu to zawsze jeden (większy)
+            // walec danego typu - nigdy dwa osobne, rozstawione płatki.
+            const byType = new Map();
+            group.forEach(g => {
+                if (!byType.has(g.type)) byType.set(g.type, []);
+                byType.get(g.type).push(g);
+            });
+            const distinctTypes = Array.from(byType.keys());
+
+            if (distinctTypes.length === 1) {
+                // Jeden typ, kilka wydarzeń -> jeden większy walec (jak dotychczas).
+                return [{ ...group[0], lat, lng, combined, _merged: true }];
+            }
+
+            // Kilka RÓŻNYCH typów w tym samym miejscu -> jeden walec NA TYP
+            // (2 typy = para naprzeciw siebie, 3 typy = rozeta), rozstawione
+            // wokół wspólnej lokalizacji - dokładnie tyle punktów, ile
+            // różnych kategorii, niezależnie od tego, ile surowych wydarzeń
+            // kryje się w każdej z nich. Jeśli dany typ ma więcej niż jedno
+            // wydarzenie (np. 2x conference), JEGO walec też dostaje
+            // _merged:true (większy promień) - tak jak scalony pojedynczy
+            // punkt powyżej, zamiast mnożyć płatki tego samego koloru.
+            // dLng dzielimy przez cos(lat), bo stopnie długości geogr.
+            // "kurczą się" bliżej biegunów - bez tego okrąg wyszedłby
+            // owalny zamiast równomierny.
+            const n = distinctTypes.length;
+            return distinctTypes.map((type, i) => {
+                const entries = byType.get(type);
+                const angle = (2 * Math.PI * i) / n - Math.PI / 2; // start od góry
+                const dLat = this.MIXED_MARKER_OFFSET_DEG * Math.sin(angle);
+                const dLng = (this.MIXED_MARKER_OFFSET_DEG * Math.cos(angle)) / Math.cos(lat * Math.PI / 180);
+                return {
+                    ...entries[0],
+                    lat: lat + dLat,
+                    lng: lng + dLng,
+                    combined,
+                    _merged: entries.length > 1,
+                    // Prawdziwy środek grupy - używany przy centrowaniu kamery
+                    // po kliknięciu, żeby nie doskakiwała do jednego płatka.
+                    _centerLat: lat,
+                    _centerLng: lng
+                };
+            });
         });
     },
 
@@ -232,7 +318,7 @@ const PortfolioApp = {
         }
     ],
 
-// ---- QUANTUM FOOTER TAGLINES -------------------------------------------
+    // ---- QUANTUM FOOTER TAGLINES -------------------------------------------
     footerTaglines: [
         "Website optimized at the B3LYP / 6-31G* level of theory.",
         "Site designed & built, atom by curated atom.",
@@ -243,10 +329,10 @@ const PortfolioApp = {
         "No SCF convergence failures were suffered in the making of this site.",
         "Layout reached its global minimum."
     ],
-    
+
     /* ------------------------------------------------------------------ */
 
-    init(){
+    init() {
         this.currentYear = new Date().getFullYear().toString();
         this.initTheme();
         this.generateYearBadges();
@@ -256,7 +342,7 @@ const PortfolioApp = {
         this.initLogoStrip();
         this.initReveal();
         this.initTimeline();
-        this.initTimelineHelix(); 
+        this.initTimelineHelix();
         this.initMobileMenu();
         this.initToast();
         this.initBackToTop();
@@ -269,7 +355,7 @@ const PortfolioApp = {
        (prefers-color-scheme) > night (the site's default design). The
        toggle button (#themeToggle) always just flips day<->night and saves
        the explicit choice, overriding the OS setting from then on. */
-    initTheme(){
+    initTheme() {
         const root = document.documentElement;
         const saved = localStorage.getItem('sp_theme');
         let theme = saved;
@@ -296,10 +382,10 @@ const PortfolioApp = {
         }
     },
 
-    generateYearBadges(){
-        const years = [...new Set(this.publications.map(p => p.year))].sort((a,b) => b-a);
-        const hasCurrent = years.includes(parseInt(this.currentYear,10));
-        if(!hasCurrent){ this.currentYear = years[0].toString(); }
+    generateYearBadges() {
+        const years = [...new Set(this.publications.map(p => p.year))].sort((a, b) => b - a);
+        const hasCurrent = years.includes(parseInt(this.currentYear, 10));
+        if (!hasCurrent) { this.currentYear = years[0].toString(); }
 
         const filter = document.getElementById('years-filter');
         filter.innerHTML = years.map(yr =>
@@ -315,7 +401,7 @@ const PortfolioApp = {
         });
     },
 
-    renderMedia(){
+    renderMedia() {
         const container = document.getElementById('mediaLayout');
         if (!container) return;
 
@@ -349,11 +435,11 @@ const PortfolioApp = {
         `;
     },
 
-    renderPublications(year){
+    renderPublications(year) {
         const container = document.getElementById('publications-list');
         const filtered = this.publications
             .filter(p => p.year.toString() === year)
-            .sort((a,b) => (a.cycle ? -1 : 0) - (b.cycle ? -1 : 0));
+            .sort((a, b) => (a.cycle ? -1 : 0) - (b.cycle ? -1 : 0));
 
         container.style.opacity = '0';
         container.style.transition = 'opacity .25s ease';
@@ -363,8 +449,8 @@ const PortfolioApp = {
                 <div class="publication-item ${pub.cycle === 'H' ? 'is-habilitation' : ''} ${pub.cycle === 'D' ? 'is-doctoral' : ''}">
                     <div class="publisher-logo-container">
                         ${this.publishers[pub.publisher]
-                            ? `<img src="${this.publishers[pub.publisher]}" alt="${pub.publisher}" class="publisher-logo" loading="lazy">`
-                            : `<span class="publisher-logo-text">${pub.publisher}</span>`}
+                    ? `<img src="${this.publishers[pub.publisher]}" alt="${pub.publisher}" class="publisher-logo" loading="lazy">`
+                    : `<span class="publisher-logo-text">${pub.publisher}</span>`}
                     </div>
                     <div class="publication-content">
                         <div class="publication-title">${pub.title}</div>
@@ -380,7 +466,7 @@ const PortfolioApp = {
         }, 120);
     },
 
-    generateTags(tags){
+    generateTags(tags) {
         return tags.map(tag => {
             let cls = 'bg-dark';
             if (/^Q[1-4]$/.test(tag)) cls = 'bg-secondary';
@@ -390,7 +476,7 @@ const PortfolioApp = {
         }).join(' ');
     },
 
-    initGlobe(){
+    initGlobe() {
         const viz = document.getElementById('globeViz');
         if (!viz || typeof Globe === 'undefined') return;
 
@@ -416,12 +502,11 @@ const PortfolioApp = {
                 .pointAltitude(0.02)
                 .pointsData(pointsData)
                 .pointColor(p => {
-                    if (p.type === 'mixed') return '#1fe0b0';     // teal dla mieszanych
                     if (p.type === 'home') return '#FFD700';
                     if (p.type === 'conference') return '#1fe0b0';
                     return '#9d8cff';                             // internship / inne
                 })
-                .pointRadius(p => p.combined ? 0.8 : 0.55)
+                .pointRadius(p => p._merged ? this.POINT_RADIUS_MERGED : this.POINT_RADIUS_SINGLE)
                 // === NOWOŚĆ: tooltip po najechaniu ===
                 .pointLabel(p => {
                     if (!p.combined) {
@@ -429,7 +514,7 @@ const PortfolioApp = {
                         return `
                             <div style="background:rgba(12,17,32,.95); color:#f4f3ef; padding:12px 14px; border-radius:4px; font-family:var(--f-mono); font-size:.72rem; line-height:1.4; max-width:220px;">
                                 <strong>${p.name}</strong><br>
-                                <span style="opacity:.7;">${p.location} · ${p.period}</span>
+                                <span style="opacity:.7;">${p.location} · ${p.period} · <span style="color:${this.getTypeColor(p.type)}; font-weight:600;">${p.type}</span></span>
                             </div>
                         `;
                     } else {
@@ -473,7 +558,8 @@ const PortfolioApp = {
                             html += `
                                 <div style="margin-top:14px; ${idx > 0 ? 'border-top:1px dashed rgba(255,255,255,.2); padding-top:10px;' : ''}">
                                     ${logoHtml}
-                                    <h6 style="margin:0 0 4px;">${item.period} · ${item.type}</h6>
+                                    <strong style="display:block; margin:0 0 4px;">${item.name}</strong>
+                                    <h6 style="margin:0 0 4px;">${item.period} · <span style="color:${this.getTypeColor(item.type)}">${item.type}</span></h6>
                                     <p style="margin:0; font-size:.9rem;">${item.description}</p>
                                     ${item.url ? `<a href="${item.url}" target="_blank" rel="noopener" style="font-family:var(--f-mono); font-size:.72rem; color:var(--gold);">${item.url}</a>` : ''}
                                 </div>
@@ -481,15 +567,15 @@ const PortfolioApp = {
                         });
                         infoBox.innerHTML = html;
                     } else {
-                        // pojedynczy punkt bez zmian
+                        // pojedynczy punkt – kolor zgodny z typem
                         infoBox.innerHTML = `
                             ${point.logo ? `<img src="${point.logo}" alt="">` : ''}
                             <h4>${point.name}</h4>
-                            <h6>${point.location} · ${point.period}</h6>
+                            <h6>${point.location} · ${point.period} · <span style="color:${this.getTypeColor(point.type)}">${point.type}</span></h6>
                             <p>${point.description}</p>
                         `;
                     }
-                    this.globe.pointOfView({ lat: point.lat, lng: point.lng, altitude: 1.6 }, 1500);
+                    this.globe.pointOfView({ lat: point._centerLat ?? point.lat, lng: point._centerLng ?? point.lng, altitude: 1.6 }, 1500);
                 });
 
             this.globe.pointOfView({ lat: 35, lng: 15, altitude: 2.1 }, 0);
@@ -506,7 +592,7 @@ const PortfolioApp = {
     /* Journey timeline accordion — collapsed by default (except the item
        marked class="is-open" in the HTML), grid-template-rows animation
        handled entirely in CSS; this just flips the class + aria state. */
-    initTimeline(){
+    initTimeline() {
         document.querySelectorAll('.sp-tl-toggle').forEach(btn => {
             btn.addEventListener('click', () => {
                 const item = btn.closest('.sp-tl-item');
@@ -536,10 +622,10 @@ const PortfolioApp = {
        wstęga, a nie dwie płaskie linie. Przerysowuje się przez
        ResizeObserver, więc zostaje poprawna też live, gdy akordeon się
        otwiera/zamyka. */
-    initTimelineHelix(){
+    initTimelineHelix() {
         const wrap = document.querySelector('.sp-timeline-helix-wrap');
-        const svg  = document.querySelector('.sp-timeline-helix');
-        if(!wrap || !svg) return;
+        const svg = document.querySelector('.sp-timeline-helix');
+        if (!wrap || !svg) return;
 
         /* Smooth path through many sampled points: each point becomes a
            quadratic control point, the curve actually passes through the
@@ -547,11 +633,11 @@ const PortfolioApp = {
            freehand curve from point array" trick, no per-segment control-
            point math to get wrong. pts is an array of {x,y}. */
         const smoothPath = pts => {
-            if(pts.length < 2) return '';
+            if (pts.length < 2) return '';
             let d = `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
-            for(let i = 1; i < pts.length - 1; i++){
-                const mx = (pts[i].x + pts[i+1].x) / 2;
-                const my = (pts[i].y + pts[i+1].y) / 2;
+            for (let i = 1; i < pts.length - 1; i++) {
+                const mx = (pts[i].x + pts[i + 1].x) / 2;
+                const my = (pts[i].y + pts[i + 1].y) / 2;
                 d += ` Q${pts[i].x.toFixed(1)},${pts[i].y.toFixed(1)} ${mx.toFixed(1)},${my.toFixed(1)}`;
             }
             const last = pts[pts.length - 1];
@@ -561,14 +647,14 @@ const PortfolioApp = {
 
         const draw = () => {
             const w = wrap.clientWidth, h = wrap.clientHeight;
-            if(!w || !h) return;
+            if (!w || !h) return;
 
-            const cx     = w / 2;
-            const amp    = Math.max(6, w / 2 - 6);
-            const half   = h / Math.max(2, Math.round(h / 27));  // half-period, tuned so it divides h evenly
+            const cx = w / 2;
+            const amp = Math.max(6, w / 2 - 6);
+            const half = h / Math.max(2, Math.round(h / 27));  // half-period, tuned so it divides h evenly
             const period = half * 2;
-            const step   = 4;                                     // px between samples — plenty smooth at this wavelength
-            const gap    = Math.min(4, half * 0.25);               // px trimmed off the "back" strand at each crossing
+            const step = 4;                                     // px between samples — plenty smooth at this wavelength
+            const gap = Math.min(4, half * 0.25);               // px trimmed off the "back" strand at each crossing
 
             // cos()  — NOT sin() — so the curve sits at its EXTREME (peak
             // separation) at y=0, not at zero: that's what makes rungs (at
@@ -584,23 +670,23 @@ const PortfolioApp = {
             // top and bottom); exactly one strand is "outward" in each
             // zone, and that's the one drawn on top there.
             const crossings = [0];
-            for(let y = period / 4; y < h; y += half) crossings.push(y);
+            for (let y = period / 4; y < h; y += half) crossings.push(y);
             crossings.push(h);
 
             let backParts = [], frontParts = [];
 
-            for(let z = 0; z < crossings.length - 1; z++){
+            for (let z = 0; z < crossings.length - 1; z++) {
                 const y0 = crossings[z], y1 = crossings[z + 1];
                 const aFront = z % 2 === 0;
                 const front = aFront ? xA : xB;
-                const back  = aFront ? xB : xA;
+                const back = aFront ? xB : xA;
                 const frontColor = aFront ? 'var(--gold)' : 'var(--violet)';
-                const backColor  = aFront ? 'var(--violet)' : 'var(--gold)';
+                const backColor = aFront ? 'var(--violet)' : 'var(--gold)';
 
                 const sample = (fn, ys, ye) => {
                     const pts = [];
-                    for(let y = ys; y <= ye; y += step) pts.push({ x: fn(y), y });
-                    if(pts.length === 0 || pts[pts.length - 1].y < ye - 0.01) pts.push({ x: fn(ye), y: ye });
+                    for (let y = ys; y <= ye; y += step) pts.push({ x: fn(y), y });
+                    if (pts.length === 0 || pts[pts.length - 1].y < ye - 0.01) pts.push({ x: fn(ye), y: ye });
                     return pts;
                 };
 
@@ -608,7 +694,7 @@ const PortfolioApp = {
 
                 const b0 = y0 + (z > 0 ? gap : 0);
                 const b1 = y1 - (z < crossings.length - 2 ? gap : 0);
-                if(b1 > b0){
+                if (b1 > b0) {
                     backParts.push(`<path d="${smoothPath(sample(back, b0, b1))}" fill="none" stroke="${backColor}" stroke-width="1.3" stroke-linecap="round" opacity=".38"/>`);
                 }
             }
@@ -626,10 +712,10 @@ const PortfolioApp = {
             // without scattering extra shapes across the strip.
             const rungStep = Math.max(6, half / 4);
             let rungs = [];
-            for(let y = 0; y <= h + 0.01; y += rungStep){
+            for (let y = 0; y <= h + 0.01; y += rungStep) {
                 const yy = Math.min(y, h);
                 const rxA = xA(yy).toFixed(1), rxB = xB(yy).toFixed(1), ryF = yy.toFixed(1);
-                if(Math.abs(xA(yy) - xB(yy)) < 1.5) continue; // skip near-zero-length rungs right at a crossing
+                if (Math.abs(xA(yy) - xB(yy)) < 1.5) continue; // skip near-zero-length rungs right at a crossing
                 rungs.push(`<line x1="${rxA}" y1="${ryF}" x2="${rxB}" y2="${ryF}" stroke="var(--tx-on-paper-dim)" stroke-width="2" stroke-linecap="round" opacity=".42"/>`);
             }
 
@@ -640,13 +726,13 @@ const PortfolioApp = {
 
         let queued = false;
         const schedule = () => {
-            if(queued) return;
+            if (queued) return;
             queued = true;
             requestAnimationFrame(() => { queued = false; draw(); });
         };
 
         schedule();
-        if('ResizeObserver' in window){
+        if ('ResizeObserver' in window) {
             new ResizeObserver(schedule).observe(wrap);
         } else {
             window.addEventListener('resize', schedule);
@@ -677,16 +763,20 @@ const PortfolioApp = {
        logo — Altınbaş/Univerzita Karlova currently have '') so there's one
        source of truth for institutions, shared with the globe. Duplicates
        the list once so the CSS translateX(-50%) loop is seamless. */
-    initLogoStrip(){
+    initLogoStrip() {
         const track = document.getElementById('logoStrip');
         if (!track) return;
-        const logos = this.locations.filter(l => l.logo);
-        if (!logos.length) return;
-        const doubled = [...logos, ...logos];
-        track.innerHTML = doubled.map(l => `<img src="${l.logo}" alt="${l.name}" loading="lazy">`).join('');
+        const institutions = this.institutions.filter(i => i.logo);
+        if (!institutions.length) return;
+        const doubled = [...institutions, ...institutions];
+        track.innerHTML = doubled.map(i => `
+            <a href="${i.website || '#'}" target="_blank" rel="noopener" title="${i.name}">
+                <img src="${i.logo}" alt="${i.name}" loading="lazy">
+            </a>
+        `).join('');
     },
 
-    initReveal(){
+    initReveal() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -705,7 +795,7 @@ const PortfolioApp = {
        Right now it dismisses PERMANENTLY (localStorage) for a given date,
        not just for the current visit — if you'd rather it reappear on
        every fresh page load instead, swap localStorage for sessionStorage. */
-    initToast(){
+    initToast() {
         const toast = document.getElementById('myToast');
         const closeBtn = document.getElementById('toastClose');
         const dateEl = toast ? toast.querySelector('small') : null;
@@ -721,7 +811,7 @@ const PortfolioApp = {
         });
     },
 
-    initBackToTop(){
+    initBackToTop() {
         const btn = document.getElementById('backToTop');
         if (!btn) return;
         window.addEventListener('scroll', () => {
@@ -729,18 +819,18 @@ const PortfolioApp = {
         });
     },
 
-    initCopyrightYear(){
+    initCopyrightYear() {
         const el = document.getElementById('copyright-year');
-        if (el) el.textContent = `© ${new Date().getFullYear()} Maciej Spiegel`;
+        if (el) el.textContent = `© ${new Date().getFullYear()} Dr Maciej Spiegel`;
     },
 
-    initFooterTagline(){
+    initFooterTagline() {
         const el = document.getElementById('footer-tagline');
         if (!el) return;
         const randomQuote = this.footerTaglines[Math.floor(Math.random() * this.footerTaglines.length)];
         el.textContent = randomQuote;
     },
-    
+
 };
 
 document.addEventListener('DOMContentLoaded', () => PortfolioApp.init());
