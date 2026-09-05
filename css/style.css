@@ -1837,7 +1837,7 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon {
     gap: 64px;
     width: max-content;
     /* CHANGE SPEED HERE: Lower number = faster (e.g., 25s instead of 75s) */
-    animation: sp-scroll 40s linear infinite; 
+    animation: sp-scroll 40s linear infinite;
 }
 
 /* Optional: Override gap specifically when inside .sp-collab-network */
@@ -1866,6 +1866,7 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon {
     from {
         transform: translateX(0);
     }
+
     to {
         transform: translateX(-50%);
     }
