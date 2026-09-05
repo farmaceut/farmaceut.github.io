@@ -38,25 +38,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<script>
-  (function() {
-    // 1. Check if user made a manual choice on the website
-    const saved = localStorage.getItem('sp_theme');
-    if (saved) {
-      document.documentElement.setAttribute('data-theme', saved);
-      return;
-    }
-
-    // 2. Fall back directly to macOS / Windows system preference
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    document.documentElement.setAttribute('data-theme', prefersDark ? 'night' : 'day');
-  })();
-</script>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maciej Spiegel, MPharm, PhD — Computational Pharmacist</title>
+
+    <!-- Anti-FOUC Theme Initialisation (Musi być na samym początku head) -->
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem('sp_theme');
+                if (saved) {
+                    document.documentElement.setAttribute('data-theme', saved);
+                    return;
+                }
+                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.setAttribute('data-theme', prefersDark ? 'night' : 'day');
+            } catch (e) { }
+        })();
+    </script>
 
     <!-- Primary SEO -->
     <meta name="description"
@@ -71,14 +71,14 @@
     <meta name="theme-color" content="#0b0f19" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://farmaceut.github.io/">
     <meta property="og:title" content="Maciej Spiegel, MPharm, PhD — Computational and Pharmaceutical Chemist">
     <meta property="og:description"
         content="In silico drug design across antioxidant chemistry, photodynamic therapy, and senotherapeutics at Wrocław Medical University.">
-    <meta property="og:image" content="https://www.umw.edu.pl/sites/default/files/2024-12/Maciej%20Spiegel.png">
-    <meta property="og:image:alt" content="Maciej Spiegel, Assistant Professor at Wrocław Medical University">
+    <meta property="og:image" content="https://farmaceut.github.io/assets/logo.png">
+    <meta property="og:image:alt" content="Maciej Spiegel — Personal Academic Website Logo">
     <meta property="og:site_name" content="Maciej Spiegel — Personal Academic Website">
     <meta property="og:locale" content="en_US">
 
@@ -89,37 +89,23 @@
     <meta name="twitter:title" content="Maciej Spiegel, MPharm, PhD — Computational and Pharmaceutical Chemist">
     <meta name="twitter:description"
         content="In silico drug design across antioxidant chemistry, photodynamic therapy, and senotherapeutics at Wrocław Medical University.">
-    <meta name="twitter:image" content="https://www.umw.edu.pl/sites/default/files/2024-12/Maciej%20Spiegel.png">
-    <meta name="twitter:image:alt" content="Maciej Spiegel, Assistant Professor at Wrocław Medical University">
+    <meta name="twitter:image" content="https://farmaceut.github.io/assets/logo.png">
+    <meta name="twitter:image:alt" content="Maciej Spiegel — Personal Academic Website Logo">
 
     <!-- Icons -->
-    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="assets/logo.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
     <!-- Performance & Preloading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://www.umw.edu.pl/sites/default/files/2024-12/Maciej%20Spiegel.png" as="image"
-        type="image/png">
+    <link rel="preload" href="assets/logo.png" as="image" type="image/png">
 
     <!-- Stylesheets -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/style.css">
-
-    <!-- Anti-FOUC Theme Initialisation -->
-    <script>
-        (function () {
-            try {
-                var t = localStorage.getItem('sp_theme');
-                if (!t) {
-                    t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'day' : 'night';
-                }
-                document.documentElement.setAttribute('data-theme', t);
-            } catch (e) { }
-        })();
-    </script>
 
     <!-- Structured Data (JSON-LD) for Search Engines -->
     <script type="application/ld+json">
@@ -136,7 +122,7 @@
         "department": "Department of Organic Chemistry and Pharmaceutical Technology"
       },
       "url": "https://farmaceut.github.io/",
-      "image": "https://www.umw.edu.pl/sites/default/files/2024-12/Maciej%20Spiegel.png",
+      "image": "https://farmaceut.github.io/assets/logo.png",
       "sameAs": [
         "https://orcid.org/0000-0002-8012-1026",
         "https://scholar.google.com/citations?user=G_K5_CMAAAAJ",
@@ -322,8 +308,7 @@
                     <div class="sp-orbit sp-orbit-2" aria-hidden="true"></div>
                     <div class="sp-orbit sp-orbit-3" aria-hidden="true"></div>
                     <div class="sp-portrait">
-                        <img itemprop="image"
-                            src="https://www.umw.edu.pl/sites/default/files/2024-12/Maciej%20Spiegel.png"
+                        <img itemprop="image" src="assets/1779181255161.jpeg"
                             alt="Portrait of Dr. Maciej Spiegel, Assistant Professor at Wrocław Medical University"
                             loading="eager" fetchpriority="high">
                     </div>
@@ -1175,9 +1160,10 @@
     <script src="https://unpkg.com/globe.gl" defer></script>
     <script src="js/data.js" defer></script>
     <script src="js/main.js" defer></script>
-    
+
     <!-- Cloudflare Web Analytics -->
-    <script src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "dee65cb6a6904e7e928497752cc5f624"}' defer></script>
+    <script src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "dee65cb6a6904e7e928497752cc5f624"}' defer></script>
 </body>
 
 </html>
