@@ -120,19 +120,19 @@ const PortfolioApp = {
         { lat: 39.36209, lng: 16.22371, name: 'University of Calabria (2nd stay)', logo: 'https://www.uni-med.net/wp-content/uploads/2022/12/University-of-Calabria.png', location: 'Rende, Italy', period: 'Mar 2026 (Erasmus+)', type: 'internship', description: 'A second research stay with Prof. Nino Russo, deepening the collaboration on photophysical properties of metal-based photosensitisers and extending the TD-DFT toolkit developed during the first stay.' },
         { lat: 40.98319, lng: 28.87226, name: 'Altınbaş University', location: 'Istanbul, Turkey', logo: 'https://altinbas.edu.tr/asset/awd/content/SC_IMAGE_20250120151444_1737375284.6598.jpeg', period: '2026 (IDUB mobility)', type: 'internship', description: 'A funded mobility project with Prof. Ebru Özdemir Nath, applying computational chemistry to the biological activity of phytochemicals isolated by her group — a new collaboration bridging natural product chemistry and in silico pharmacology.' },
         { lat: 50.06967, lng: 14.42821, name: 'Univerzita Karlova', location: 'Prague, Czech Republic', logo: 'https://cdn.brandfetch.io/id725hbZju/idZjFHntey.svg', period: '2026 (Visegrad Fellowship)', type: 'internship', description: 'QM/MM study with Prof. Jaroslav V. Burda on how Au(I) complexes inhibit thioredoxin reductase — work that touches directly on selenocysteine-containing active sites and expands my methodological toolkit into bioinorganic QM/MM.' },
-        { lat: 45.34603, lng: 11.95726, name: 'University of Padova', location: 'Padua, Italy', logo: 'https://fundit.fr/sites/default/files/styles/max_650x650/public/actors/1583-universite-padoue.jpg?itok=XB3mRlKz', period: '2026', type: 'internship', description: 'Collaboration with Dr. Massimiliano Magro on a nanogrant project bridging computational chemistry and nanoparticle design — a new methodological direction at the interface of materials science and pharmacy.' },
+        { lat: 45.34603, lng: 11.95726, name: 'University of Padova', location: 'Padua, Italy', logo: 'https://fundit.fr/sites/default/files/styles/max_650x650/public/actors/1583-universite-padoue.jpg?itok=XB3mRlKz', period: '2026', type: 'internship', description: 'Nanogrant collaboration with Prof. Massimiliano Magro on computational modelling of DNA/nano-bio systems — bridging computational chemistry and experimental nanomedicine.' },
         // ============================================================
         // CONFERENCES
         // ============================================================
-        { lat: 48.84386, lng: 2.34360, name: '32nd SCT Young Research Fellows Meeting', location: 'Paris, France', logo: 'https://www.efmc.info/data/thumbnail/1669046799logo-sct-2022.png', period: '26–28 Feb 2025', type: 'conference', description: 'Presented in silico design of fisetin derivatives with enhanced senotherapeutic properties, and reconnected with Prof. Carlo Adamo at Chimie ParisTech after several years.' },
-        { lat: 40.83946, lng: 14.18525, name: 'EuChemS CompChem 2025', logo: 'https://www.eucompchem2025.unina.it/wp-content/uploads/2025/03/cropped-Picture1.png', location: 'Naples, Italy', period: '15–18 Sep 2025', type: 'conference', description: 'A poster on antisense-oligonucleotide binding-affinity optimisation at one of Europe\'s leading computational chemistry forums, alongside a brief exchange with the ORCA developer team.' },
-        { lat: 32.65891, lng: -16.92465, name: 'PSE Meeting 2025: Phytochemicals as Drugs, Foods, and Biocommunicators', logo: 'https://new.phytochemicalsociety.org/wp-content/uploads/2021/12/PSE287x120.png', location: 'Funchal, Madeira, Portugal', period: '22–24 Oct 2025', type: 'conference', description: 'Presented preliminary QSAR results from the NCN Preludium grant on the antioxidant activity of dietary polyphenols in FRAP, DPPH and ABTS assays.' },
-        { lat: 43.30555, lng: -2.01047, name: 'DFT 2026', location: 'San Sebastián, Spain', logo: 'https://dft2026.com/wp-content/uploads/2025/01/gris-e1739989919790.png', period: '2026', type: 'conference', description: 'Presenting recent work on benchmarking DFT methods for excited-state properties of natural photosensitisers — a key forum for the computational chemistry community.', url: 'https://dft2026.com' },
-        { lat: 32.65891, lng: -16.92465, name: 'TheoBio 2026', location: 'Funchal, Madeira, Portugal', logo: 'https://theobio2026.com/wp-content/uploads/2026/03/cropped-Logo_TheoBio2026horiz_noBG-1-scaled-1-600x156.png', period: '2026', type: 'conference', description: 'Presenting the latest results from the NCN Preludium grant on QSAR modelling of antioxidant activity — an extension of the work first shown at PSE 2025.', url: 'https://theobio2026.com' },
-        { lat: 39.90571, lng: 116.39130, name: 'MMCS 2026', location: 'Beijing, China', logo: 'https://api.sciforum.net/events_files/1319/MMCS%202026-Banner-hero.jpg', period: '2026', type: 'conference', description: 'Modeling and Design of Molecular Materials — presenting a contribution on computational methods for photodynamic therapy agents at this MDPI-sponsored conference.', url: 'https://mdmm2026.com' },
-        { lat: 51.10974, lng: 17.07193, name: 'Wrocławskie Dni Modelowania Molekularnego 2026', location: 'Wrocław, Poland', logo: 'https://makromol.chem.uni.wroc.pl/assets/basic/img/UWr-logo.svg', period: '2026', type: 'conference', description: 'A local flagship event — presenting recent work on quantum-chemical modelling of photosensitiser photophysics to the Polish computational chemistry community.' },
-        { lat: 51.10974, lng: 17.07193, name: 'International Conference Modeling and Design of Molecular Materials 2026', location: 'Wrocław, Poland', logo: 'https://study.gov.pl/sites/default/files/logo_ucz_wiz/88/logo_pwr_kolor_poziom_ang.png', period: '2026', type: 'conference', description: 'A local flagship event — presenting recent work on quantum-chemical modelling of photosensitiser photophysics to the Polish computational chemistry community.' },
-        { lat: 51.25056, lng: 22.57010, name: 'XVIII Interdyscyplinarna Konferencja Naukowa TYGIEL 2026', location: 'Lubling (remote), Poland', logo: 'https://konferencja-tygiel.pl/wp-content/uploads/sites/15/2025/09/baner-KT18-2026_1920x480pc.jpg', period: '2026', type: 'conference', description: 'An interdisciplinary forum bringing together young researchers from across Poland — presenting work at the intersection of computational chemistry and pharmaceutical sciences.' },
+        { lat: 48.84386, lng: 2.34360, name: '32nd SCT Young Research Fellows Meeting', location: 'Paris, France', logo: 'https://www.efmc.info/data/thumbnail/1669046799logo-sct-2022.png', period: '26–28 Feb 2025', type: 'conference', description: 'Presented in silico design of fisetin derivatives with enhanced senotherapeutic properties.' },
+        { lat: 40.83946, lng: 14.18525, name: 'EuChemS CompChem 2025', logo: 'https://www.eucompchem2025.unina.it/wp-content/uploads/2025/03/cropped-Picture1.png', location: 'Naples, Italy', period: '15–18 Sep 2025', type: 'conference', description: 'A poster on antisense-oligonucleotide binding-affinity optimisation at one of Europe\'s leading computational chemistry forums, alongside a brief exchange with the ORCA developer team.', url: 'https://www.eucompchem2025.unina.it/' },
+        { lat: 32.65891, lng: -16.92465, name: 'PSE Meeting 2025: Phytochemicals as Drugs, Foods, and Biocommunicators', logo: 'https://new.phytochemicalsociety.org/wp-content/uploads/2021/12/PSE287x120.png', location: 'Funchal, Madeira, Portugal', period: '22–24 Oct 2025', type: 'conference', description: 'Presented preliminary QSAR results from the NCN Preludium grant on the antioxidant activity of dietary polyphenols in FRAP, DPPH and ABTS assays.', url: 'https://new.phytochemicalsociety.org/pse-meeting-2025/' },
+        { lat: 43.30555, lng: -2.01047, name: 'DFT 2026', location: 'San Sebastián, Spain', logo: 'https://dft2026.com/wp-content/uploads/2025/01/gris-e1739989919790.png', period: '2026', type: 'conference', description: 'Presenting DFT-guided design of Pt(II) complexes with heterocyclic ligands as anticancer agents — a key forum for the computational chemistry community.', url: 'https://dft2026.com' },
+        { lat: 32.65891, lng: -16.92465, name: 'TheoBio 2026', location: 'Funchal, Madeira, Portugal', logo: 'https://theobio2026.com/wp-content/uploads/2026/03/cropped-Logo_TheoBio2026horiz_noBG-1-scaled-1-600x156.png', period: '2026', type: 'conference', description: 'Presenting TROI, a trajectory-resolved Monte Carlo framework for directional steric accessibility at reactive centres — an extension of the work first shown at PSE 2025.', url: 'https://theobio2026.com' },
+        { lat: 39.90571, lng: 116.39130, name: 'MMCS 2026', location: 'Beijing, China', logo: 'https://api.sciforum.net/events_files/1319/MMCS%202026-Banner-hero.jpg', period: '2026', type: 'conference', description: 'Presented preliminary QSAR results from the NCN Preludium grant on the antioxidant activity of dietary polyphenols in FRAP, DPPH and ABTS assays.', url: 'https://www.sciforum.net/event/mmcs2026' },
+        { lat: 51.10974, lng: 17.07193, name: 'Wrocławskie Dni Modelowania Molekularnego 2026', location: 'Wrocław, Poland', logo: 'https://makromol.chem.uni.wroc.pl/assets/basic/img/UWr-logo.svg', period: '2026', type: 'conference', description: 'A local flagship event — presenting recent work on quantum-chemical modelling of photosensitiser photophysics to the Polish computational chemistry community.', url: 'https://makromol.chem.uni.wroc.pl/' },
+        { lat: 51.10974, lng: 17.07193, name: 'Modeling and Design of Molecular Materials 2025', location: 'Wrocław, Poland', logo: 'https://study.gov.pl/sites/default/files/logo_ucz_wiz/88/logo_pwr_kolor_poziom_ang.png', period: '2026', type: 'conference', description: 'A local flagship event — presenting recent work on quantum-chemical modelling of photosensitiser photophysics to the Polish computational chemistry community.', url: 'https://mdmm2026.com' },
+        { lat: 51.25056, lng: 22.57010, name: 'XVIII Interdyscyplinarna Konferencja Naukowa TYGIEL 2026', location: 'Lubling (remote), Poland', logo: 'https://konferencja-tygiel.pl/wp-content/uploads/sites/15/2025/09/baner-KT18-2026_1920x480pc.jpg', period: '2026', type: 'conference', description: 'An interdisciplinary forum bringing together young researchers from across Poland — presenting work at the intersection of computational chemistry and pharmaceutical sciences.', url: 'https://konferencja-tygiel.pl/' },
     ],
 
     // Odstęp (w stopniach) między rozstawionymi punktami, gdy w jednym
@@ -161,6 +161,53 @@ const PortfolioApp = {
         return '#9d8cff'; // internship / inne
     },
 
+    openLocationCarousel(infoBox, point) {
+        const items = point.combined;
+        const city = items[0].location || items[0].name;
+
+        infoBox.innerHTML = `
+        <h4>${city}</h4>
+        <div class="sp-location-carousel">
+            <button type="button" class="sp-loc-nav sp-loc-prev" aria-label="Poprzedni wpis">‹</button>
+            <div class="sp-location-slide"></div>
+            <button type="button" class="sp-loc-nav sp-loc-next" aria-label="Następny wpis">›</button>
+        </div>
+        <span class="sp-location-counter"></span>
+    `;
+
+        const slide = infoBox.querySelector('.sp-location-slide');
+        const counter = infoBox.querySelector('.sp-location-counter');
+        let idx = 0;
+
+        const paint = (dir) => {
+            idx = ((idx % items.length) + items.length) % items.length;
+            const item = items[idx];
+            const html = `
+            ${item.logo ? `<img src="${item.logo}" alt="${item.name}">` : ''}
+            <strong style="display:block; margin:0 0 4px;">${item.name}</strong>
+            <h6 style="margin:0 0 4px;">${item.period} · <span style="color:${this.getTypeColor(item.type)}">${item.type}</span></h6>
+            <p style="margin:0; font-size:.9rem;">${item.description}</p>
+            ${item.url ? `<a href="${item.url}" target="_blank" rel="noopener" style="font-family:var(--f-mono); font-size:.72rem; color:var(--gold);">${item.url}</a>` : ''}
+        `;
+            counter.textContent = `${idx + 1} / ${items.length}`;
+
+            if (dir === 0) { slide.innerHTML = html; return; }
+
+            slide.style.setProperty('--slide-dir', dir > 0 ? '14px' : '-14px');
+            slide.classList.add('is-shifted');
+            slide.addEventListener('transitionend', function onOut() {
+                slide.removeEventListener('transitionend', onOut);
+                slide.innerHTML = html;
+                slide.style.setProperty('--slide-dir', dir > 0 ? '-14px' : '14px');
+                requestAnimationFrame(() => requestAnimationFrame(() => slide.classList.remove('is-shifted')));
+            }, { once: true });
+        };
+
+        infoBox.querySelector('.sp-loc-prev').addEventListener('click', () => { idx--; paint(-1); });
+        infoBox.querySelector('.sp-loc-next').addEventListener('click', () => { idx++; paint(1); });
+
+        paint(0);
+    },
 
     groupLocations(locs) {
         const map = new Map();
@@ -241,7 +288,7 @@ const PortfolioApp = {
         {
             date: '2025',
             title: 'Bright Therapy: Photodynamic Therapy in Oncology',
-            description: 'Explains how femtosecond-scale molecular processes determine PDT effectiveness and why quantum modelling improves its clinical predictability.',
+            description: 'How femtosecond-scale molecular processes determine PDT effectiveness and why quantum modelling improves clinical predictability.',
             type: 'Research highlight',
             color: 'violet',
             url: 'https://www.umw.edu.pl/pl/aktualnosci/jasna-terapia-terapia-fotodynamiczna-w-onkologii',
@@ -250,7 +297,7 @@ const PortfolioApp = {
         {
             date: 'Oct 2024',
             title: 'Designing Innovative Drugs: Antioxidants and Senolytics',
-            description: 'A popular-science feature on computational design of new senolytic compounds, including fisetin derivatives.',
+            description: 'Popular-science article on computational design of new senolytic compounds, including fisetin derivatives.',
             type: 'Popular science',
             color: 'teal',
             url: 'https://www.umw.edu.pl/pl/aktualnosci/dr-maciej-spiegel-projektuje-innowacyjne-leki'
@@ -274,7 +321,7 @@ const PortfolioApp = {
         {
             date: 'Dec 2025',
             title: 'University Celebration 2025: Doctorate Before 30 and Top 2% Listing',
-            description: 'Mentioned among scientists honoured for a doctorate before age 30 and inclusion in World\'s Top 2% Scientists.',
+            description: 'Recognised among Wroclaw Medical University scientists included in the World\'s Top 2% Scientists 2025 ranking (single-year category)..',
             type: 'University news',
             color: 'teal',
             url: 'https://www.umw.edu.pl/pl/aktualnosci/swieto-uczelni-2025-w-auli-leopoldina'
@@ -289,7 +336,7 @@ const PortfolioApp = {
         },
         {
             date: '2025',
-            title: 'Elected to the Council of the Pharmaceutical Sciences Discipline',
+            title: 'Member of the Council of the Pharmaceutical Sciences Discipline',
             description: 'Elected as a member of the Council for the 2025–2028 term.',
             type: 'University news',
             color: 'teal',
@@ -314,7 +361,7 @@ const PortfolioApp = {
         {
             date: 'Sep 2024',
             title: 'World\'s Top 2% Scientists 2024',
-            description: 'Named in the single-year category of the 2024 edition, placing 15th among UMW researchers.',
+            description: 'Named in the single-year category of the 2024 edition, placing 15th among Wroclaw Medical University researchers.',
             type: 'Ranking news',
             color: 'teal',
             url: 'https://www.umw.edu.pl/pl/aktualnosci/worlds-top-2-proc-scientists-2024'
@@ -565,42 +612,14 @@ const PortfolioApp = {
                 .onPointClick(point => {
                     const infoBox = document.getElementById('locationInfo');
                     if (point.combined) {
-                        const city = point.combined[0].location || point.combined[0].name;
-                        // Zbierz unikalne loga z grupy
-                        const uniqueLogos = [...new Set(point.combined.map(item => item.logo).filter(Boolean))];
-
-                        let html = `<h4>${city}</h4>`;
-
-                        // Jeśli jest dokładnie jedno unikalne logo, pokaż je na górze
-                        if (uniqueLogos.length === 1) {
-                            html += `<img src="${uniqueLogos[0]}" alt="" style="max-height:52px; max-width:190px; margin:10px 0 14px; background:#fff; padding:8px 14px; border-radius:4px; object-fit:contain;">`;
-                        }
-
-                        point.combined.forEach((item, idx) => {
-                            // Logo tylko wtedy, gdy w grupie są różne loga i dany wpis je ma
-                            const logoHtml = (uniqueLogos.length > 1 && item.logo)
-                                ? `<img src="${item.logo}" alt="${item.name}" style="max-height:40px; max-width:150px; margin:0 0 8px; background:#fff; padding:6px 10px; border-radius:3px; object-fit:contain;">`
-                                : '';
-
-                            html += `
-                                <div style="margin-top:14px; ${idx > 0 ? 'border-top:1px dashed rgba(255,255,255,.2); padding-top:10px;' : ''}">
-                                    ${logoHtml}
-                                    <strong style="display:block; margin:0 0 4px;">${item.name}</strong>
-                                    <h6 style="margin:0 0 4px;">${item.period} · <span style="color:${this.getTypeColor(item.type)}">${item.type}</span></h6>
-                                    <p style="margin:0; font-size:.9rem;">${item.description}</p>
-                                    ${item.url ? `<a href="${item.url}" target="_blank" rel="noopener" style="font-family:var(--f-mono); font-size:.72rem; color:var(--gold);">${item.url}</a>` : ''}
-                                </div>
-                            `;
-                        });
-                        infoBox.innerHTML = html;
+                        this.openLocationCarousel(infoBox, point);
                     } else {
-                        // pojedynczy punkt – kolor zgodny z typem
                         infoBox.innerHTML = `
-                            ${point.logo ? `<img src="${point.logo}" alt="">` : ''}
-                            <h4>${point.name}</h4>
-                            <h6>${point.location} · ${point.period} · <span style="color:${this.getTypeColor(point.type)}">${point.type}</span></h6>
-                            <p>${point.description}</p>
-                        `;
+            ${point.logo ? `<img src="${point.logo}" alt="">` : ''}
+            <h4>${point.name}</h4>
+            <h6>${point.location} · ${point.period} · <span style="color:${this.getTypeColor(point.type)}">${point.type}</span></h6>
+            <p>${point.description}</p>
+        `;
                     }
                     this.globe.pointOfView({ lat: point._centerLat ?? point.lat, lng: point._centerLng ?? point.lng, altitude: 1.6 }, 1500);
                 });
@@ -825,13 +844,19 @@ const PortfolioApp = {
     initToast() {
         const toast = document.getElementById('myToast');
         const closeBtn = document.getElementById('toastClose');
-        const dateEl = toast ? toast.querySelector('small') : null;
-        if (!toast || !dateEl) return;
+        if (!toast || !closeBtn) return;
 
-        const key = 'sp_toast_dismissed_' + dateEl.textContent.trim();
+        const listItems = toast.querySelectorAll('.sp-toast-body li');
+        if (listItems.length === 0) return;          // brak pre-printów → nie pokazuj tostu
+
+        // Użyj pierwszego tytułu pre-printu jako klucza
+        const firstPreprint = listItems[0].querySelector('span')?.textContent?.trim() || 'latest';
+        const key = 'sp_toast_dismissed_' + firstPreprint;
+
         if (localStorage.getItem(key) === '1') return;
 
         setTimeout(() => { toast.style.display = 'block'; }, 1400);
+
         closeBtn.addEventListener('click', () => {
             toast.style.display = 'none';
             localStorage.setItem(key, '1');
