@@ -85,8 +85,8 @@ const PortfolioApp = {
     // a website; the logo will be rendered as a clickable link.
     // Add / remove entries as collaborations evolve.
     institutions: [
-        { name: 'Wrocław Medical University', logo: 'https://upload.wikimedia.org/wikipedia/en/3/3e/Wrocław_Medical_University_Seal.png', website: 'https://www.umw.edu.pl/' },
-        { name: 'University of Calabria', logo: 'https://apre.it/wp-content/uploads/2021/01/logo_Uni-calabria.jpg', website: 'https://www.unical.it/' },
+        { name: 'Wrocław Medical University', logo: 'https://study.gov.pl/sites/default/files/logo_ucz_wiz/97/logo_umw_uklad_symetryczny_wersja_ang_dwuwierszowa_wersja_cmyk.jpg', website: 'https://www.umw.edu.pl/' },
+        { name: 'University of Calabria', logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReMWIkPXm3LFrUJ-WDQ13mvpubnMCYfd3roJGir8f4X0aY1NruI7hKbf6Y&s=10', website: 'https://www.unical.it/' },
         { name: 'Chimie ParisTech, PSL University', logo: 'https://www.chimieparistech.psl.eu/wp-content/uploads/2018/11/logo-chimie-paristech-psl-w270.png', website: 'https://www.chimieparistech.psl.eu/' },
         { name: 'Weizmann Institute of Science', logo: 'https://www.weizmann.ac.il/pages/sites/default/files/group_1262x_1.png', website: 'https://www.weizmann.ac.il/' },
         { name: 'University of Porto', logo: 'https://sincronyproject.eu/wp-content/uploads/2024/02/uporto-e1603293443607.png', website: 'https://www.up.pt/' },
@@ -94,11 +94,12 @@ const PortfolioApp = {
         { name: 'Altınbaş University', logo: 'https://altinbas.edu.tr/asset/awd/content/SC_IMAGE_20250120151444_1737375284.6598.jpeg', website: 'https://www.altinbas.edu.tr/' },
         { name: 'Univerzita Karlova', logo: 'https://cdn.brandfetch.io/id725hbZju/idZjFHntey.svg', website: 'https://cuni.cz/' },
         { name: 'University of Padova', logo: 'https://fundit.fr/sites/default/files/styles/max_650x650/public/actors/1583-universite-padoue.jpg?itok=XB3mRlKz', website: 'https://www.unipd.it/' },
-        { name: 'Universidade da Madeira', logo: 'https://www.uma.pt/wp-content/uploads/2021/09/uma-logo.png', website: 'https://www.uma.pt/' }
+        { name: 'Universidade da Madeira', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/43/UMa.png?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original', website: 'https://www.uma.pt/' },
+        { name: 'Université Frère Mentouri - Constantine 1', logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVasI-_mheU9R6ICt6TZT5gQ_O4KS5_eAozfUf3-BtxMlarHtFGYj0v8k&s=10', website: 'https://www.umc.edu.dz/', }
     ],
 
     // ---- ADD NEW COLLABORATION / CONFERENCE MARKERS HERE -------------------
-    // type: 'home' (gold, should stay just the one), 'internship' (violet —
+    // type: 'home' (gold, should stay just the one), 'reserach_stay' (violet —
     // research stays / ongoing collaborations), or 'conference' (teal).
     // Colour mapping lives in initGlobe()'s pointColor() below.
     // logo is optional — leave '' if you don't have a clean transparent one;
@@ -112,27 +113,48 @@ const PortfolioApp = {
         // ============================================================
         // RESEARCH STAYS
         // ============================================================
-        { lat: 39.36209, lng: 16.22371, name: 'University of Calabria', logo: 'https://apre.it/wp-content/uploads/2021/01/logo_Uni-calabria.jpg', location: 'Rende, Italy', period: 'Jul–Aug 2021 (ongoing)', type: 'internship', description: 'A two-month stay with Prof. Nino Russo launched what is now my longest-running collaboration: eight joint papers on antioxidant mechanisms and metal-complex photosensitisers, with a further Erasmus+ visit planned for March 2026.' },
-        { lat: 48.84386, lng: 2.34360, name: 'Chimie ParisTech, PSL University', location: 'Paris, France', logo: 'https://www.chimieparistech.psl.eu/wp-content/uploads/2018/11/logo-chimie-paristech-psl-w270.png', period: 'Mar–May 2022', type: 'internship', description: 'Three months with Prof. Carlo Adamo, refining TD-DFT modelling of excited states — the methodological basis for the Ru(II) photosensitiser paper and, later, the whole photodynamic therapy pillar of my work.' },
-        { lat: 31.90785, lng: 34.81334, name: 'Weizmann Institute of Science', logo: 'https://www.weizmann.ac.il/pages/sites/default/files/group_1262x_1.png', location: 'Rehovot, Israel', period: 'Feb–Mar 2023', type: 'internship', description: 'With Prof. Jan M. L. Martin, benchmarking coupled-cluster methods up to CCSDTQ for diatomic molecules and ozone — the paper that later won the Molecular Physics Early Career Researcher Prize 2024.' },
-        { lat: 41.15247, lng: -8.63968, name: 'University of Porto', logo: 'https://sincronyproject.eu/wp-content/uploads/2024/02/uporto-e1603293443607.png', location: 'Porto, Portugal', period: 'Jun–Jul 2023', type: 'internship', description: 'QM/MM modelling with Prof. Pedro A. Fernandes of the catalytic mechanism of a viper-venom phospholipase A2 — work on standardising toxicology substrate models for snake-venom research.' },
-        { lat: 41.96484, lng: 2.82941, name: 'University of Girona', location: 'Girona, Spain', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/da/Logo_de_la_universitat_de_girona.png', period: '15–29 May 2024', type: 'internship', description: 'A stay with Dr. Albert Poater that connected me to a wider catalysis network (Rutgers, RIKEN, Ghent, KAUST); resulted in two papers on NHC-catalysed cross-coupling and ionic-liquid lubricant chemistry.' },
-        { lat: 39.36209, lng: 16.22371, name: 'University of Calabria (2nd stay)', logo: 'https://www.uni-med.net/wp-content/uploads/2022/12/University-of-Calabria.png', location: 'Rende, Italy', period: 'Mar 2026 (Erasmus+)', type: 'internship', description: 'A second research stay with Prof. Nino Russo, deepening the collaboration on photophysical properties of metal-based photosensitisers and extending the TD-DFT toolkit developed during the first stay.' },
-        { lat: 40.98319, lng: 28.87226, name: 'Altınbaş University', location: 'Istanbul, Turkey', logo: 'https://altinbas.edu.tr/asset/awd/content/SC_IMAGE_20250120151444_1737375284.6598.jpeg', period: '2026 (IDUB mobility)', type: 'internship', description: 'A funded mobility project with Prof. Ebru Özdemir Nath, applying computational chemistry to the biological activity of phytochemicals isolated by her group — a new collaboration bridging natural product chemistry and in silico pharmacology.' },
-        { lat: 50.06967, lng: 14.42821, name: 'Univerzita Karlova', location: 'Prague, Czech Republic', logo: 'https://cdn.brandfetch.io/id725hbZju/idZjFHntey.svg', period: '2026 (Visegrad Fellowship)', type: 'internship', description: 'QM/MM study with Prof. Jaroslav V. Burda on how Au(I) complexes inhibit thioredoxin reductase — work that touches directly on selenocysteine-containing active sites and expands my methodological toolkit into bioinorganic QM/MM.' },
-        { lat: 45.34603, lng: 11.95726, name: 'University of Padova', location: 'Padua, Italy', logo: 'https://fundit.fr/sites/default/files/styles/max_650x650/public/actors/1583-universite-padoue.jpg?itok=XB3mRlKz', period: '2026', type: 'internship', description: 'Nanogrant collaboration with Prof. Massimiliano Magro on computational modelling of DNA/nano-bio systems — bridging computational chemistry and experimental nanomedicine.' },
+        { lat: 39.36209, lng: 16.22371, name: 'University of Calabria', logo: 'https://apre.it/wp-content/uploads/2021/01/logo_Uni-calabria.jpg', location: 'Rende, Italy', period: 'Jul–Aug 2021', type: 'research stay', description: 'A two-month stay with Prof. Nino Russo launched what is now my longest-running collaboration: eight joint papers on antioxidant mechanisms and metal-complex photosensitisers.' },
+        { lat: 48.84386, lng: 2.34360, name: 'Chimie ParisTech, PSL University', location: 'Paris, France', logo: 'https://www.chimieparistech.psl.eu/wp-content/uploads/2018/11/logo-chimie-paristech-psl-w270.png', period: 'Mar–May 2022', type: 'research stay', description: 'Three months with Prof. Carlo Adamo, refining TD-DFT modelling of excited states — the methodological basis for the Ru(II) photosensitiser paper and, later, the whole photodynamic therapy pillar of my work.' },
+        { lat: 31.90785, lng: 34.81334, name: 'Weizmann Institute of Science', logo: 'https://www.weizmann.ac.il/pages/sites/default/files/group_1262x_1.png', location: 'Rehovot, Israel', period: 'Feb–Mar 2023', type: 'research stay', description: 'With Prof. Jan M. L. Martin, benchmarking coupled-cluster methods up to CCSDTQ for diatomic molecules and ozone — the paper that later won the Molecular Physics Early Career Researcher Prize 2024.' },
+        { lat: 41.15247, lng: -8.63968, name: 'University of Porto', logo: 'https://sincronyproject.eu/wp-content/uploads/2024/02/uporto-e1603293443607.png', location: 'Porto, Portugal', period: 'Jun–Jul 2023', type: 'research stay', description: 'QM/MM modelling with Prof. Pedro A. Fernandes of the catalytic mechanism of a viper-venom phospholipase A2 — work on standardising toxicology substrate models for snake-venom research.' },
+        { lat: 41.96484, lng: 2.82941, name: 'University of Girona', location: 'Girona, Spain', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/da/Logo_de_la_universitat_de_girona.png', period: '15–29 May 2024', type: 'research stay', description: 'A stay with Dr. Albert Poater that resulted in two papers on NHC-catalysed cross-coupling and ionic-liquid lubricant chemistry.' },
+        { lat: 39.36209, lng: 16.22371, name: 'University of Calabria (2nd stay)', logo: 'https://www.uni-med.net/wp-content/uploads/2022/12/University-of-Calabria.png', location: 'Rende, Italy', period: 'Mar 2026 (Erasmus+)', type: 'research stay', description: 'A second research stay with Prof. Nino Russo, deepening the collaboration on computational chemistry developed during the first stay.' },
+        { lat: 40.98319, lng: 28.87226, name: 'Altınbaş University', location: 'Istanbul, Turkey', logo: 'https://altinbas.edu.tr/asset/awd/content/SC_IMAGE_20250120151444_1737375284.6598.jpeg', period: '2026 (IDUB mobility)', type: 'research stay', description: 'A funded mobility project with Prof. Ebru Özdemir Nath, applying computational chemistry to evaluate rejuvenating phytochemicals isolated by her research group — a new collaboration bridging natural product chemistry and in silico pharmacology.' },
+        { lat: 50.06967, lng: 14.42821, name: 'Univerzita Karlova', location: 'Prague, Czech Republic', logo: 'https://cdn.brandfetch.io/id725hbZju/idZjFHntey.svg', period: '2026 (Visegrad Fellowship)', type: 'research stay', description: 'QM/MM study with Prof. Jaroslav V. Burda on how Au(I) complexes inhibit thioredoxin reductase — work that touches directly on selenocysteine-containing active sites and expands my methodological toolkit into bioinorganic QM/MM.' },
+        { lat: 45.34603, lng: 11.95726, name: 'University of Padova', location: 'Padua, Italy', logo: 'https://fundit.fr/sites/default/files/styles/max_650x650/public/actors/1583-universite-padoue.jpg?itok=XB3mRlKz', period: '2026', type: 'research stay', description: 'Nanogrant collaboration with Prof. Massimiliano Magro on computational modelling of DNA/nano-bio systems — bridging computational chemistry and experimental nanomedicine.' },
+
         // ============================================================
         // CONFERENCES
         // ============================================================
         { lat: 48.84386, lng: 2.34360, name: '32nd SCT Young Research Fellows Meeting', location: 'Paris, France', logo: 'https://www.efmc.info/data/thumbnail/1669046799logo-sct-2022.png', period: '26–28 Feb 2025', type: 'conference', description: 'Presented in silico design of fisetin derivatives with enhanced senotherapeutic properties.' },
-        { lat: 40.83946, lng: 14.18525, name: 'EuChemS CompChem 2025', logo: 'https://www.eucompchem2025.unina.it/wp-content/uploads/2025/03/cropped-Picture1.png', location: 'Naples, Italy', period: '15–18 Sep 2025', type: 'conference', description: 'A poster on antisense-oligonucleotide binding-affinity optimisation at one of Europe\'s leading computational chemistry forums, alongside a brief exchange with the ORCA developer team.', url: 'https://www.eucompchem2025.unina.it/' },
-        { lat: 32.65891, lng: -16.92465, name: 'PSE Meeting 2025: Phytochemicals as Drugs, Foods, and Biocommunicators', logo: 'https://new.phytochemicalsociety.org/wp-content/uploads/2021/12/PSE287x120.png', location: 'Funchal, Madeira, Portugal', period: '22–24 Oct 2025', type: 'conference', description: 'Presented preliminary QSAR results from the NCN Preludium grant on the antioxidant activity of dietary polyphenols in FRAP, DPPH and ABTS assays.', url: 'https://new.phytochemicalsociety.org/pse-meeting-2025/' },
+        { lat: 40.83946, lng: 14.18525, name: 'EuChemS CompChem 2025', logo: 'https://www.eucompchem2025.unina.it/wp-content/uploads/2025/03/cropped-Picture1.png', location: 'Naples, Italy', period: '15–18 Sep 2025', type: 'conference', description: 'Presented a poster on optimizing the mRNA binding affinity of antisense oligonucleotides (ASOs) using simple nucleobase modifications via an integrated QM/MD framework at one of Europe\'s leading computational chemistry forums.', url: 'https://www.eucompchem2025.unina.it/' },
+        { lat: 32.65891, lng: -16.92465, name: 'PSE Meeting 2025: Phytochemicals as Drugs, Foods, and Biocommunicators', logo: 'https://new.phytochemicalsociety.org/wp-content/uploads/2021/12/PSE287x120.png', location: 'Funchal, Madeira, Portugal', period: '22–24 Oct 2025', type: 'conference', description: 'Presented experimental insights and preliminary data on the antioxidant capacity of polyphenolic compounds within the framework of the NCN Preludium grant.', url: 'https://new.phytochemicalsociety.org/pse-meeting-2025/' },
         { lat: 43.30555, lng: -2.01047, name: 'DFT 2026', location: 'San Sebastián, Spain', logo: 'https://dft2026.com/wp-content/uploads/2025/01/gris-e1739989919790.png', period: '2026', type: 'conference', description: 'Presenting DFT-guided design of Pt(II) complexes with heterocyclic ligands as anticancer agents — a key forum for the computational chemistry community.', url: 'https://dft2026.com' },
-        { lat: 32.65891, lng: -16.92465, name: 'TheoBio 2026', location: 'Funchal, Madeira, Portugal', logo: 'https://theobio2026.com/wp-content/uploads/2026/03/cropped-Logo_TheoBio2026horiz_noBG-1-scaled-1-600x156.png', period: '2026', type: 'conference', description: 'Presenting TROI, a trajectory-resolved Monte Carlo framework for directional steric accessibility at reactive centres — an extension of the work first shown at PSE 2025.', url: 'https://theobio2026.com' },
-        { lat: 39.90571, lng: 116.39130, name: 'MMCS 2026', location: 'Beijing, China', logo: 'https://api.sciforum.net/events_files/1319/MMCS%202026-Banner-hero.jpg', period: '2026', type: 'conference', description: 'Presented preliminary QSAR results from the NCN Preludium grant on the antioxidant activity of dietary polyphenols in FRAP, DPPH and ABTS assays.', url: 'https://www.sciforum.net/event/mmcs2026' },
-        { lat: 51.10974, lng: 17.07193, name: 'Wrocławskie Dni Modelowania Molekularnego 2026', location: 'Wrocław, Poland', logo: 'https://makromol.chem.uni.wroc.pl/assets/basic/img/UWr-logo.svg', period: '2026', type: 'conference', description: 'A local flagship event — presenting recent work on quantum-chemical modelling of photosensitiser photophysics to the Polish computational chemistry community.', url: 'https://makromol.chem.uni.wroc.pl/' },
-        { lat: 51.10974, lng: 17.07193, name: 'Modeling and Design of Molecular Materials 2025', location: 'Wrocław, Poland', logo: 'https://study.gov.pl/sites/default/files/logo_ucz_wiz/88/logo_pwr_kolor_poziom_ang.png', period: '2026', type: 'conference', description: 'A local flagship event — presenting recent work on quantum-chemical modelling of photosensitiser photophysics to the Polish computational chemistry community.', url: 'https://mdmm2026.com' },
-        { lat: 51.25056, lng: 22.57010, name: 'XVIII Interdyscyplinarna Konferencja Naukowa TYGIEL 2026', location: 'Lubling (remote), Poland', logo: 'https://konferencja-tygiel.pl/wp-content/uploads/sites/15/2025/09/baner-KT18-2026_1920x480pc.jpg', period: '2026', type: 'conference', description: 'An interdisciplinary forum bringing together young researchers from across Poland — presenting work at the intersection of computational chemistry and pharmaceutical sciences.', url: 'https://konferencja-tygiel.pl/' },
+        { lat: 32.65891, lng: -16.92465, name: 'TheoBio 2026', location: 'Funchal, Madeira, Portugal', logo: 'https://theobio2026.com/wp-content/uploads/2026/03/cropped-Logo_TheoBio2026horiz_noBG-1-scaled-1-600x156.png', period: '2026', type: 'conference', description: 'Presenting TROI, a trajectory-resolved Monte Carlo framework for directional steric accessibility at reactive centres.', url: 'https://theobio2026.com' },
+        { lat: 39.90571, lng: 116.39130, name: 'MMCS 2026', location: 'Beijing, China', logo: 'https://api.sciforum.net/events_files/1319/MMCS%202026-Banner-hero.jpg', period: '2026', type: 'conference', description: 'Presented the experimental foundation and standardized in vitro assay dataset (FRAP, ABTS, and DPPH) for polyphenolic compounds under the NCN Preludium grant to support subsequent QSAR modeling.', url: 'https://www.sciforum.net/event/mmcs2026' },
+        {
+            lat: 51.10974,
+            lng: 17.07193,
+            name: 'Wrocławskie Dni Modelowania Molekularnego 2026',
+            location: 'Wrocław, Poland',
+            logo: 'https://makromol.chem.uni.wroc.pl/assets/basic/img/UWr-logo.svg',
+            period: '2026',
+            type: 'conference',
+            description: 'Presenting mechanistic and kinetic insights into rubiadin phototoxicity in photodynamic therapy — detailing ESIPT-driven triplet state dynamics, pH-dependent activation switches, and ODE kinetic modeling of singlet oxygen production.',
+            url: 'https://makromol.chem.uni.wroc.pl/'
+        },
+        {
+            lat: 51.10974,
+            lng: 17.07193,
+            name: 'Modeling and Design of Molecular Materials 2025',
+            location: 'Wrocław, Poland',
+            logo: 'https://study.gov.pl/sites/default/files/logo_ucz_wiz/88/logo_pwr_kolor_poziom_ang.png',
+            period: '2025',
+            type: 'conference',
+            description: 'Presented in silico design of heavy-atom-free 9,10-anthraquinone derivatives as two-photon photosensitizers for photodynamic therapy, highlighting quadrupolar D–π–A–π–D architectures for deep-tissue tumor ablation.',
+            url: 'https://mdmm2025.com'
+        },
+        { lat: 51.25056, lng: 22.57010, name: 'XVIII Interdyscyplinarna Konferencja Naukowa TYGIEL 2026', location: 'Lublin (remote), Poland', logo: 'https://konferencja-tygiel.pl/wp-content/uploads/sites/15/2025/09/baner-KT18-2026_1920x480pc.jpg', period: '2026', type: 'conference', description: 'An interdisciplinary forum bringing together young researchers from across Poland — presenting work at the intersection of computational chemistry and pharmaceutical sciences.', url: 'https://konferencja-tygiel.pl/' }
     ],
 
     // Odstęp (w stopniach) między rozstawionymi punktami, gdy w jednym
@@ -158,7 +180,7 @@ const PortfolioApp = {
     getTypeColor(type) {
         if (type === 'home') return '#FFD700';
         if (type === 'conference') return '#1fe0b0';
-        return '#9d8cff'; // internship / inne
+        return '#9d8cff'; // reserach_stay / inne
     },
 
     openLocationCarousel(infoBox, point) {
@@ -231,7 +253,7 @@ const PortfolioApp = {
                 url: g.url || ''
             }));
             // Grupujemy PO TYPIE, nie po pojedynczym wpisie - liczy się, ile
-            // RÓŻNYCH kategorii (home/internship/conference) jest w tym
+            // RÓŻNYCH kategorii (home/reserach_stay/conference) jest w tym
             // miejscu, nie ile surowych wydarzeń. Dwa wydarzenia TEGO
             // SAMEGO typu w tym samym miejscu to zawsze jeden (większy)
             // walec danego typu - nigdy dwa osobne, rozstawione płatki.
@@ -299,7 +321,7 @@ const PortfolioApp = {
             title: 'Designing Innovative Drugs: Antioxidants and Senolytics',
             description: 'Popular-science article on computational design of new senolytic compounds, including fisetin derivatives.',
             type: 'Popular science',
-            color: 'teal',
+            color: 'violet',
             url: 'https://www.umw.edu.pl/pl/aktualnosci/dr-maciej-spiegel-projektuje-innowacyjne-leki'
         },
         {
@@ -307,21 +329,21 @@ const PortfolioApp = {
             title: 'Scientific Leader of UMW',
             description: 'Named among 40 researchers awarded the Rector\'s "Scientific Leader" prize for supporting colleagues during evaluation.',
             type: 'Recognition',
-            color: 'teal',
+            color: 'gold',
             url: 'https://www.umw.edu.pl/pl/aktualnosci/liderzy-naukowi-umw'
         },
         {
             date: '2025',
             title: 'Persistence Wins: Computational Chemistry and Research Philosophy',
-            description: 'Q&A about research areas, motivations, and advice for young scientists.',
+            description: 'Q&A about research areas, motivations, and advice for early-career scientists.',
             type: 'Interview',
-            color: 'teal',
+            color: 'violet',
             url: 'https://www.umw.edu.pl/pl/aktualnosci/upor-wygrywa'
         },
         {
             date: 'Dec 2025',
-            title: 'University Celebration 2025: Doctorate Before 30 and Top 2% Listing',
-            description: 'Recognised among Wroclaw Medical University scientists included in the World\'s Top 2% Scientists 2025 ranking (single-year category)..',
+            title: 'University Celebration 2025: Aula Leopoldina',
+            description: 'Recognised among Wrocław Medical University scientists included in the World\'s Top 2% Scientists 2025 ranking (single-year category).',
             type: 'University news',
             color: 'teal',
             url: 'https://www.umw.edu.pl/pl/aktualnosci/swieto-uczelni-2025-w-auli-leopoldina'
@@ -329,9 +351,9 @@ const PortfolioApp = {
         {
             date: '2025',
             title: 'World\'s Top 2% Scientists 2025',
-            description: 'Included in the single-year category of the Stanford/Elsevier ranking for 2024 achievements.',
+            description: 'Included in the single-year category of the Stanford/Elsevier ranking for 2024 research achievements.',
             type: 'Ranking news',
-            color: 'teal',
+            color: 'gold',
             url: 'https://www.umw.edu.pl/pl/aktualnosci/worlds-top-2-scientists-2025'
         },
         {
@@ -353,7 +375,7 @@ const PortfolioApp = {
         {
             date: 'Dec 2024',
             title: 'Research Worth a Medal: Iuvenes Wratislaviae Award',
-            description: 'Announcement of the Polish Academy of Sciences medal for the flavonoid antioxidant modelling cycle.',
+            description: 'Awarded the Polish Academy of Sciences medal for the flavonoid antioxidant modelling research cycle.',
             type: 'Award news',
             color: 'gold',
             url: 'https://www.umw.edu.pl/pl/aktualnosci/badania-na-medal'
@@ -361,9 +383,9 @@ const PortfolioApp = {
         {
             date: 'Sep 2024',
             title: 'World\'s Top 2% Scientists 2024',
-            description: 'Named in the single-year category of the 2024 edition, placing 15th among Wroclaw Medical University researchers.',
+            description: 'Named in the single-year category of the 2024 edition, placing 15th among Wrocław Medical University researchers.',
             type: 'Ranking news',
-            color: 'teal',
+            color: 'gold',
             url: 'https://www.umw.edu.pl/pl/aktualnosci/worlds-top-2-proc-scientists-2024'
         }
     ],
@@ -407,14 +429,9 @@ const PortfolioApp = {
        the explicit choice, overriding the OS setting from then on. */
     initTheme() {
         const root = document.documentElement;
-        const saved = localStorage.getItem('sp_theme');
-        let theme = saved;
-        if (!theme) {
-            theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'day' : 'night';
-        }
-        root.setAttribute('data-theme', theme);
-
         const btn = document.getElementById('themeToggle');
+
+        // 1. Manual Toggle Button Handler
         if (btn) {
             btn.addEventListener('click', () => {
                 const next = root.getAttribute('data-theme') === 'day' ? 'night' : 'day';
@@ -423,11 +440,16 @@ const PortfolioApp = {
             });
         }
 
-        // If the user never made an explicit choice, keep following the OS.
-        if (!saved && window.matchMedia) {
-            window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
-                if (localStorage.getItem('sp_theme')) return; // user has since chosen manually
-                root.setAttribute('data-theme', e.matches ? 'day' : 'night');
+        // 2. Listen live to Windows / macOS system theme changes
+        if (window.matchMedia) {
+            const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+            darkQuery.addEventListener('change', (e) => {
+                // Do not override if user manually clicked the toggle button
+                if (localStorage.getItem('sp_theme')) return;
+
+                // Automatically switch theme when OS mode changes
+                root.setAttribute('data-theme', e.matches ? 'night' : 'day');
             });
         }
     },
@@ -466,19 +488,19 @@ const PortfolioApp = {
                     <p>${featured.description}</p>
                     <div class="sp-media-featured-meta">
                         <span>${featured.date}</span>
-                        <a href="${featured.url}" target="_blank" rel="noopener">Read full story ↗</a>
+                        <a href="${featured.url}" target="_blank" rel="noopener noreferrer" aria-label="Read full story about ${featured.title} (opens in a new tab)">Read full story &nearr;</a>
                     </div>
                 </div>
             </div>
             <div class="sp-media-compact">
                 ${rest.map(item => `
-                    <a href="${item.url}" target="_blank" rel="noopener" class="sp-media-compact-item is-${item.color || 'teal'}">
-                        <span class="sp-media-compact-dot"></span>
+                    <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="sp-media-compact-item is-${item.color || 'teal'}" aria-label="${item.title} - ${item.type} (${item.date}, opens in a new tab)">
+                        <span class="sp-media-compact-dot" aria-hidden="true"></span>
                         <span class="sp-media-compact-text">
                             <strong>${item.title}</strong>
-                            <em>${item.type} · ${item.date}</em>
+                            <em>${item.type} &middot; ${item.date}</em>
                         </span>
-                        <span class="sp-media-compact-arrow">↗</span>
+                        <span class="sp-media-compact-arrow" aria-hidden="true">&nearr;</span>
                     </a>
                 `).join('')}
             </div>
@@ -578,7 +600,7 @@ const PortfolioApp = {
                 .pointColor(p => {
                     if (p.type === 'home') return '#FFD700';
                     if (p.type === 'conference') return '#1fe0b0';
-                    return '#9d8cff';                             // internship / inne
+                    return '#9d8cff';                             // reserach_stay / inne
                 })
                 .pointRadius(p => p._merged ? this.POINT_RADIUS_MERGED : this.POINT_RADIUS_SINGLE)
                 // === NOWOŚĆ: tooltip po najechaniu ===
@@ -873,7 +895,7 @@ const PortfolioApp = {
 
     initCopyrightYear() {
         const el = document.getElementById('copyright-year');
-        if (el) el.textContent = `© ${new Date().getFullYear()} Dr Maciej Spiegel`;
+        if (el) el.textContent = new Date().getFullYear();
     },
 
     initFooterTagline() {
