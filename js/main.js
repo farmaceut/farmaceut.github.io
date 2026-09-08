@@ -408,7 +408,10 @@ const PortfolioApp = {
         this.currentYear = new Date().getFullYear().toString();
         this.initTheme();
         this.generateYearBadges();
+
+        // Generuje publikacje w HTML-u (synchronicznie)
         this.renderPublications(this.currentYear);
+
         this.renderMedia();
         this.initGlobe();
         this.initLogoStrip();
@@ -416,7 +419,10 @@ const PortfolioApp = {
         this.initTimeline();
         this.initTimelineHelix();
         this.initMobileMenu();
+
+        // Toast odpala się od razu po wygenerowaniu listy
         this.initToast();
+
         this.initBackToTop();
         this.initCopyrightYear();
         this.initFooterTagline();
