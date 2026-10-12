@@ -4,6 +4,8 @@
     ============================================================================
     This file is meant to be extended over time. Quick map of where things live:
 
+    - News strip (karuzela pod hero) -> js/main.js, `newsItems` array (max 3
+                             shown, `NEWS_MAX`). Title, label, link, optional image.
     - Publications list  -> js/main.js, `publications` array (NOT in this file).
                              Add an object; `cycle:'Z#'` marks habilitation-cycle
                              papers (violet left border + sorted first).
@@ -165,6 +167,7 @@
                 <li><a itemprop="url" href="#journey"><span itemprop="name">journey</span></a></li>
                 <li><a itemprop="url" href="#awards"><span itemprop="name">awards</span></a></li>
                 <li><a itemprop="url" href="#publications"><span itemprop="name">publications</span></a></li>
+                <li><a itemprop="url" href="#tools"><span itemprop="name">tools</span></a></li>
                 <li><a itemprop="url" href="#media"><span itemprop="name">media</span></a></li>
                 <li><a itemprop="url" href="#global"><span itemprop="name">collaborations</span></a></li>
                 <li><a itemprop="url" href="#contact"><span itemprop="name">contact</span></a></li>
@@ -317,6 +320,27 @@
             </div>
         </div>
     </header>
+
+    <!-- ============================== NEWS STRIP ==============================
+         Pasek newsów pod hero. NIE edytujesz tu nic — wpisy są w js/main.js,
+         tablica `newsItems` (max 3 widoczne, patrz NEWS_MAX). Cały pasek znika
+         sam, jeśli tablica jest pusta.
+    ======================================================================== -->
+    <section id="news" class="sp-news" aria-label="Latest news" hidden>
+        <div class="sp-container sp-reveal">
+            <div class="sp-news-head">
+                <span class="sp-eyebrow">Latest news</span>
+                <div class="sp-news-nav">
+                    <button class="sp-news-btn" id="newsPrev" type="button" aria-label="Previous news">&#8249;</button>
+                    <button class="sp-news-btn" id="newsNext" type="button" aria-label="Next news">&#8250;</button>
+                </div>
+            </div>
+            <div class="sp-news-carousel" role="region" aria-roledescription="carousel" aria-label="Latest news">
+                <ul class="sp-news-track" id="newsTrack"></ul>
+            </div>
+            <div class="sp-news-dots" id="newsDots" aria-hidden="true"></div>
+        </div>
+    </section>
 
     <!-- ============================== ABOUT ============================== -->
     <section id="about" class="sp-about sp-section" aria-labelledby="about-title">
@@ -992,8 +1016,16 @@
         </div>
     </section>
 
+    <!-- =============================== IN SILICO TOOLS ============================== -->
+    <section id="tools" class="sp-section" aria-labelledby="tools-title" style="background:var(--paper)">
+        <div class="sp-container">
+            <h2 class="sp-section-title">In Silico Tools</h2>
+            <div id="tools-grid" class="sp-tools-grid"></div>
+        </div>
+    </section>
+    
     <!-- ============================== GLOBE / COLLABORATIONS ============================== -->
-    <section id="global" class="sp-globe-section sp-section">
+    <section id="global" class="sp-globe-section sp-section" style="background:var(--paper-2)">
         <div class="sp-container">
             <div class="sp-reveal">
                 <span class="sp-eyebrow">Internationalization &amp; Mobility</span>
@@ -1021,7 +1053,7 @@
     </section>
 
     <!-- ============================== COLLABORATION CTA ============================== -->
-    <section class="sp-collab sp-section">
+    <section class="sp-collab sp-section" style="background:var(--paper)">
         <div class="sp-container">
             <div class="sp-reveal">
                 <span class="sp-eyebrow">Collaborative Research &amp; Consulting</span>
@@ -1080,7 +1112,7 @@
     </section>
 
     <!-- ============================== CONTACT ============================== -->
-    <section id="contact" class="sp-contact sp-section">
+    <section id="contact" class="sp-contact sp-section" style="background:var(--paper-2)">
         <div class="sp-container">
             <div class="sp-reveal">
                 <span class="sp-eyebrow">Contact</span>
@@ -1117,7 +1149,7 @@
     </section>
 
     <!-- ============================== FOOTER ============================== -->
-    <footer class="sp-footer" role="contentinfo">
+    <footer class="sp-footer" role="contentinfo" style="background:var(--paper)">
         <div class="sp-container">
             <p id="footer-tagline">Optimized at the B3LYP/6-31G* level of theory.</p>
             <p id="copyright-text">&copy; <span id="copyright-year">2026</span> Dr. Maciej Spiegel. All rights reserved.

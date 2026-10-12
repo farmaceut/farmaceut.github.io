@@ -109,6 +109,63 @@ html[data-theme="day"] .sp-toast {
     --cream-solid: #f4f3ef;
 }
 
+/* Siatka narzędzi */
+.sp-tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* Pojedynczy kafelek */
+.sp-tool-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sp-tool-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Ograniczenie rozmiaru obrazka */
+.sp-tool-icon {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.sp-tool-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Treść kafelka */
+.sp-tool-content {
+    flex: 1;
+}
+
+.sp-tool-content h4 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1rem;
+}
+
+.sp-tool-content p {
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.75;
+}
+
 /* ---------------------------------------------------------------------- */
 /* Reset / base                                                           */
 /* ---------------------------------------------------------------------- */
@@ -2320,4 +2377,225 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon {
     font-size: .85rem;
     color: var(--tx-on-ink-dim);
     margin: 0;
+}
+
+/* ---------------------------------------------------------------------- */
+/* News strip (carousel under the hero)                                   */
+/* Karty mają zawsze ciemną nakładkę z jasnym tekstem (kolory na sztywno, */
+/* nie przez --ink), więc czytelność nie zależy od motywu dzień/noc.      */
+/* ---------------------------------------------------------------------- */
+.sp-news {
+    background: var(--ink-soft);
+    border-block: 1px solid var(--ink-line);
+    padding-block: 34px 30px;
+    color: var(--tx-on-ink);
+}
+
+.sp-news[hidden] {
+    display: none;
+}
+
+.sp-news-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.sp-news-head .sp-eyebrow {
+    margin-bottom: 0;
+}
+
+.sp-news-nav {
+    display: flex;
+    gap: 8px;
+}
+
+.sp-news-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--ink-line);
+    background: transparent;
+    color: var(--tx-on-ink);
+    font-size: 1.15rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color .2s, color .2s;
+}
+
+.sp-news-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.sp-news-track {
+    --gap: 18px;
+    --per-view: 1.15;
+    /* mobile: lekki "peek" następnej karty */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: var(--gap);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+}
+
+.sp-news-track::-webkit-scrollbar {
+    display: none;
+}
+
+@media (min-width:640px) {
+    .sp-news-track {
+        --per-view: 2;
+    }
+}
+
+@media (min-width:980px) {
+    .sp-news-track {
+        --per-view: 3;
+    }
+}
+
+.sp-news-slide {
+    flex: 0 0 calc((100% - var(--gap) * (var(--per-view) - 1)) / var(--per-view));
+    scroll-snap-align: start;
+}
+
+/* Proporcje grafik — zmień tu, jeśli Twoje obrazki są inne (np. 3 / 1). */
+.sp-news-card {
+    --news-ratio: 16 / 9;
+    position: relative;
+    display: block;
+    aspect-ratio: var(--news-ratio);
+    overflow: hidden;
+    border: 1px solid var(--ink-line);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: #f4f3ef;
+    background:
+        radial-gradient(ellipse 80% 90% at 85% 0%, rgba(110, 92, 230, .55), transparent 65%),
+        linear-gradient(135deg, #1b2140, #0c1120);
+    transition: transform .25s var(--ease), border-color .25s var(--ease);
+}
+
+.sp-news-card.is-gold {
+    background:
+        radial-gradient(ellipse 80% 90% at 85% 0%, rgba(217, 154, 61, .55), transparent 65%),
+        linear-gradient(135deg, #2a2236, #0c1120);
+}
+
+.sp-news-card.is-teal {
+    background:
+        radial-gradient(ellipse 80% 90% at 85% 0%, rgba(47, 158, 136, .5), transparent 65%),
+        linear-gradient(135deg, #14282f, #0c1120);
+}
+
+.sp-news-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+}
+
+.sp-news-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s var(--ease);
+}
+
+.sp-news-card:hover img {
+    transform: scale(1.04);
+}
+
+.sp-news-cap {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 46px 18px 16px;
+    background: linear-gradient(to top, rgba(8, 11, 22, .9), rgba(8, 11, 22, 0));
+}
+
+.sp-news-label {
+    display: block;
+    font-family: var(--f-mono);
+    font-size: .66rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 5px;
+}
+
+.sp-news-card.is-violet .sp-news-label {
+    color: #b9adff;
+}
+
+.sp-news-card.is-teal .sp-news-label {
+    color: #4fd3b8;
+}
+
+.sp-news-title {
+    display: block;
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.08rem;
+    line-height: 1.25;
+}
+
+.sp-news-arrow {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--f-mono);
+    font-size: .8rem;
+    background: rgba(8, 11, 22, .6);
+    border: 1px solid rgba(255, 255, 255, .25);
+    backdrop-filter: blur(4px);
+    transition: background .2s, color .2s;
+}
+
+.sp-news-card:hover .sp-news-arrow {
+    background: var(--gold);
+    color: var(--ink-solid);
+    border-color: var(--gold);
+}
+
+.sp-news-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.sp-news-dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border-radius: 50%;
+    border: 0;
+    background: var(--ink-line);
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+}
+
+.sp-news-dot.is-active {
+    background: var(--gold);
+    transform: scale(1.25);
+}
+
+/* Gdy wszystko mieści się w jednym widoku (np. 3 karty na desktopie) —
+   strzałki i kropki są zbędne i znikają. */
+.sp-news.is-static .sp-news-nav,
+.sp-news.is-static .sp-news-dots {
+    display: none;
 }

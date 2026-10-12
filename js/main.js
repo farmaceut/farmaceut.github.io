@@ -301,6 +301,34 @@ const PortfolioApp = {
         });
     },
 
+    // ---- IN SILICO WEB TOOLS & APPS ----------------------------------------
+    tools: [
+        /*{
+            title: "TROI: Trajectory-Resolved Occlusion Index",
+            desc: "A Monte Carlo framework for directional steric accessibility at reactive centres.",
+            image: "assets/tools/spectrum.png",
+            url: "https://farmaceut.github.io/troi/",
+        },
+        {
+            title: "Antioxidant QSAR",
+            desc: "Predictive TAU radical scavenging activity scoring in FRAP, ABTS and DPPH.",
+            image: "assets/tools/spectrum.png",
+            url: "https://farmaceut.github.io/antiox-qsar/",
+        },
+        {
+            title: "Lipoxygenase and Peroxidase QSAR",
+            desc: "Predictive inhibitory activity towards lipoxygenase and peroxidase.",
+            image: "assets/tools/spectrum.png",
+            url: "https://farmaceut.github.io/enzymes-qsar/",
+        },*/
+        {
+            title: "Dexter Energy Transfer Calculator",
+            desc: "Estimate Dexter energy transfer rates from monomers.",
+            image: "assets/dexrate.jpg",
+            url: "tools/dexter/main.html"
+        }
+    ],
+
     // ---- ADD MEDIA / OUTREACH ITEMS HERE ---------------------------------
     // One object per entry. color: 'teal' | 'gold' | 'violet' (left border/dot).
     // type: 'Popular science', 'Interview', 'Recognition', 'Research highlight',
@@ -390,6 +418,44 @@ const PortfolioApp = {
         }
     ],
 
+    // ---- NEWS STRIP (karuzela pod hero) ----------------------------------
+    // Edytujesz TYLKO tę tablicę. Pierwsze NEWS_MAX wpisów trafia na stronę
+    // (kolejność = kolejność wyświetlania); pusta tablica = pasek znika.
+    //   title : tekst na grafice / w kafelku
+    //   label : mała etykieta nad tytułem ("Recognition", "New paper"...)
+    //   url   : dokąd prowadzi klik (zawsze w nowej karcie)
+    //   image : ścieżka do grafiki, np. 'assets/news/top2.jpg' (zalecane ok.
+    //           1200x675 px, JPG/WebP, poziomo). Opcjonalne — bez obrazka
+    //           (albo gdy plik się nie wczyta) kafelek dostaje kolorowe tło
+    //           z samym tekstem, więc nic się nie "sypie".
+    //   alt   : opis grafiki dla czytników ekranu (opcjonalny, domyślnie title)
+    //   color : 'gold' | 'violet' | 'teal' — kolor tła kafelka bez obrazka
+    NEWS_MAX: 3,
+    NEWS_AUTOPLAY_MS: 6000,   // 0 = bez automatycznego przewijania
+    newsItems: [
+        {
+            label: 'Recognition',
+            title: "World's Top 2% Scientists 2026",
+            url: 'https://elsevier.digitalcommonsdata.com/datasets/btchxktzyw/9',
+            image: '',   // np. 'assets/news/top2.jpg'
+            color: 'gold'
+        },
+        {
+            label: 'Milestone',
+            title: 'Habilitation awarded',   // TODO: popraw treść i wstaw właściwy link
+            url: 'https://bip.umw.edu.pl/artykul/229/7457/dr-maciej-spiegel-postepowanie-habilitacyjne/',   // TODO: link do źródła (komunikat / BIP)
+            image: '',
+            color: 'violet'
+        },
+        {
+            label: 'New paper',
+            title: 'How 3-O-Glucosylation Modulates Resveratrol Radical Scavenging: A QM-ORSA Study of Polydatin/Piceid, a Stilbenoid Glucoside',   // TODO: przykład — podmień na najnowszą pracę
+            url: 'https://doi.org/10.1021/acs.jpcb.6c03897',
+            image: '',
+            color: 'teal'
+        }
+    ],
+
     // ---- QUANTUM FOOTER TAGLINES -------------------------------------------
     footerTaglines: [
         "Website optimized at the B3LYP / 6-31G* level of theory.",
@@ -412,7 +478,10 @@ const PortfolioApp = {
         // Generuje publikacje w HTML-u (synchronicznie)
         this.renderPublications(this.currentYear);
 
+        this.renderTools();
         this.renderMedia();
+        this.renderNews();
+        this.initNewsCarousel();
         this.initGlobe();
         this.initLogoStrip();
         this.initReveal();
@@ -513,6 +582,136 @@ const PortfolioApp = {
         `;
     },
 
+    /* News strip: render + carousel -------------------------------------
+       Natywny scroll-snap (swipe na telefonie działa "z automatu"), a JS
+       dokłada tylko strzałki, kropki i opcjonalny autoplay. Jeśli wszystkie
+       karty mieszczą się naraz (3 na desktopie), pasek jest statyczny i
+       strzałki/kropki się chowają. */
+    renderNews() {
+        const section = document.getElementById('news');
+        const track = document.getElementById('newsTrack');
+        if (!section || !track) return;
+
+        const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        const items = (this.newsItems || []).filter(n => n && n.title && n.url).slice(0, this.NEWS_MAX);
+
+        if (!items.length) { section.hidden = true; return; }
+
+        track.innerHTML = items.map(n => `
+            <li class="sp-news-slide">
+                <a class="sp-news-card is-${esc(n.color || 'violet')}" href="${esc(n.url)}" target="_blank" rel="noopener noreferrer"
+                   aria-label="${esc(n.label ? n.label + ': ' : '')}${esc(n.title)} (opens in a new tab)">
+                    ${n.image ? `<img src="${esc(n.image)}" alt="${esc(n.alt || n.title)}" loading="lazy" draggable="false">` : ''}
+                    <span class="sp-news-cap">
+                        ${n.label ? `<span class="sp-news-label">${esc(n.label)}</span>` : ''}
+                        <span class="sp-news-title">${esc(n.title)}</span>
+                    </span>
+                    <span class="sp-news-arrow" aria-hidden="true">&nearr;</span>
+                </a>
+            </li>
+        `).join('');
+
+        // Obrazek się nie wczytał (zła ścieżka / brak pliku) -> zostaje tło z tekstem.
+        track.querySelectorAll('.sp-news-card img').forEach(img =>
+            img.addEventListener('error', () => img.remove()));
+
+        section.hidden = false;
+    },
+
+    initNewsCarousel() {
+        const section = document.getElementById('news');
+        const track = document.getElementById('newsTrack');
+        const dotsBox = document.getElementById('newsDots');
+        const prev = document.getElementById('newsPrev');
+        const next = document.getElementById('newsNext');
+        if (!section || !track || section.hidden) return;
+
+        const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let maxIdx = 0, step = 0, timer = null, paused = false;
+
+        const measure = () => {
+            const slides = track.children;
+            if (!slides.length) return;
+            const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+            step = slides[0].getBoundingClientRect().width + gap;
+            const overflow = track.scrollWidth - track.clientWidth;
+            maxIdx = overflow > 2 ? Math.max(1, Math.round(overflow / step)) : 0;
+            section.classList.toggle('is-static', maxIdx === 0);
+
+            dotsBox.innerHTML = Array.from({ length: maxIdx + 1 }, (_, i) =>
+                `<button type="button" class="sp-news-dot" data-i="${i}" tabindex="-1"></button>`).join('');
+            markActive();
+            restartAutoplay();
+        };
+
+        const current = () => step ? Math.min(maxIdx, Math.max(0, Math.round(track.scrollLeft / step))) : 0;
+
+        const markActive = () => {
+            const c = current();
+            dotsBox.querySelectorAll('.sp-news-dot').forEach((d, i) => d.classList.toggle('is-active', i === c));
+        };
+
+        const goTo = i => {
+            const idx = Math.min(maxIdx, Math.max(0, i));
+            track.scrollTo({ left: idx * step, behavior: reduced ? 'auto' : 'smooth' });
+        };
+        const advance = dir => {
+            const c = current();
+            if (dir > 0) goTo(c >= maxIdx ? 0 : c + 1);   // na końcu wraca na początek
+            else goTo(c <= 0 ? maxIdx : c - 1);
+        };
+
+        const stopAutoplay = () => { clearInterval(timer); timer = null; };
+        const restartAutoplay = () => {
+            stopAutoplay();
+            if (!this.NEWS_AUTOPLAY_MS || reduced || maxIdx === 0) return;
+            timer = setInterval(() => { if (!paused && !document.hidden) advance(1); }, this.NEWS_AUTOPLAY_MS);
+        };
+
+        let ticking = false;
+        track.addEventListener('scroll', () => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => { ticking = false; markActive(); });
+        }, { passive: true });
+
+        prev && prev.addEventListener('click', () => { advance(-1); restartAutoplay(); });
+        next && next.addEventListener('click', () => { advance(1); restartAutoplay(); });
+        dotsBox.addEventListener('click', e => {
+            const b = e.target.closest('.sp-news-dot');
+            if (b) { goTo(parseInt(b.dataset.i, 10)); restartAutoplay(); }
+        });
+
+        // Pauza, gdy ktoś najeżdża / dotyka / nawiguje klawiaturą.
+        ['mouseenter', 'focusin', 'touchstart'].forEach(ev => section.addEventListener(ev, () => { paused = true; }, { passive: true }));
+        ['mouseleave', 'focusout', 'touchend'].forEach(ev => section.addEventListener(ev, () => { paused = false; }, { passive: true }));
+
+        measure();
+        if ('ResizeObserver' in window) new ResizeObserver(measure).observe(track);
+        else window.addEventListener('resize', measure);
+    },
+
+    renderTools() {
+        const container = document.getElementById('tools-grid');
+        if (!container) return;
+
+        container.innerHTML = this.tools.map(tool => `
+        <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="sp-tool-card">
+            <div class="sp-tool-icon">
+                <img src="${tool.image}" alt="${tool.title}">
+            </div>
+            <div class="sp-tool-content">
+                <h4>${tool.title}</h4>
+                <p>${tool.desc}</p>
+            </div>
+            <div class="sp-tool-arrow">
+                <i class="bi bi-arrow-up-right"></i>
+            </div>
+        </a>
+    `).join('');
+    },
+
     getImpactFactor(pub) {
         const ifTag = pub.tags.find(t => t.startsWith('IF:'));
         if (!ifTag) return -1;            // brak IF -> praca na końcu
@@ -584,14 +783,14 @@ const PortfolioApp = {
 
         const getSize = () => ({ w: viz.clientWidth, h: viz.clientHeight });
 
-        fetch('addons/ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries => {
+        fetch('assets/ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries => {
             const size = getSize();
             const pointsData = this.groupLocations(this.locations);
 
             this.globe = Globe()(viz)
                 .width(size.w)
                 .height(size.h)
-                .globeImageUrl('addons/world.topo.bathy.200407.3x5400x2700.png')
+                .globeImageUrl('assets/world.topo.bathy.200407.3x5400x2700.png')
                 .bumpImageUrl('https://unpkg.com/three-globe@2.27.4/example/img/earth-topology.png')
                 .backgroundColor('rgba(0,0,0,0)')
                 .polygonsData(countries.features)

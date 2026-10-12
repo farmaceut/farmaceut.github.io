@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DET Explorer — interaktywny model transferu Dextera</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
+  <style>
+    :root {
+      --paper: #FBFAF7;
+      --paper-raised: #F3F1EB;
+      --ink: #1C1B19;
+      --ink-muted: #6B6862;
+      --hole: #B23A24;
+      /* kanal dziurowy / pi  - czerwony, konwencja lobow orbitali */
+      --hole-soft: #E8C9C2;
+      --electron: #2B5C8A;
+      /* kanal elektronowy / pi* - niebieski */
+      --electron-soft: --electron-soft;
+      --electron-soft: #C7D9E6;
+      --peak: #B9822C;
+      /* akcent do zaznaczania maksimow na mapie */
+      --line: #DDD9D0;
+      --line-strong: #C7C2B6;
+      --radius: 3px;
+      --serif: 'Lora', Georgia, serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    header.hero {
+      padding: 72px 0 48px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .kicker {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink-muted);
+      letter-spacing: 0.02em;
+      margin: 0 0 18px;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.08;
+      margin: 0 0 20px;
+      max-width: 14ch;
+    }
+
+    .lede {
+      font-size: 18px;
+      color: var(--ink-muted);
+      max-width: 62ch;
+      margin: 0 0 36px;
+    }
+
+    .lede em {
+      font-style: italic;
+      color: var(--ink);
+    }
+
+    .hero-readout {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 20px 24px;
+      background: var(--paper-raised);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+    }
+
+    .hero-readout .label {
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    .hero-readout .value {
+      font-family: var(--mono);
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .hero-readout .unit {
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    section {
+      padding: 56px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-of-type {
+      border-bottom: none;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 26px;
+      margin: 0 0 8px;
+    }
+
+    .section-note {
+      color: var(--ink-muted);
+      font-size: 15px;
+      max-width: 58ch;
+      margin: 0 0 28px;
+    }
+
+    .panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .panel {
+      background: var(--paper);
+      padding: 24px;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 600;
+      font-size: 15px;
+      margin: 0 0 18px;
+    }
+
+    .swatch {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .swatch.donor {
+      background: var(--hole);
+    }
+
+    .swatch.acceptor {
+      background: var(--electron);
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--ink-muted);
+      margin-bottom: 6px;
+    }
+
+    .field label .fieldval {
+      font-family: var(--mono);
+      color: var(--ink);
+    }
+
+    .field input[type="number"] {
+      width: 100%;
+      padding: 9px 10px;
+      font-family: var(--mono);
+      font-size: 15px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .field input[type="number"]:focus {
+      outline: 2px solid var(--electron);
+      outline-offset: 1px;
+    }
+
+    .field input[type="range"] {
+      width: 100%;
+      accent-color: var(--ink-muted);
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 22px 0 4px;
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    .toggle-row input {
+      accent-color: var(--electron);
+    }
+
+    .aniso-controls {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--line-strong);
+      display: none;
+    }
+
+    .aniso-controls.active {
+      display: block;
+    }
+
+    .chart {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 8px;
+    }
+
+    .map-toggle {
+      display: flex;
+      gap: 0;
+      margin-bottom: 16px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      width: fit-content;
+      overflow: hidden;
+    }
+
+    .map-toggle button {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border: none;
+      background: var(--paper);
+      color: var(--ink-muted);
+      cursor: pointer;
+    }
+
+    .map-toggle button.active {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .map-toggle button:not(:last-child) {
+      border-right: 1px solid var(--line-strong);
+    }
+
+    .upload-box {
+      margin-top: 20px;
+      padding: 18px;
+      border: 1px dashed var(--line-strong);
+      border-radius: var(--radius);
+      font-size: 14px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .upload-box input[type="file"] {
+      font-family: var(--sans);
+      font-size: 13px;
+    }
+
+    .upload-status {
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+
+    .upload-status.ok {
+      color: var(--electron);
+    }
+
+    .upload-status.err {
+      color: var(--hole);
+    }
+
+    code,
+    .code {
+      font-family: var(--mono);
+      font-size: 0.92em;
+      background: var(--paper-raised);
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+
+    pre {
+      font-family: var(--mono);
+      font-size: 13px;
+      background: var(--paper-raised);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+
+    .steps {
+      padding-left: 22px;
+      color: var(--ink-muted);
+      font-size: 15px;
+    }
+
+    .steps li {
+      margin-bottom: 10px;
+    }
+
+    .steps li::marker {
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 0.9em;
+    }
+
+    footer {
+      padding: 40px 0 80px;
+      color: var(--ink-muted);
+      font-size: 13px;
+    }
+
+    footer a {
+      color: var(--ink);
+      text-decoration-color: var(--line-strong);
+    }
+
+    @media (max-width:720px) {
+      .panels {
+        grid-template-columns: 1fr;
+      }
+
+      header.hero {
+        padding: 48px 0 36px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="wrap">
+
+    <header class="hero">
+      <p class="kicker">Poziom 0 / 1 — na żywo w przeglądarce · Poziom 2 — z wczytanych danych</p>
+      <h1>Jak szybko donor przekazuje energię akceptorowi?</h1>
+      <p class="lede">Model transferu Dextera zbudowany <em>wyłącznie</em> z właściwości pojedynczych monomerów (IP, EA,
+        λ) — bez liczenia kosztownego dimeru. Zmień parametry po lewej i prawej, żeby zobaczyć, jak zależy
+        k<sub>ET</sub>.</p>
+      <div class="hero-readout">
+        <span class="label">k<sub>ET</sub> przy R = 5&nbsp;Å:</span>
+        <span class="value" id="heroValue">—</span>
+        <span class="unit">s⁻¹</span>
+        <span class="label" style="margin-left:18px;">L:</span>
+        <span class="value" id="heroL" style="font-size:18px;">—</span>
+        <span class="unit">Å</span>
+      </div>
+    </header>
+
+    <section id="inputs">
+      <h2>Para donor–akceptor</h2>
+      <p class="section-note">IP i EA wchodzą do bariery tunelowania (Poziom 0). λ to energia reorganizacji z Twojego
+        schematu 4-punktowego. Kształt (Poziom 1) jest tu uproszczony do 2D — prawdziwa anizotropia 3D wymaga pliku
+        <code>.cube</code>, patrz sekcja Poziom 2.</p>
+
+      <div class="panels">
+        <div class="panel">
+          <p class="panel-title"><span class="swatch donor"></span>Donor</p>
+          <div class="field">
+            <label>IP (eV) <span class="fieldval" id="val-d-ip">9.25</span></label>
+            <input type="number" id="d-ip" value="9.25" step="0.01">
+          </div>
+          <div class="field">
+            <label>λ (eV) <span class="fieldval" id="val-d-lambda">0.18</span></label>
+            <input type="number" id="d-lambda" value="0.18" step="0.01">
+          </div>
+          <div class="aniso-controls" id="d-aniso">
+            <div class="field">
+              <label>Wydłużenie kształtu <span class="fieldval" id="val-d-elong">1.0</span></label>
+              <input type="range" id="d-elong" min="1" max="3" step="0.1" value="1.0">
+            </div>
+            <div class="field">
+              <label>Kierunek długiej osi <span class="fieldval" id="val-d-angle">0°</span></label>
+              <input type="range" id="d-angle" min="0" max="180" step="5" value="0">
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <p class="panel-title"><span class="swatch acceptor"></span>Akceptor</p>
+          <div class="field">
+            <label>EA (eV) <span class="fieldval" id="val-a-ea">-0.20</span></label>
+            <input type="number" id="a-ea" value="-0.20" step="0.01">
+          </div>
+          <div class="field">
+            <label>λ (eV) <span class="fieldval" id="val-a-lambda">0.22</span></label>
+            <input type="number" id="a-lambda" value="0.22" step="0.01">
+          </div>
+          <div class="aniso-controls" id="a-aniso">
+            <div class="field">
+              <label>Wydłużenie kształtu <span class="fieldval" id="val-a-elong">1.0</span></label>
+              <input type="range" id="a-elong" min="1" max="3" step="0.1" value="1.0">
+            </div>
+            <div class="field">
+              <label>Kierunek długiej osi <span class="fieldval" id="val-a-angle">0°</span></label>
+              <input type="range" id="a-angle" min="0" max="180" step="5" value="0">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="toggle-row">
+        <input type="checkbox" id="anisoToggle">
+        <label for="anisoToggle">Poziom 1: uwzględnij kształt cząsteczki (anizotropia)</label>
+      </div>
+    </section>
+
+    <section id="curve">
+      <h2>k<sub>ET</sub> w funkcji odległości</h2>
+      <p class="section-note">Krzywa Marcusa–Dextera: tunelowanie elektronowe (zanik wykładniczy z R) razy człon jądrowy
+        Franck–Condona.</p>
+      <div class="chart" id="curveChart" style="height:340px;"></div>
+    </section>
+
+    <section id="map">
+      <h2>Mapa topograficzna k<sub>ET</sub></h2>
+      <p class="section-note">Donor w środku (0,0). Oś pozioma i pionowa to położenie akceptora w płaszczyźnie [Å].
+        Wysokość/kolor = log₁₀(k<sub>ET</sub>). Styl inspirowany Fig. 2c/d z Bai, Zhang, Beratan, <em>J. Phys. Chem.
+          C</em> 2020.</p>
+
+      <div class="map-toggle">
+        <button id="btnLevel01" class="active">Poziom 0/1 (na żywo)</button>
+        <button id="btnLevel2">Poziom 2 (wczytane dane)</button>
+      </div>
+
+      <div class="chart" id="mapChart" style="height:480px;"></div>
+
+      <div class="upload-box" id="uploadBox" style="display:none;">
+        <div>
+          Wczytaj siatkę z Pythona: <code>det_model_v2.export_topographic_grid(...)</code> → plik <code>.json</code>
+          ze schematem <code>{x:[...], y:[...], k_ET:[[...]]}</code>.
+          <div class="upload-status" id="uploadStatus"></div>
+        </div>
+        <input type="file" id="jsonUpload" accept="application/json">
+      </div>
+    </section>
+
+    <footer>
+      Poziom 0/1 liczone bezpośrednio w tej stronie. Poziom 2 (rzeczywiste przekrywanie orbitali z plików
+      <code>.cube</code>) wymaga Pythona — patrz repozytorium projektu.
+    </footer>
+
+  </div>
+
+  <script>
+    const HBAR_J_S = 1.054571817e-34;
+    const KB_J_K = 1.380649e-23;
+    const EV_TO_JOULE = 1.602176634e-19;
+    const ME_KG = 9.1093837015e-31;
+
+    function calculateDecayParameterL(ipDeV, eaAeV) {
+      const iEffJ = ((ipDeV + eaAeV) / 2.0) * EV_TO_JOULE;
+      if (iEffJ <= 0) return null;
+      return (HBAR_J_S / Math.sqrt(2.0 * ME_KG * iEffJ)) * 1e10;
+    }
+    function marcusFcwd(lambdaTotEv, deltaGeV, tempK) {
+      const lambdaTotJ = lambdaTotEv * EV_TO_JOULE;
+      const deltaGJ = deltaGeV * EV_TO_JOULE;
+      const kbtJ = KB_J_K * tempK;
+      const denom = Math.sqrt(4.0 * Math.PI * lambdaTotJ * kbtJ);
+      const exponent = -((deltaGJ + lambdaTotJ) ** 2) / (4.0 * lambdaTotJ * kbtJ);
+      return (1.0 / denom) * Math.exp(exponent);
+    }
+    function kEtLevel0(rAngstrom, ipDeV, eaAeV, lambdaDeV, lambdaAeV, deltaGeV, h0eV, tempK) {
+      const lAng = calculateDecayParameterL(ipDeV, eaAeV);
+      if (lAng === null) return { kEt: null, lAng: null };
+      const h0J = h0eV * EV_TO_JOULE;
+      const hDaSq = (h0J ** 2) * Math.exp((-2.0 * rAngstrom) / lAng);
+      const fcwd = marcusFcwd(lambdaDeV + lambdaAeV, deltaGeV, tempK);
+      return { kEt: ((2.0 * Math.PI) / HBAR_J_S) * hDaSq * fcwd, lAng };
+    }
+    function directionalL(lIso, elongation, axisAngleDeg, thetaRad) {
+      const phi = (axisAngleDeg * Math.PI) / 180;
+      const lLong = lIso * Math.sqrt(elongation);
+      const lShort = lIso / Math.sqrt(elongation);
+      const dtheta = thetaRad - phi;
+      const invL2 = (Math.cos(dtheta) ** 2) / (lLong ** 2) + (Math.sin(dtheta) ** 2) / (lShort ** 2);
+      return 1.0 / Math.sqrt(invL2);
+    }
+    function kEtLevel1(x, y, donor, acceptor, deltaGeV, h0eV, tempK) {
+      const r = Math.sqrt(x * x + y * y);
+      if (r === 0) return { kEt: null, r };
+      const theta = Math.atan2(y, x);
+      const lIso = calculateDecayParameterL(donor.ip, acceptor.ea);
+      if (lIso === null) return { kEt: null, r };
+      const lD = directionalL(lIso, donor.elongation, donor.axisAngle, theta);
+      const lA = directionalL(lIso, acceptor.elongation, acceptor.axisAngle, theta);
+      const lEff = 2.0 / (1.0 / lD + 1.0 / lA);
+      const h0J = h0eV * EV_TO_JOULE;
+      const hDaSq = (h0J ** 2) * Math.exp((-2.0 * r) / lEff);
+      const fcwd = marcusFcwd(donor.lambda + acceptor.lambda, deltaGeV, tempK);
+      return { kEt: ((2.0 * Math.PI) / HBAR_J_S) * hDaSq * fcwd, r };
+    }
+
+    // ---------- stan UI ----------
+    const $ = (id) => document.getElementById(id);
+    const state = { anisoOn: false, mapMode: "level01", level2Grid: null };
+
+    function readInputs() {
+      return {
+        ip: parseFloat($("d-ip").value),
+        ea: parseFloat($("a-ea").value),
+        lambdaD: parseFloat($("d-lambda").value),
+        lambdaA: parseFloat($("a-lambda").value),
+        elongD: parseFloat($("d-elong").value),
+        angleD: parseFloat($("d-angle").value),
+        elongA: parseFloat($("a-elong").value),
+        angleA: parseFloat($("a-angle").value),
+      };
+    }
+
+    function syncLabel(inputId, labelId, suffix) {
+      suffix = suffix || "";
+      $(labelId).textContent = $(inputId).value + suffix;
+    }
+
+    function updateAll() {
+      const p = readInputs();
+      syncLabel("d-ip", "val-d-ip");
+      syncLabel("d-lambda", "val-d-lambda");
+      syncLabel("a-ea", "val-a-ea");
+      syncLabel("a-lambda", "val-a-lambda");
+      syncLabel("d-elong", "val-d-elong");
+      syncLabel("d-angle", "val-d-angle", "°");
+      syncLabel("a-elong", "val-a-elong");
+      syncLabel("a-angle", "val-a-angle", "°");
+
+      const hero = kEtLevel0(5.0, p.ip, p.ea, p.lambdaD, p.lambdaA, 0.0, 0.1, 298.15);
+      $("heroValue").textContent = hero.kEt ? hero.kEt.toExponential(2) : "—";
+      $("heroL").textContent = hero.lAng ? hero.lAng.toFixed(3) : "—";
+
+      drawCurve(p);
+      if (state.mapMode === "level01") drawMapLevel01(p);
+    }
+
+    function drawCurve(p) {
+      const R = [];
+      const K = [];
+      for (let r = 2.5; r <= 12; r += 0.15) {
+        const res = kEtLevel0(r, p.ip, p.ea, p.lambdaD, p.lambdaA, 0.0, 0.1, 298.15);
+        R.push(r);
+        K.push(res.kEt);
+      }
+      Plotly.react("curveChart", [{
+        x: R, y: K, type: "scatter", mode: "lines",
+        line: { color: "#2B5C8A", width: 2.5 },
+        hovertemplate: "R = %{x:.1f} Å<br>k_ET = %{y:.2e} s⁻¹<extra></extra>",
+      }], {
+        margin: { l: 60, r: 20, t: 10, b: 44 },
+        xaxis: { title: "R (Å)", gridcolor: "#EDEAE2", zeroline: false },
+        yaxis: { title: "k_ET (s⁻¹)", type: "log", gridcolor: "#EDEAE2", zeroline: false },
+        paper_bgcolor: "rgba(0,0,0,0)",
+        plot_bgcolor: "rgba(0,0,0,0)",
+        font: { family: "Inter, sans-serif", color: "#1C1B19", size: 12 },
+      }, { displayModeBar: false, responsive: true });
+    }
+
+    function buildGrid(fn, half, n) {
+      const xs = [], ys = [];
+      for (let i = 0; i < n; i++) {
+        xs.push(-half + (2 * half * i) / (n - 1));
+        ys.push(-half + (2 * half * i) / (n - 1));
+      }
+      const z = ys.map((y) => xs.map((x) => fn(x, y)));
+      return { xs, ys, z };
+    }
+
+    function drawMapLevel01(p) {
+      const donor = {
+        ip: p.ip, lambda: p.lambdaD,
+        elongation: state.anisoOn ? p.elongD : 1.0, axisAngle: p.angleD
+      };
+      const acceptor = {
+        ea: p.ea, lambda: p.lambdaA,
+        elongation: state.anisoOn ? p.elongA : 1.0, axisAngle: p.angleA
+      };
+
+      const fn = (x, y) => {
+        const r = Math.sqrt(x * x + y * y);
+        if (r < 1.5) return null;
+        const res = kEtLevel1(x, y, donor, acceptor, 0.0, 0.1, 298.15);
+        return res.kEt ? Math.log10(res.kEt) : null;
+      };
+      const { xs, ys, z } = buildGrid(fn, 8, 46);
+      renderMap(xs, ys, z, "log₁₀(k_ET / s⁻¹) — Poziom 0/1");
+    }
+
+    function renderMap(xs, ys, z, zTitle) {
+      Plotly.react("mapChart", [{
+        x: xs, y: ys, z: z, type: "surface",
+        colorscale: [[0, "#2B5C8A"], [0.5, "#F3F1EA"], [1, "#B23A24"]],
+        showscale: true,
+        hovertemplate: "x=%{x:.1f} Å  y=%{y:.1f} Å<br>log₁₀(k_ET)=%{z:.2f}<extra></extra>",
+      }], {
+        margin: { l: 0, r: 0, t: 10, b: 0 },
+        scene: {
+          xaxis: { title: "x (Å)", gridcolor: "#EDEAE2" },
+          yaxis: { title: "y (Å)", gridcolor: "#EDEAE2" },
+          zaxis: { title: zTitle, gridcolor: "#EDEAE2" },
+          camera: { eye: { x: 1.4, y: -1.4, z: 0.9 } },
+        },
+        paper_bgcolor: "rgba(0,0,0,0)",
+        font: { family: "Inter, sans-serif", color: "#1C1B19", size: 11 },
+      }, { responsive: true });
+    }
+
+    // ---------- wpiecie zdarzen ----------
+    ["d-ip", "d-lambda", "a-ea", "a-lambda", "d-elong", "d-angle", "a-elong", "a-angle"].forEach((id) => {
+      $(id).addEventListener("input", updateAll);
+    });
+    $("anisoToggle").addEventListener("change", (e) => {
+      state.anisoOn = e.target.checked;
+      $("d-aniso").classList.toggle("active", state.anisoOn);
+      $("a-aniso").classList.toggle("active", state.anisoOn);
+      updateAll();
+    });
+
+    $("btnLevel01").addEventListener("click", () => {
+      state.mapMode = "level01";
+      $("btnLevel01").classList.add("active");
+      $("btnLevel2").classList.remove("active");
+      $("uploadBox").style.display = "none";
+      updateAll();
+    });
+    $("btnLevel2").addEventListener("click", () => {
+      state.mapMode = "level2";
+      $("btnLevel2").classList.add("active");
+      $("btnLevel01").classList.remove("active");
+      $("uploadBox").style.display = "flex";
+      if (state.level2Grid) {
+        const g = state.level2Grid;
+        renderMap(g.x, g.y, g.z, "log₁₀(k_ET / s⁻¹) — Poziom 2");
+      }
+    });
+
+    $("jsonUpload").addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const data = JSON.parse(ev.target.result);
+          if (!data.x || !data.y || !data.k_ET) throw new Error("brak pol x/y/k_ET w JSON");
+          const zLog = data.k_ET.map((row) => row.map((v) => (v > 0 ? Math.log10(v) : null)));
+          state.level2Grid = { x: data.x, y: data.y, z: zLog };
+          renderMap(data.x, data.y, zLog, "log₁₀(k_ET / s⁻¹) — Poziom 2");
+          $("uploadStatus").textContent = `Wczytano siatkę ${data.x.length}×${data.y.length}.`;
+          $("uploadStatus").className = "upload-status ok";
+        } catch (err) {
+          $("uploadStatus").textContent = "Błąd: " + err.message;
+          $("uploadStatus").className = "upload-status err";
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    updateAll();
+  </script>
+
+</body>
+
+</html>
