@@ -320,13 +320,13 @@ const PortfolioApp = {
             desc: "Predictive inhibitory activity towards lipoxygenase and peroxidase.",
             image: "assets/tools/spectrum.png",
             url: "https://farmaceut.github.io/enzymes-qsar/",
-        },*/
+        },
         {
             title: "Dexter Energy Transfer Calculator",
             desc: "Estimate Dexter energy transfer rates from monomers.",
             image: "assets/dexrate.jpg",
             url: "tools/dexter/main.html"
-        }
+        }*/
     ],
 
     // ---- ADD MEDIA / OUTREACH ITEMS HERE ---------------------------------
@@ -435,7 +435,7 @@ const PortfolioApp = {
     newsItems: [
         {
             label: 'Recognition',
-            title: "World's Top 2% Scientists 2026",
+            title: "Again in World's Top 2% Scientists (Edition 2026)",
             url: 'https://elsevier.digitalcommonsdata.com/datasets/btchxktzyw/9',
             image: '',   // np. 'assets/news/top2.jpg'
             color: 'gold'
