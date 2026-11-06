@@ -10,10 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="tunneling.css">
 <script>
+  /* ---- edit these three lines after publication (leave '' to hide the link) ---- */
   window.TNL_CONFIG = {
     paperCitation: 'M. Spiegel, One-dimensional tunneling corrections in computational kinetics: numerically exact benchmarks and limits of barrier-shape calibration, Theor. Chem. Acc. (2026), invited article, in preparation.',
-    paperUrl: '',
-    homeUrl: 'https://farmaceut.github.io'
+    paperUrl: '',      // DOI link of the article, e.g. 'https://doi.org/...'
+    repoUrl: '',       // GitHub / Zenodo link of the Python code
+    homeUrl: '../../'  // link back to the main page of the site
   };
 </script>
 </head>
@@ -225,7 +227,7 @@
         <li><b>Reproduced here:</b> the closed-form models (Wigner, truncated parabola, Eckart), the exact 1D reference, ZCT-MEP, ZCT-EC and EQ-FREQ on matched model profiles (Table 2, five families, button above), the double-hump case, and the CH₄ + OH• example.</li>
         <li><b>Python only:</b> the 540-case benchmark, bootstrap and Clopper–Pearson intervals, literature cases, mass and isotope scans, parameter maps, the real-IRC analysis and the Hessian-based isotope analysis.</li>
         <li><b>Numerical differences</b> to the Python code: cubic spline with natural end conditions (SciPy’s default is not-a-knot), a dense path grid of 8001 points (Python: 20001), barrier top refined by a parabola through the three highest grid points (Python: grid maximum), Gauss–Chebyshev quadrature of the WKB action between turning points (Python: trapezoid rule on the grid), an analytic action for the Eckart reference in ZCT-EC/EQ-FREQ (Python: a discrete 801-point model path), and a transfer-matrix propagator with Richardson extrapolation in ln T for the exact solver (Python: Riccati log-derivative, Richardson in T).</li>
-        <li><b>Measured agreement</b> (30 matched profiles: Gaussian, Lorentzian, sech², sech⁴, Lorentzian², shoulder; five (V₁, ΔE, |ν‡|) sets; 200–600 K): exact κ, ZCT-MEP, ZCT-EC and EQ-FREQ agree with the Python package to ≤ 0.015 %, ν<sub>eff</sub> to ≤ 0.023 %, Eckart to 10⁻⁵ %, Wigner and the truncated parabola to rounding. Only the plain-WKB variant of ZCT-MEP, which has a kink at the barrier top, differs by up to 0.11 %. For an ORCA trajectory the parsers give the same s(V) and the same ZCT-MEP κ to six digits when the same atomic masses are used. Reference values and the scripts that produced them are in <code>tests/pyref/</code>.</li>
+        <li><b>Measured agreement</b> (30 matched profiles: Gaussian, Lorentzian, sech², sech⁴, Lorentzian², shoulder; five (V₁, ΔE, |ν‡|) sets; 200–600 K): exact κ, ZCT-MEP, ZCT-EC and EQ-FREQ agree with the Python package to ≤ 0.015 %, ν<sub>eff</sub> to ≤ 0.023 %, Eckart to 10⁻⁵ %, Wigner and the truncated parabola to rounding. Only the plain-WKB variant of ZCT-MEP, which has a kink at the barrier top, differs by up to 0.11 %. For an ORCA trajectory the parsers give the same s(V) and the same ZCT-MEP κ to six digits when the same atomic masses are used. Reference values and the scripts that produced them are in the Python package repository.</li>
         <li><b>Atomic masses for ORCA files:</b> this page uses the most abundant isotopes by default (what ORCA and Gaussian use in the IRC), the Python package uses standard atomic weights (e.g. C 12.0107). For a CH<sub>3</sub>-type path the arc length then differs by up to 0.1 %, κ by 0.03–0.1 % in the example; the selector in the “Reaction path” tab switches between the two.</li>
       </ul>
       <h2 style="margin-top:18px">Citation, code and licence</h2>
