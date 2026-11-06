@@ -326,7 +326,14 @@ const PortfolioApp = {
             desc: "Estimate Dexter energy transfer rates from monomers.",
             image: "assets/dexrate.jpg",
             url: "tools/dexter/main.html"
+        },
+        {
+            title: "Tunneling Correction Calculator",
+            desc: "Thermal tunneling corrections κ(T) for H-transfer: Wigner, Eckart, ZCT-EC and EQ-FREQ vs. an exact 1D benchmark.",
+            image: "assets/tunnel.jpg",
+            url: "tools/tunneling/index.html"
         }
+        
     ],
 
     // ---- ADD MEDIA / OUTREACH ITEMS HERE ---------------------------------
