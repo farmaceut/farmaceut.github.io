@@ -6,7 +6,7 @@
   'use strict';
 
   function profilePath(p, rho) {
-    const L = Math.max(14, 14 * p.w), n = 8001, s = new Float64Array(n), V = new Float64Array(n);
+    const L = C.boxFor(p), n = L < 30 ? 8001 : 16001, s = new Float64Array(n), V = new Float64Array(n);
     for (let i = 0; i < n; i++) { const x = -L + 2 * L * i / (n - 1); s[i] = x; V[i] = p.V(x); }
     return new C.PathModel(s, V, { nu: p.nuAct, massRatio: rho || 1 });
   }

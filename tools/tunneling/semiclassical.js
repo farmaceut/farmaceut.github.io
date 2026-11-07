@@ -161,6 +161,7 @@
       const qL = C.brent(g, b, a, 1e-13);
       a = 0; b = step; while (g(b) > 0 && b < 60) { a = b; b += step; }
       const qR = C.brent(g, a, b, 1e-13);
+      if (!Number.isFinite(qL) || !Number.isFinite(qR)) throw new Error('no turning point on the modified potential');   // as in the Python package: mSVPT4 is then not defined (NaN)
       if (!(qR > qL)) return 0;
       maxMod = Math.max(maxMod, Math.abs(poly(qL) - 1), Math.abs(poly(qR) - 1));
       const half = 0.5 * (qR - qL), mid = 0.5 * (qR + qL); let s = 0;
@@ -171,13 +172,14 @@
     let k1 = 0;
     if (Ehi > Elo) {
       const f = (E) => { const S = action(E - dE); return Math.exp(-beta * (E - Vs) - Math.log1p(Math.exp(S))); };
-      k1 = beta * C.quadGK(f, Elo, Ehi, 1e-10, 24);
+      k1 = beta * C.qags(f, Elo, Ehi, 0, 1e-10, 400).result;       // QUADPACK QAGS, as scipy.integrate.quad in the Python package
     }
     // above the (shifted) top: SVPT4 energy-action relation, eq 3.25
     const E = energyOfTheta(c, Vs, w, 4);
     const gl = (th) => -beta * (E(th) - Vs) - 2 * Math.log(Math.cosh(th));
-    if (gl(-40) > gl(0) + 5) return NaN;
+    if (gl(-40) > gl(0) + 5) return { kappa: NaN, maxMod };            // the series is not usable here (as in the Python package)
     const r = logsumexpIntegral(gl, -40, 0, 4000);
+    if (r.ln > 700) return { kappa: NaN, maxMod };
     const k2 = 0.5 * Math.exp(-beta * dE) + 0.5 * Math.exp(r.ln);
     return { kappa: k1 + k2, U31, U41, dE, maxMod };
   }
@@ -477,7 +479,7 @@
     const pm = new C.PathModel(s, Vv, { nu: p.nuAct });
     const E0 = Math.max(0, pm.dE);
     const act = makeAction((E) => pm.theta(E), pm.V1, E0);
-    const Vred = (q) => p.V(p.xMax + rd.ell * q) / hw;
+    const Vred = (q) => (p.V(p.xMax + rd.ell * q) - Vv[0]) / hw;       // measured from the reactant asymptote at the box edge, as in the Python package
     const res = { info, T: Ts.slice(), inst: [], usit: [], usit1: [], usitNum: [], svpt2: [], svpt4: [], msvpt4: [], msvpt4mod: [], mvpt2: [], myf: [], Ebeta: [], law2: [], law4: [], lawOk: false };
     let la = null;
     if (opts.lawrence !== false) { try { la = lawrenceActions(p, act, Vv[0], L); res.lawOk = la.ok; } catch (e) { la = null; } }

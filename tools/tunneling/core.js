@@ -196,7 +196,7 @@
     return 2 * Math.PI * Math.sqrt(V1 * V2) / (hnu * sB) * (sB - Math.sqrt(Ee) - Math.sqrt(Math.max(Ee - A, 0)));
   }
   function lnPfromTheta(theta, variant) {
-    if (variant === 'wkb') return theta > 0 ? -2 * theta : 0;
+    if (variant === 'wkb' && theta > 0) return -2 * theta;      // plain WKB below the top; at and above the top the parabolic (Kemble-type) continuation, as in the Python package
     return lnKemble(theta);
   }
   /** ZCT-MEP kappa evaluated on the Eckart(V1,V2,nu) model path (analytic action) */
@@ -399,7 +399,9 @@
 
   class Profile {
     constructor(family, V0, w, dE) { this.family = family; this.V0 = V0; this.w = w; this.dE = dE; this.f = FAMILIES[family].f; }
-    V(x) { return this.V0 * this.f(x / this.w) + 0.5 * this.dE * (1 + Math.tanh(x / (0.5 * this.w))); }
+    /** width of the tanh step that sets the product asymptote: 0.5 w for the matched single-hump families, fixed 0.6 (A amu^1/2) for the double-hump family */
+    get stepW() { return FAMILIES[this.family].nominal ? 0.6 : 0.5 * this.w; }
+    V(x) { return this.V0 * this.f(x / this.w) + 0.5 * this.dE * (1 + Math.tanh(x / this.stepW)); }
     /** locate the global maximum and the curvature there (x in A, m = 1 amu) */
     analyse() {
       const w = this.w; let xb = 0, vb = -Infinity;
@@ -565,10 +567,12 @@
     }
   }
 
+  /** half-width of the box (A amu^1/2): max(12, 9 w, wing*w), wing = 40 (Lorentzian), 15 (Lorentzian^2) - the same rule as in the Python package */
+  function boxFor(prof) { const wing = { lorentz: 40, lorentz2: 15 }[prof.family] || 0; return Math.max(12, 9 * prof.w, wing * prof.w); }
   /** exact solver for a matched model profile (x in A with m = 1 amu; massRatio rho scales s = sqrt(rho) x) */
   function exactForProfile(prof, opts = {}) {
     const rho = opts.massRatio || 1, sr = Math.sqrt(rho);
-    const L = Math.max(14, 14 * prof.w) * (opts.boxScale || 1);
+    const L = boxFor(prof) * (opts.boxScale || 1);
     const solver = new ExactSolver((s) => prof.V(s / sr), -L * sr, L * sr, { hScale: opts.hScale });
     solver.nuEst = prof.nuAct / sr;
     return solver;
@@ -582,14 +586,144 @@
     return solver;
   }
 
+  // ------------------------------------------------------------------ QUADPACK QAGS (the integrator behind scipy.integrate.quad)
+  // Port of dqagse / dqk21 / dqpsrt / dqelg: adaptive 21-point Gauss-Kronrod with epsilon-algorithm extrapolation.
+  // It visits exactly the same abscissae as scipy.integrate.quad(f, a, b, epsabs, epsrel, limit), which the Python package uses.
+  const QK21_XGK = [0.995657163025808080735527280689003, 0.973906528517171720077964012084452, 0.930157491355708226001207180059508, 0.865063366688984510732096688423493, 0.780817726586416897063717578345042, 0.679409568299024406234327365114874, 0.562757134668604683339000099272694, 0.433395394129247190799265943165784, 0.294392862701460198131126603103866, 0.148874338981631210884826001129720, 0.0];
+  const QK21_WGK = [0.011694638867371874278064396062192, 0.032558162307964727478818972459390, 0.054755896574351996031381300244580, 0.075039674810919952767043140916190, 0.093125454583697605535065465083366, 0.109387158802297641899210590325805, 0.123491976262065851077958109831074, 0.134709217311473325928054001771707, 0.142775938577060080797094273138717, 0.147739104901338491374841515972068, 0.149445554002916905664936468389821];
+  const QK21_WG = [0.066671344308688137593568809893332, 0.149451349150580593145776339657697, 0.219086362515982043995534934228163, 0.269266719309996355091226921569469, 0.295524224714752870173892994651338];
+  const EPMACH = 2.220446049250313e-16, UFLOW = 2.2250738585072014e-308, OFLOW = 1.7976931348623157e308;
+  function dqk21(f, a, b) {
+    const centr = 0.5 * (a + b), hlgth = 0.5 * (b - a), dhlgth = Math.abs(hlgth);
+    const fv1 = new Array(10), fv2 = new Array(10);
+    let resg = 0; const fc = f(centr); let resk = QK21_WGK[10] * fc, resabs = Math.abs(resk);
+    for (let j = 1; j <= 5; j++) { const jtw = 2 * j, absc = hlgth * QK21_XGK[jtw - 1], f1 = f(centr - absc), f2 = f(centr + absc); fv1[jtw - 1] = f1; fv2[jtw - 1] = f2; const fs = f1 + f2; resg += QK21_WG[j - 1] * fs; resk += QK21_WGK[jtw - 1] * fs; resabs += QK21_WGK[jtw - 1] * (Math.abs(f1) + Math.abs(f2)); }
+    for (let j = 1; j <= 5; j++) { const jtwm1 = 2 * j - 1, absc = hlgth * QK21_XGK[jtwm1 - 1], f1 = f(centr - absc), f2 = f(centr + absc); fv1[jtwm1 - 1] = f1; fv2[jtwm1 - 1] = f2; const fs = f1 + f2; resk += QK21_WGK[jtwm1 - 1] * fs; resabs += QK21_WGK[jtwm1 - 1] * (Math.abs(f1) + Math.abs(f2)); }
+    const reskh = resk * 0.5; let resasc = QK21_WGK[10] * Math.abs(fc - reskh);
+    for (let j = 0; j < 10; j++) resasc += QK21_WGK[j] * (Math.abs(fv1[j] - reskh) + Math.abs(fv2[j] - reskh));
+    const result = resk * hlgth; resabs *= dhlgth; resasc *= dhlgth; let abserr = Math.abs((resk - resg) * hlgth);
+    if (resasc !== 0 && abserr !== 0) abserr = resasc * Math.min(1, Math.pow(200 * abserr / resasc, 1.5));
+    if (resabs > UFLOW / (50 * EPMACH)) abserr = Math.max(EPMACH * 50 * resabs, abserr);
+    return { result, abserr, resabs, resasc };
+  }
+  function dqpsrt(limit, last, st, elist, iord) {     // st = {maxerr, ermax, nrmax}; 1-based arrays
+    if (last <= 2) { iord[1] = 1; iord[2] = 2; }
+    else {
+      const errmax = elist[st.maxerr]; let jump = false;
+      if (st.nrmax !== 1) { const ido = st.nrmax - 1; for (let i = 1; i <= ido; i++) { const isucc = iord[st.nrmax - 1]; if (errmax <= elist[isucc]) break; iord[st.nrmax] = isucc; st.nrmax--; } }
+      const jupbn = last > (Math.floor(limit / 2) + 2) ? limit + 3 - last : last, errmin = elist[last], jbnd = jupbn - 1, ibeg = st.nrmax + 1; let i = ibeg, found = false;
+      if (ibeg <= jbnd) { for (i = ibeg; i <= jbnd; i++) { const isucc = iord[i]; if (errmax >= elist[isucc]) { found = true; break; } iord[i - 1] = isucc; } }
+      if (!found) { iord[jbnd] = st.maxerr; iord[jupbn] = last; }
+      else { iord[i - 1] = st.maxerr; let k = jbnd, placed = false; for (let j = i; j <= jbnd; j++) { const isucc = iord[k]; if (errmin < elist[isucc]) { iord[k + 1] = last; placed = true; break; } iord[k + 1] = isucc; k--; } if (!placed) iord[i] = last; }
+    }
+    st.maxerr = iord[st.nrmax]; st.ermax = elist[st.maxerr];
+  }
+  function dqelg(st, epstab, res3la) {                // st = {n, nres, result, abserr}; epstab 1-based (size 53), res3la 1-based (3)
+    st.nres++; st.abserr = OFLOW; st.result = epstab[st.n];
+    if (st.n >= 3) {
+      const limexp = 50; epstab[st.n + 2] = epstab[st.n]; const newelm = Math.floor((st.n - 1) / 2); epstab[st.n] = OFLOW; const num = st.n; let k1 = st.n, done = false;
+      for (let i = 1; i <= newelm; i++) {
+        const k2 = k1 - 1, k3 = k1 - 2; let res = epstab[k1 + 2]; const e0 = epstab[k3], e1 = epstab[k2], e2 = res, e1abs = Math.abs(e1);
+        const delta2 = e2 - e1, err2 = Math.abs(delta2), tol2 = Math.max(Math.abs(e2), e1abs) * EPMACH, delta3 = e1 - e0, err3 = Math.abs(delta3), tol3 = Math.max(e1abs, Math.abs(e0)) * EPMACH;
+        if (!(err2 > tol2 || err3 > tol3)) { st.result = res; st.abserr = err2 + err3; st.abserr = Math.max(st.abserr, 5 * EPMACH * Math.abs(st.result)); return; }
+        const e3 = epstab[k1]; epstab[k1] = e1; const delta1 = e1 - e3, err1 = Math.abs(delta1), tol1 = Math.max(e1abs, Math.abs(e3)) * EPMACH;
+        if (err1 <= tol1 || err2 <= tol2 || err3 <= tol3) { st.n = i + i - 1; break; }
+        const ss = 1 / delta1 + 1 / delta2 - 1 / delta3, epsinf = Math.abs(ss * e1);
+        if (!(epsinf > 1e-4)) { st.n = i + i - 1; break; }
+        res = e1 + 1 / ss; epstab[k1] = res; k1 -= 2; const error = err2 + Math.abs(res - e2) + err3;
+        if (error > st.abserr) continue;
+        st.abserr = error; st.result = res;
+      }
+      if (st.n === limexp) st.n = 2 * Math.floor(limexp / 2) - 1;
+      let ib = (Math.floor(num / 2) * 2 === num) ? 2 : 1; const ie = newelm + 1;
+      for (let i = 1; i <= ie; i++) { const ib2 = ib + 2; epstab[ib] = epstab[ib2]; ib = ib2; }
+      if (num !== st.n) { let indx = num - st.n + 1; for (let i = 1; i <= st.n; i++) { epstab[i] = epstab[indx]; indx++; } }
+      if (st.nres >= 4) { st.abserr = Math.abs(st.result - res3la[3]) + Math.abs(st.result - res3la[2]) + Math.abs(st.result - res3la[1]); res3la[1] = res3la[2]; res3la[2] = res3la[3]; res3la[3] = st.result; }
+      else { res3la[st.nres] = st.result; st.abserr = OFLOW; }
+    }
+    st.abserr = Math.max(st.abserr, 5 * EPMACH * Math.abs(st.result));
+  }
+  /** returns {result, abserr, last, ier, alist, blist} like scipy.integrate.quad(..., full_output=1) */
+  function qags(f, a, b, epsabs = 0, epsrel = 1e-10, limit = 400) {
+    const alist = new Float64Array(limit + 4), blist = new Float64Array(limit + 4), rlist = new Float64Array(limit + 4), elist = new Float64Array(limit + 4), iord = new Int32Array(limit + 4), rlist2 = new Float64Array(53), res3la = new Float64Array(4);
+    let ier = 0, ierro = 0, result, abserr, last = 1;
+    alist[1] = a; blist[1] = b;
+    let q = dqk21(f, a, b); result = q.result; abserr = q.abserr; const defabs = q.resabs, resabs0 = q.resasc;
+    const dres = Math.abs(result); let errbnd = Math.max(epsabs, epsrel * dres);
+    rlist[1] = result; elist[1] = abserr; iord[1] = 1;
+    if (abserr <= 100 * EPMACH * defabs && abserr > errbnd) ier = 2;
+    if (limit === 1) ier = 1;
+    const out = () => ({ result, abserr, last, ier, alist, blist });
+    if (ier !== 0 || (abserr <= errbnd && abserr !== resabs0) || abserr === 0) return out();
+    rlist2[1] = result; const st = { maxerr: 1, ermax: abserr, nrmax: 1 }; let errmax = abserr, area = result, errsum = abserr; abserr = OFLOW;
+    let nres = 0, numrl2 = 2, ktmin = 0, extrap = false, noext = false, iroff1 = 0, iroff2 = 0, iroff3 = 0, small = 0, erlarg = 0, ertest = 0, correc = 0;
+    const ksgn = dres >= (1 - 50 * EPMACH) * defabs ? 1 : -1; const eps = { n: 0, nres: 0, result: 0, abserr: 0 };
+    let jumpTo115 = false;
+    for (last = 2; last <= limit; last++) {
+      const maxerr = st.maxerr; errmax = st.ermax;
+      const a1 = alist[maxerr], b1 = 0.5 * (alist[maxerr] + blist[maxerr]), a2 = b1, b2 = blist[maxerr], erlast = errmax;
+      const q1 = dqk21(f, a1, b1), q2 = dqk21(f, a2, b2); const area1 = q1.result, error1 = q1.abserr, area2 = q2.result, error2 = q2.abserr;
+      const area12 = area1 + area2, erro12 = error1 + error2; errsum = errsum + erro12 - errmax; area = area + area12 - rlist[maxerr];
+      if (q1.resasc !== error1 && q2.resasc !== error2) {
+        if (Math.abs(rlist[maxerr] - area12) <= 1e-5 * Math.abs(area12) && erro12 >= 0.99 * errmax) { if (extrap) iroff2++; else iroff1++; }
+        if (last > 10 && erro12 > errmax) iroff3++;
+      }
+      rlist[maxerr] = area1; rlist[last] = area2; errbnd = Math.max(epsabs, epsrel * Math.abs(area));
+      if (iroff1 + iroff2 >= 10 || iroff3 >= 20) ier = 2;
+      if (iroff2 >= 5) ierro = 3;
+      if (last === limit) ier = 1;
+      if (Math.max(Math.abs(a1), Math.abs(b2)) <= (1 + 100 * EPMACH) * (Math.abs(a2) + 1000 * UFLOW)) ier = 4;
+      if (error2 > error1) { alist[maxerr] = a2; alist[last] = a1; blist[last] = b1; rlist[maxerr] = area2; rlist[last] = area1; elist[maxerr] = error2; elist[last] = error1; }
+      else { alist[last] = a2; blist[maxerr] = b1; blist[last] = b2; elist[maxerr] = error1; elist[last] = error2; }
+      dqpsrt(limit, last, st, elist, iord);
+      if (errsum <= errbnd) { jumpTo115 = true; break; }
+      if (ier !== 0) break;
+      if (last === 2) { small = Math.abs(b - a) * 0.375; erlarg = errsum; ertest = errbnd; rlist2[2] = area; continue; }
+      if (noext) continue;
+      erlarg -= erlast; if (Math.abs(b1 - a1) > small) erlarg += erro12;
+      if (!extrap) { if (Math.abs(blist[st.maxerr] - alist[st.maxerr]) > small) continue; extrap = true; st.nrmax = 2; }
+      if (ierro !== 3 && erlarg > ertest) {
+        const id = st.nrmax; const jupbnd = last > (2 + Math.floor(limit / 2)) ? limit + 3 - last : last; let goOn = false;
+        for (let k = id; k <= jupbnd; k++) { st.maxerr = iord[st.nrmax]; st.ermax = elist[st.maxerr]; if (Math.abs(blist[st.maxerr] - alist[st.maxerr]) > small) { goOn = true; break; } st.nrmax++; }
+        if (goOn) continue;
+      }
+      numrl2++; rlist2[numrl2] = area; eps.n = numrl2; eps.nres = nres; dqelg(eps, rlist2, res3la); numrl2 = eps.n; nres = eps.nres; const reseps = eps.result, abseps = eps.abserr;
+      ktmin++; if (ktmin > 5 && abserr < 1e-3 * errsum) ier = 5;
+      if (abseps < abserr) { ktmin = 0; abserr = abseps; result = reseps; correc = erlarg; ertest = Math.max(epsabs, epsrel * Math.abs(reseps)); if (abserr <= ertest) break; }
+      if (numrl2 === 1) noext = true;
+      if (ier === 5) break;
+      st.maxerr = iord[1]; st.ermax = elist[st.maxerr]; st.nrmax = 1; extrap = false; small *= 0.5; erlarg = errsum;
+    }
+    if (last > limit) last = limit;
+    // set final result and error estimate (labels 100-130 of dqagse)
+    let to115 = jumpTo115;
+    if (!to115) {
+      if (abserr === OFLOW) to115 = true;
+      else if (ier + ierro !== 0) {
+        if (ierro === 3) abserr += correc;
+        if (ier === 0) ier = 3;
+        if (result !== 0 && area !== 0) { if (abserr / Math.abs(result) > errsum / Math.abs(area)) to115 = true; }
+        else if (abserr > errsum) to115 = true;
+        else if (area === 0) { if (ier > 2) ier--; return out(); }
+      }
+      if (!to115) {
+        if (!(ksgn === -1 && Math.max(Math.abs(result), Math.abs(area)) <= defabs * 0.01)) { if (0.01 > result / area || result / area > 100 || errsum > Math.abs(area)) ier = 6; }
+        if (ier > 2) ier--; return out();
+      }
+    }
+    result = 0; for (let k = 1; k <= last; k++) result += rlist[k]; abserr = errsum;
+    if (ier > 2) ier--;
+    return out();
+  }
+
   // ------------------------------------------------------------------ helpers for the application
   function linspace(a, b, n) { const o = []; for (let i = 0; i < n; i++) o.push(n === 1 ? a : a + (b - a) * i / (n - 1)); return o; }
   function eckartPE(V1, V2, nu, Es) { const hnu = HNU * nu; return Es.map((E) => Math.exp(eckartLnT(E, V1, V2, hnu))); }
 
   return {
-    CONST, uStar, Tcross, dG, quadGK, brent, gaussLegendre,
+    CONST, uStar, Tcross, dG, quadGK, qags, brent, gaussLegendre,
     kappaWigner, kappaParabola, kappaParabolaNumeric, kappaEckart, kappaEckartSym, eckartLnT, thetaEckart, kappaZCTonEckart, fsubFromLnT,
     PathModel, kappaZCTEC, effectiveFrequency, kappaEQFREQ, allModels,
-    FAMILIES, Profile, matchProfile, ExactSolver, exactForProfile, exactForPath, naturalSpline, cubicSpline, linspace, eckartPE, lnPfromTheta
+    FAMILIES, Profile, boxFor, matchProfile, ExactSolver, exactForProfile, exactForPath, naturalSpline, cubicSpline, linspace, eckartPE, lnPfromTheta
   };
 });
