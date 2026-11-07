@@ -1,249 +1,274 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tunneling correction calculator</title>
-<meta name="description" content="Interactive thermal tunneling corrections κ(T) for hydrogen/proton transfer: Wigner, truncated parabola, Eckart, ZCT-MEP, ZCT-EC and EQ-FREQ, with an exact one-dimensional reference. Runs entirely in the browser.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="tunneling.css">
-<script>
-  /* ---- edit these three lines after publication (leave '' to hide the link) ---- */
-  window.TNL_CONFIG = {
-    paperCitation: 'M. Spiegel, One-dimensional tunneling corrections in computational kinetics: numerically exact benchmarks and limits of barrier-shape calibration, Theor. Chem. Acc. (2026), invited article, in preparation.',
-    paperUrl: '',      // DOI link of the article, e.g. 'https://doi.org/...'
-    repoUrl: '',       // GitHub / Zenodo link of the Python code
-    homeUrl: '../../'  // link back to the main page of the site
-  };
-</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tunneling correction calculator</title>
+  <meta name="description"
+    content="Interactive thermal tunneling corrections κ(T) for hydrogen/proton transfer: Wigner, truncated parabola, Eckart, ZCT-MEP, ZCT-EC and EQ-FREQ, with an exact one-dimensional reference. Runs entirely in the browser.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="tunneling.css">
+  <script>
+    /* ---- edit these three lines after publication (leave '' to hide the link) ---- */
+    window.TNL_CONFIG = {
+      paperCitation: 'M. Spiegel, Incorporating barrier shape into one-dimensional tunnelling corrections: benchmark and parameter-free Eckart calibrations for quantitative accuracy, Theor. Chem. Acc. (2026), invited article, in preparation.',
+      paperUrl: '',      // DOI link of the article, e.g. 'https://doi.org/...'
+      repoUrl: '',       // GitHub / Zenodo link of the Python code
+      homeUrl: '../../'  // link back to the main page of the site
+    };
+  </script>
 </head>
+
 <body class="tnl">
-<div class="tnl-wrap" data-mode="simple">
-  <div class="tnl-top">
-    <a id="homeLink" href="../../">← back to the site</a>
-    <span class="tnl-topr"><div class="seg" role="group" aria-label="Interface mode">
+  <div class="tnl-wrap" data-mode="simple">
+    <div class="tnl-top">
+      <a id="homeLink" href="../../">← back to the site</a>
+      <span class="tnl-topr">
+        <div class="seg" role="group" aria-label="Interface mode">
           <button type="button" id="mode-simple" aria-pressed="true">Basic</button>
           <button type="button" id="mode-adv" aria-pressed="false">Advanced</button>
-        </div><button class="mini" id="themeBtn" type="button" aria-label="Toggle colour theme">theme: auto</button></span>
-  </div>
+        </div><button class="mini" id="themeBtn" type="button" aria-label="Toggle colour theme">theme: auto</button>
+      </span>
+    </div>
 
-  <h1>Tunneling correction calculator</h1>
-  <p class="lead simple-only">Tunneling correction κ(T) for hydrogen / proton transfer. Enter the barrier, the reaction energy and the imaginary frequency; everything is computed in your browser.</p>
-  <p class="lead adv">Thermal tunneling corrections κ(T) for hydrogen/proton transfer from a one-dimensional barrier model:
-    Wigner, truncated parabola, Eckart, a static MEP-based path model (ZCT-MEP) and the two Eckart-calibrated path corrections ZCT-EC and EQ-FREQ,
-    compared with a numerically exact solution of the one-dimensional Schrödinger equation. Everything is computed in your browser; no data are uploaded.</p>
+    <h1>Tunneling correction calculator</h1>
+    <p class="lead simple-only">Tunneling correction κ(T) for hydrogen / proton transfer. Enter the barrier, the
+      reaction energy and the imaginary frequency; everything is computed in your browser.</p>
+    <p class="lead adv">Thermal tunneling corrections κ(T) for hydrogen/proton transfer from a one-dimensional barrier
+      model:
+      Wigner, truncated parabola, Eckart, a static MEP-based path model (ZCT-MEP) and the two Eckart-calibrated path
+      corrections ZCT-EC and EQ-FREQ,
+      compared with a numerically exact solution of the one-dimensional Schrödinger equation. Everything is computed in
+      your browser; no data are uploaded.</p>
 
-  <div class="tnl-tabs adv" role="tablist" aria-label="Calculator sections">
-    <button role="tab" id="tab-b-params" aria-controls="tab-params" aria-selected="true" type="button">Three numbers (V₁, ΔE, ν‡)</button>
-    <button role="tab" id="tab-b-path" aria-controls="tab-path" aria-selected="false" type="button">Reaction path (IRC)</button>
-    <button role="tab" id="tab-b-about" aria-controls="tab-about" aria-selected="false" type="button">Methods &amp; validation</button>
-  </div>
+    <div class="tnl-tabs adv" role="tablist" aria-label="Calculator sections">
+      <button role="tab" id="tab-b-params" aria-controls="tab-params" aria-selected="true" type="button">Three numbers
+        (V₁, ΔE, ν‡)</button>
+      <button role="tab" id="tab-b-path" aria-controls="tab-path" aria-selected="false" type="button">Reaction path
+        (IRC)</button>
+    </div>
 
-  <!-- ===================================================== PARAMETERS ===================================================== -->
-  <section id="tab-params" role="tabpanel" aria-labelledby="tab-b-params">
-    <div class="tnl-card">
-      <h2>Barrier parameters</h2>
-      <div class="tnl-form">
-        <label class="f"><span>V₁ forward barrier <span class="tip" tabindex="0" role="note" data-tip="Forward barrier of the transition state, ZPE-corrected, measured from the reactant asymptote (or the pre-reactive complex).">?</span></span><span class="u">kcal/mol</span><input id="p-V1" type="number" step="any" value="12"></label>
-        <label class="f"><span>ΔE reaction energy <span class="tip" tabindex="0" role="note" data-tip="E(products) − E(reactants), at the same level and with the same reference as V₁. Negative for an exothermic reaction. Do not type absolute energies.">?</span></span><span class="u">kcal/mol (&lt; 0 exothermic)</span><input id="p-dE" type="number" step="any" value="-5"></label>
-        <label class="f"><span>|ν‡| imaginary frequency <span class="tip" tabindex="0" role="note" data-tip="Magnitude of the imaginary frequency of the transition state (Hessian of the TS), entered as a positive number.">?</span></span><span class="u">cm⁻¹</span><input id="p-nu" type="number" step="any" min="1" value="1800"></label>
-        <label class="f"><span><span class="adv">T for the table</span><span class="simple-only">Temperature</span></span><span class="u">K</span><input id="p-T" type="number" step="any" min="1" value="298.15"></label>
-        <label class="f adv">T from <span class="u">K</span><input id="p-Tmin" type="number" step="any" min="1" value="200"></label>
-        <label class="f adv">T to <span class="u">K</span><input id="p-Tmax" type="number" step="any" min="1" value="600"></label>
-        <label class="f adv">points<input id="p-nT" type="number" step="1" min="3" max="80" value="21"></label>
-        <label class="f adv">Examples
-          <select id="p-preset">
-            <option value="">— choose —</option>
-            <option value="fig4a">Fig. 4a: V₁ = 12, ΔE = −5, 1800 cm⁻¹</option>
-            <option value="fig4b">Fig. 4b: V₁ = 15, ΔE = −10, 1200 cm⁻¹</option>
-            <option value="tab2">Table 2: V₁ = 12, ΔE = −8, 1800 cm⁻¹</option>
-            <option value="ch4oh">CH₄ + OH• (PES-2014 values, illustrative)</option>
-            <option value="sym">Symmetric: V₁ = 8, ΔE = 0, 1500 cm⁻¹</option>
-          </select>
-        </label>
-      </div>
-      <div class="row adv"><label class="chk"><input type="checkbox" id="p-sym"> symmetric reaction (ΔE = 0)</label></div>
-      <details class="energies" id="p-en">
-        <summary>I have energies of reactants, TS and products instead</summary>
-        <p class="hint">Same level of theory, electronic energy + zero-point energy (Gaussian: “Sum of electronic and zero-point Energies”). For several species write a sum with spaces: <code>-155.1234 + -76.4321</code>. V₁ = E(TS) − E(reactants), ΔE = E(products) − E(reactants). Free energies (ΔG‡, ΔG<sub>rxn</sub>) are not the right input.</p>
+    <!-- ===================================================== PARAMETERS ===================================================== -->
+    <section id="tab-params" role="tabpanel" aria-labelledby="tab-b-params">
+      <div class="tnl-card">
+        <h2>Barrier parameters</h2>
         <div class="tnl-form">
-          <label class="f"><span>E(reactants)</span><input id="en-R" type="text" inputmode="decimal" placeholder="AH + B"></label>
-          <label class="f"><span>E(transition state)</span><input id="en-TS" type="text" inputmode="decimal" placeholder="TS"></label>
-          <label class="f"><span>E(products)</span><input id="en-P" type="text" inputmode="decimal" placeholder="A + BH"></label>
-          <label class="f"><span>unit</span><select id="en-unit"><option value="Eh">hartree</option><option value="kcal">kcal/mol</option><option value="kJ">kJ/mol</option><option value="eV">eV</option></select></label>
+          <label class="f"><span>V₁ forward barrier <span class="tip" tabindex="0" role="note"
+                data-tip="Forward barrier of the transition state, ZPE-corrected, measured from the reactant asymptote (or the pre-reactive complex).">?</span></span><span
+              class="u">kcal/mol</span><input id="p-V1" type="number" step="any" value="12"></label>
+          <label class="f"><span>ΔE reaction energy <span class="tip" tabindex="0" role="note"
+                data-tip="E(products) − E(reactants), at the same level and with the same reference as V₁. Negative for an exothermic reaction. Do not type absolute energies.">?</span></span><span
+              class="u">kcal/mol (&lt; 0 exothermic)</span><input id="p-dE" type="number" step="any" value="-5"></label>
+          <label class="f"><span>|ν‡| imaginary frequency <span class="tip" tabindex="0" role="note"
+                data-tip="Magnitude of the imaginary frequency of the transition state (Hessian of the TS), entered as a positive number.">?</span></span><span
+              class="u">cm⁻¹</span><input id="p-nu" type="number" step="any" min="1" value="1800"></label>
+          <label class="f"><span><span class="adv">T for the table</span><span
+                class="simple-only">Temperature</span></span><span class="u">K</span><input id="p-T" type="number"
+              step="any" min="1" value="298.15"></label>
+          <label class="f adv">T from <span class="u">K</span><input id="p-Tmin" type="number" step="any" min="1"
+              value="200"></label>
+          <label class="f adv">T to <span class="u">K</span><input id="p-Tmax" type="number" step="any" min="1"
+              value="600"></label>
+          <label class="f adv">points<input id="p-nT" type="number" step="1" min="3" max="80" value="21"></label>
+          <label class="f adv">Examples
+            <select id="p-preset">
+              <option value="">— choose —</option>
+              <option value="fig4a">Fig. 4a: V₁ = 12, ΔE = −5, 1800 cm⁻¹</option>
+              <option value="fig4b">Fig. 4b: V₁ = 15, ΔE = −10, 1200 cm⁻¹</option>
+              <option value="tab2">Table 2: V₁ = 12, ΔE = −8, 1800 cm⁻¹</option>
+              <option value="ch4oh">CH₄ + OH• (PES-2014 values, illustrative)</option>
+              <option value="sym">Symmetric: V₁ = 8, ΔE = 0, 1500 cm⁻¹</option>
+            </select>
+          </label>
         </div>
-        <div class="tnl-form adv" style="margin-top:10px">
-          <label class="f"><span>ZPE(reactants) <span class="u">optional, same unit</span></span><input id="en-zR" type="text" inputmode="decimal" placeholder="0"></label>
-          <label class="f"><span>ZPE(transition state)</span><input id="en-zTS" type="text" inputmode="decimal" placeholder="0"></label>
-          <label class="f"><span>ZPE(products)</span><input id="en-zP" type="text" inputmode="decimal" placeholder="0"></label>
+        <div class="row adv"><label class="chk"><input type="checkbox" id="p-sym"> symmetric reaction (ΔE = 0)</label>
         </div>
-        <div class="row"><button class="btn ghost" id="en-use" type="button">Use V₁ and ΔE from these</button><span class="tnl-status" id="en-status" role="status" aria-live="polite"></span></div>
-      </details>
-      <p class="hint adv">V₂ = V₁ − ΔE is the reverse barrier. V₁ and ΔE must be measured from the same reference state (reactant or pre-reactive complex) and include zero-point energy.
-        The result is the tunneling correction κ only, not a rate constant.</p>
+        <details class="energies" id="p-en">
+          <summary>I have energies of reactants, TS and products instead</summary>
+          <p class="hint">Same level of theory, electronic energy + zero-point energy (Gaussian: “Sum of electronic and
+            zero-point Energies”). For several species write a sum with spaces: <code>-155.1234 + -76.4321</code>. V₁ =
+            E(TS) − E(reactants), ΔE = E(products) − E(reactants). Free energies (ΔG‡, ΔG<sub>rxn</sub>) are not the
+            right input.</p>
+          <div class="tnl-form">
+            <label class="f"><span>E(reactants)</span><input id="en-R" type="text" inputmode="decimal"
+                placeholder="AH + B"></label>
+            <label class="f"><span>E(transition state)</span><input id="en-TS" type="text" inputmode="decimal"
+                placeholder="TS"></label>
+            <label class="f"><span>E(products)</span><input id="en-P" type="text" inputmode="decimal"
+                placeholder="A + BH"></label>
+            <label class="f"><span>unit</span><select id="en-unit">
+                <option value="Eh">hartree</option>
+                <option value="kcal">kcal/mol</option>
+                <option value="kJ">kJ/mol</option>
+                <option value="eV">eV</option>
+              </select></label>
+          </div>
+          <div class="tnl-form adv" style="margin-top:10px">
+            <label class="f"><span>ZPE(reactants) <span class="u">optional, same unit</span></span><input id="en-zR"
+                type="text" inputmode="decimal" placeholder="0"></label>
+            <label class="f"><span>ZPE(transition state)</span><input id="en-zTS" type="text" inputmode="decimal"
+                placeholder="0"></label>
+            <label class="f"><span>ZPE(products)</span><input id="en-zP" type="text" inputmode="decimal"
+                placeholder="0"></label>
+          </div>
+          <div class="row"><button class="btn ghost" id="en-use" type="button">Use V₁ and ΔE from these</button><span
+              class="tnl-status" id="en-status" role="status" aria-live="polite"></span></div>
+        </details>
+        <p class="hint adv">V₂ = V₁ − ΔE is the reverse barrier. V₁ and ΔE must be measured from the same reference
+          state (reactant or pre-reactive complex) and include zero-point energy.
+          The result is the tunneling correction κ only, not a rate constant.</p>
 
-      <div class="adv">
-      <h3>Exact one-dimensional reference on model profiles with the same V₁, V₂, |ν‡|</h3>
-      <div class="row" id="p-fams">
-        <label class="chk"><input type="checkbox" value="gauss" checked> Gaussian</label>
-        <label class="chk"><input type="checkbox" value="lorentz" checked> Lorentzian</label>
-        <label class="chk"><input type="checkbox" value="sech2" checked> sech²</label>
-        <label class="chk"><input type="checkbox" value="sech4"> sech⁴ (held out)</label>
-        <label class="chk"><input type="checkbox" value="lorentz2"> Lorentzian² (held out)</label>
-        <label class="chk"><input type="checkbox" value="shoulder"> shoulder (asymmetric)</label>
-        <label class="chk"><input type="checkbox" value="double"> double hump (2d/w = 2.4; V₁ is read as the nominal V₀)</label>
-      </div>
-      <p class="hint">Each profile is built so that its maximum is V₁ above the reactant asymptote, its reverse barrier is V₂ and its top curvature gives |ν‡| (mass 1 amu, x in Å).
-        The exact κ(T) of the profile and the path-based models evaluated on the same profile are then compared with the three-number models.</p>
-      </div>
+        <div class="adv">
+          <h3>Exact one-dimensional reference on model profiles with the same V₁, V₂, |ν‡|</h3>
+          <div class="row" id="p-fams">
+            <label class="chk"><input type="checkbox" value="gauss" checked> Gaussian</label>
+            <label class="chk"><input type="checkbox" value="lorentz" checked> Lorentzian</label>
+            <label class="chk"><input type="checkbox" value="sech2" checked> sech²</label>
+            <label class="chk"><input type="checkbox" value="sech4"> sech⁴ (held out)</label>
+            <label class="chk"><input type="checkbox" value="lorentz2"> Lorentzian² (held out)</label>
+            <label class="chk"><input type="checkbox" value="shoulder"> shoulder (asymmetric)</label>
+            <label class="chk"><input type="checkbox" value="double"> double hump (2d/w = 2.4; V₁ is read as the nominal
+              V₀)</label>
+          </div>
+          <p class="hint">Each profile is built so that its maximum is V₁ above the reactant asymptote, its reverse
+            barrier is V₂ and its top curvature gives |ν‡| (mass 1 amu, x in Å).
+            The exact κ(T) of the profile and the path-based models evaluated on the same profile are then compared with
+            the three-number models.</p>
+        </div>
 
-      <div class="adv">
-      <h3>Isotope</h3>
-      <div class="tnl-form">
-        <label class="f">Heavy isotopologue
-          <select id="p-iso">
-            <option value="1">none</option>
-            <option value="1.99854" selected>H → D (mass ratio 1.9985)</option>
-            <option value="2.99244">H → T (2.9924)</option>
-            <option value="1.08362">¹²C → ¹³C (1.0836)</option>
-            <option value="custom">custom ratio…</option>
-          </select>
-        </label>
-        <label class="f" id="p-isoCustomWrap" hidden><span>m<sub>heavy</sub>/m<sub>light</sub></span><input id="p-isoRho" type="number" step="any" min="1" value="2"></label>
-        <label class="f">|ν‡| of the heavy isotopologue <span class="u">cm⁻¹, blank = ν‡/√ratio</span><input id="p-nuH" type="number" step="any" min="1" placeholder="auto"></label>
-      </div>
-      <p class="hint">One-dimensional mass scaling on the same potential (Q = κ<sub>light</sub>/κ<sub>heavy</sub>, tunneling contribution only; no zero-point or partition-function terms).</p>
-      </div>
+        <div class="adv">
+          <h3>Isotope</h3>
+          <div class="tnl-form">
+            <label class="f">Heavy isotopologue
+              <select id="p-iso">
+                <option value="1">none</option>
+                <option value="1.99854" selected>H → D (mass ratio 1.9985)</option>
+                <option value="2.99244">H → T (2.9924)</option>
+                <option value="1.08362">¹²C → ¹³C (1.0836)</option>
+                <option value="custom">custom ratio…</option>
+              </select>
+            </label>
+            <label class="f" id="p-isoCustomWrap" hidden><span>m<sub>heavy</sub>/m<sub>light</sub></span><input
+                id="p-isoRho" type="number" step="any" min="1" value="2"></label>
+            <label class="f">|ν‡| of the heavy isotopologue <span class="u">cm⁻¹, blank = ν‡/√ratio</span><input
+                id="p-nuH" type="number" step="any" min="1" placeholder="auto"></label>
+          </div>
+          <p class="hint">One-dimensional mass scaling on the same potential (Q = κ<sub>light</sub>/κ<sub>heavy</sub>,
+            tunneling contribution only; no zero-point or partition-function terms).</p>
+        </div>
 
-      <div class="row">
-        <button class="btn" id="p-run" type="button">Calculate κ</button>
-        <label class="chk adv"><input type="checkbox" id="p-fine"> finer energy grid (slower)</label>
-        <button class="btn ghost adv" id="p-share" type="button">Copy link to these settings</button>
-        <button class="btn ghost adv" id="p-csv" type="button" disabled>Download results (CSV)</button>
-        <span class="tnl-status" id="p-status" role="status" aria-live="polite"></span>
+        <div class="row">
+          <button class="btn" id="p-run" type="button">Calculate κ</button>
+          <label class="chk adv"><input type="checkbox" id="p-fine"> finer energy grid (slower)</label>
+          <button class="btn ghost adv" id="p-share" type="button">Copy link to these settings</button>
+          <button class="btn ghost adv" id="p-csv" type="button" disabled>Download results (CSV)</button>
+          <span class="tnl-status" id="p-status" role="status" aria-live="polite"></span>
+        </div>
+        <div class="tnl-progress" id="p-prog"><i></i></div>
       </div>
-      <div class="tnl-progress" id="p-prog"><i></i></div>
-    </div>
-    <div id="p-out"></div>
-  </section>
+      <div id="p-out"></div>
+    </section>
 
-  <!-- ===================================================== PATH ===================================================== -->
-  <section id="tab-path" role="tabpanel" aria-labelledby="tab-b-path" hidden>
-    <div class="tnl-card">
-      <h2>Reaction path V(s)</h2>
-      <div class="dropzone" id="r-drop">
-        <p style="margin:0 0 8px"><b>Drop files here</b> or choose them:
-          ORCA <code>*_IRC_Full_trj.xyz</code> (or <code>_IRC_B_trj.xyz</code> + <code>_IRC_F_trj.xyz</code>), a Gaussian IRC output <code>.log/.out</code>, or a two-column table (s, V).</p>
-        <input type="file" id="r-file" multiple>
-        <p class="hint" style="margin:8px 0 0">ORCA: the energy is read from the comment line of each frame and the mass-weighted arc length is built from the geometries (Kabsch alignment).
-          Gaussian: the “Summary of reaction path following” table (RxCoord in bohr·amu<sup>1/2</sup>). Files stay on your computer.</p>
+    <!-- ===================================================== PATH ===================================================== -->
+    <section id="tab-path" role="tabpanel" aria-labelledby="tab-b-path" hidden>
+      <div class="tnl-card">
+        <h2>Reaction path V(s)</h2>
+        <div class="dropzone" id="r-drop">
+          <p style="margin:0 0 8px"><b>Drop files here</b> or choose them:
+            ORCA <code>*_IRC_Full_trj.xyz</code> (or <code>_IRC_B_trj.xyz</code> + <code>_IRC_F_trj.xyz</code>), a
+            Gaussian IRC output <code>.log/.out</code>, or a two-column table (s, V).</p>
+          <input type="file" id="r-file" multiple>
+          <p class="hint" style="margin:8px 0 0">ORCA: the energy is read from the comment line of each frame and the
+            mass-weighted arc length is built from the geometries (Kabsch alignment).
+            Gaussian: the “Summary of reaction path following” table (RxCoord in bohr·amu<sup>1/2</sup>). Files stay on
+            your computer.</p>
+        </div>
+        <div class="row" id="r-orcaopts" hidden>
+          <label class="f" style="max-width:420px"><span>Atomic masses for the arc length <span class="tip" tabindex="0"
+                role="note"
+                data-tip="ORCA and Gaussian use the masses of the most abundant isotopes by default. The Python package of the article uses standard atomic weights (C 12.0107 instead of 12.0000); the effect on s is below 0.05 % for C, O, N.">?</span></span>
+            <select id="r-masses">
+              <option value="iso">most abundant isotope (ORCA/Gaussian default)</option>
+              <option value="std">standard atomic weights (as the Python package)</option>
+            </select></label>
+        </div>
+        <div class="row" id="r-tableopts" hidden>
+          <label class="f" style="min-width:160px">s column unit<select id="r-sUnit">
+              <option value="A">Å·amu^½</option>
+              <option value="bohr">bohr·amu^½</option>
+            </select></label>
+          <label class="f" style="min-width:160px">energy unit<select id="r-eUnit">
+              <option value="kcal">kcal/mol</option>
+              <option value="kJ">kJ/mol</option>
+              <option value="eV">eV</option>
+              <option value="Eh">hartree</option>
+            </select></label>
+        </div>
+        <div class="tnl-form" style="margin-top:12px">
+          <label class="f">|ν‡| imaginary frequency <span class="u">cm⁻¹ (blank = from path curvature)</span><input
+              id="r-nu" type="number" step="any" min="1" placeholder="from the path"></label>
+          <label class="f">V₁ from a better level <span class="u">kcal/mol, optional</span><input id="r-V1"
+              type="number" step="any" min="0" placeholder="path value"></label>
+          <label class="f">Reactant side
+            <select id="r-side">
+              <option value="auto">auto (higher end)</option>
+              <option value="first">first point</option>
+              <option value="last">last point</option>
+            </select>
+          </label>
+          <label class="f">T for the table <span class="u">K</span><input id="r-T" type="number" step="any" min="1"
+              value="298.15"></label>
+          <label class="f">T from <span class="u">K</span><input id="r-Tmin" type="number" step="any" min="1"
+              value="200"></label>
+          <label class="f">T to <span class="u">K</span><input id="r-Tmax" type="number" step="any" min="1"
+              value="600"></label>
+          <label class="f">points<input id="r-nT" type="number" step="1" min="3" max="80" value="21"></label>
+          <label class="f">Heavy isotopologue
+            <select id="r-iso">
+              <option value="1">none</option>
+              <option value="1.99854">H → D (1.9985)</option>
+              <option value="2.99244">H → T (2.9924)</option>
+              <option value="1.08362">¹²C → ¹³C (1.0836)</option>
+            </select>
+          </label>
+        </div>
+        <div class="row">
+          <label class="chk"><input type="checkbox" id="r-exact"> also solve the Schrödinger equation on this path
+            (exact 1D, see caveats in “Methods”)</label>
+          <label class="chk"><span>frequency file (optional):</span> <input type="file" id="r-freq"></label>
+        </div>
+        <p class="hint">Rescaling to a different V₁ multiplies V by c = V₁/V<sub>top</sub> and s by √c (the curvature is
+          kept); ΔE is scaled by the same factor. Use ZPE-corrected energies of the stationary points whenever possible.
+        </p>
+        <div class="row">
+          <button class="btn" id="r-run" type="button" disabled>Calculate</button>
+          <button class="btn ghost" id="r-demo" type="button">Load a demo path (Eckart model, 12 / 17 / 1800)</button>
+          <button class="btn ghost" id="r-csv" type="button" disabled>Download results (CSV)</button>
+          <span class="tnl-status" id="r-status" role="status" aria-live="polite"></span>
+        </div>
+        <div class="tnl-progress" id="r-prog"><i></i></div>
       </div>
-      <div class="row" id="r-orcaopts" hidden>
-        <label class="f" style="max-width:420px"><span>Atomic masses for the arc length <span class="tip" tabindex="0" role="note" data-tip="ORCA and Gaussian use the masses of the most abundant isotopes by default. The Python package of the article uses standard atomic weights (C 12.0107 instead of 12.0000); the effect on s is below 0.05 % for C, O, N.">?</span></span>
-          <select id="r-masses"><option value="iso">most abundant isotope (ORCA/Gaussian default)</option><option value="std">standard atomic weights (as the Python package)</option></select></label>
-      </div>
-      <div class="row" id="r-tableopts" hidden>
-        <label class="f" style="min-width:160px">s column unit<select id="r-sUnit"><option value="A">Å·amu^½</option><option value="bohr">bohr·amu^½</option></select></label>
-        <label class="f" style="min-width:160px">energy unit<select id="r-eUnit"><option value="kcal">kcal/mol</option><option value="kJ">kJ/mol</option><option value="eV">eV</option><option value="Eh">hartree</option></select></label>
-      </div>
-      <div class="tnl-form" style="margin-top:12px">
-        <label class="f">|ν‡| imaginary frequency <span class="u">cm⁻¹ (blank = from path curvature)</span><input id="r-nu" type="number" step="any" min="1" placeholder="from the path"></label>
-        <label class="f">V₁ from a better level <span class="u">kcal/mol, optional</span><input id="r-V1" type="number" step="any" min="0" placeholder="path value"></label>
-        <label class="f">Reactant side
-          <select id="r-side"><option value="auto">auto (higher end)</option><option value="first">first point</option><option value="last">last point</option></select>
-        </label>
-        <label class="f">T for the table <span class="u">K</span><input id="r-T" type="number" step="any" min="1" value="298.15"></label>
-        <label class="f">T from <span class="u">K</span><input id="r-Tmin" type="number" step="any" min="1" value="200"></label>
-        <label class="f">T to <span class="u">K</span><input id="r-Tmax" type="number" step="any" min="1" value="600"></label>
-        <label class="f">points<input id="r-nT" type="number" step="1" min="3" max="80" value="21"></label>
-        <label class="f">Heavy isotopologue
-          <select id="r-iso"><option value="1">none</option><option value="1.99854">H → D (1.9985)</option><option value="2.99244">H → T (2.9924)</option><option value="1.08362">¹²C → ¹³C (1.0836)</option></select>
-        </label>
-      </div>
-      <div class="row">
-        <label class="chk"><input type="checkbox" id="r-exact"> also solve the Schrödinger equation on this path (exact 1D, see caveats in “Methods”)</label>
-        <label class="chk"><span>frequency file (optional):</span> <input type="file" id="r-freq"></label>
-      </div>
-      <p class="hint">Rescaling to a different V₁ multiplies V by c = V₁/V<sub>top</sub> and s by √c (the curvature is kept); ΔE is scaled by the same factor. Use ZPE-corrected energies of the stationary points whenever possible.</p>
-      <div class="row">
-        <button class="btn" id="r-run" type="button" disabled>Calculate</button>
-        <button class="btn ghost" id="r-demo" type="button">Load a demo path (Eckart model, 12 / 17 / 1800)</button>
-        <button class="btn ghost" id="r-csv" type="button" disabled>Download results (CSV)</button>
-        <span class="tnl-status" id="r-status" role="status" aria-live="polite"></span>
-      </div>
-      <div class="tnl-progress" id="r-prog"><i></i></div>
-    </div>
-    <div id="r-out"></div>
-  </section>
+      <div id="r-out"></div>
+    </section>
 
-  <!-- ===================================================== ABOUT ===================================================== -->
-  <section id="tab-about" role="tabpanel" aria-labelledby="tab-b-about" hidden>
-    <div class="tnl-card">
-      <h2>Definitions</h2>
-      <p>Energies are measured from the reactant asymptote (or pre-reactive complex); ΔE = E<sub>prod</sub> − E<sub>react</sub>, V₂ = V₁ − ΔE. With P(E) the one-dimensional transmission probability and β = 1/k<sub>B</sub>T:</p>
-      <div class="eq">κ(T) = β e<sup>βV₁</sup> ∫<sub>E₀</sub><sup>∞</sup> P(E) e<sup>−βE</sup> dE,&nbsp;&nbsp; E₀ = max(0, ΔE)</div>
-      <p>u‡ = hc|ν‡|/k<sub>B</sub>T, T<sub>c</sub> = hc|ν‡|/2πk<sub>B</sub> = 0.2290·|ν‡| K per cm⁻¹. The sub-barrier share is f<sub>sub</sub> = ∫<sub>E₀</sub><sup>V₁</sup>P e<sup>−βE</sup>dE / ∫<sub>E₀</sub><sup>∞</sup>P e<sup>−βE</sup>dE.
-        The equivalent free-energy shift is |ΔΔG‡| = RT |ln(κ₁/κ₂)|: the conversion of a ratio of two tunneling corrections into energy units. It is not an error of the computed activation free energy.</p>
-      <h2 style="margin-top:18px">Implemented models</h2>
-      <ul class="t">
-        <li><b>Wigner</b>: κ = 1 + (u‡)²/24. Uses |ν‡| only; a low-u‡ expansion (conventionally u‡ ≲ 2, |ν‡| ≲ 414 cm⁻¹ at 298 K).</li>
-        <li><b>Truncated parabola</b> (Skodje–Truhlar closed form), with r = u‡/2π and V′ = min(V₁, V₂):
-          κ = πr/sin(πr) − r/(1−r)·exp[(1−1/r)V′/k<sub>B</sub>T] for r &lt; 1, and r/(r−1)·{exp[(1−1/r)V′/k<sub>B</sub>T] − 1} for r &gt; 1.</li>
-        <li><b>Eckart</b> (Brown parametrisation; transmission in the logarithmic domain; thermal integral to (E − V₁)/k<sub>B</sub>T = 60). Fixed by (V₁, V₂, |ν‡|). A symmetric variant (V₂ := V₁) is also shown.</li>
-        <li><b>ZCT-MEP</b>: static MEP-based path model on V(s): θ(E) = C<sub>θ</sub>∫√(V − E) ds between the turning points (C<sub>θ</sub> = 4.55495 for kcal/mol, Å, amu), P = [1 + e<sup>2θ</sup>]⁻¹ (Kemble form) or min(1, e<sup>−2θ</sup>) (plain WKB), parabolic continuation above the top.
-          No vibrationally adiabatic potential, no corner cutting. Despite the name it is not claimed to reproduce every ZCT variant of the literature.</li>
-        <li><b>ZCT-EC</b> (this work): κ<sub>ZCT-MEP</sub>[path] · κ<sub>Eckart</sub>(V₁, V₂, ν‡) / κ<sub>ZCT-MEP</sub>[Eckart(V₁, V₂, ν‡)].</li>
-        <li><b>EQ-FREQ</b> (this work): solve κ<sub>ZCT-MEP</sub>[Eckart(V₁, V₂, ν<sub>eff</sub>)] = κ<sub>ZCT-MEP</sub>[path] at each temperature (Brent), then κ = κ<sub>Eckart</sub>(V₁, V₂, ν<sub>eff</sub>(T)).</li>
-        <li><b>Exact 1D reference</b>: Riccati/transfer-matrix propagation with exact cosh/sinh steps, Richardson extrapolation in the step, thermal integral with a square-root substitution at E₀.</li>
-      </ul>
-      <h3 style="margin-top:14px">Literature semiclassical theories (Advanced mode, model profiles)</h3>
-      <p>For the model profiles the page also evaluates published one-dimensional semiclassical theories, using the equations of the original papers (a different kind of input than ZCT-EC: they need the action S(E) or the derivatives V₂…V₈ at the barrier top, which are exact for the closed-form profiles and not available from a tabulated IRC):</p>
-      <ul class="t">
-        <li><b>standard instanton</b> (Miller/Affleck) and the <b>uniform instanton, USIT</b> with and without the high-energy correction — S. Upadhyayula, E. Pollak, <i>J. Phys. Chem. Lett.</i> <b>14</b>, 9892 (2023);</li>
-        <li><b>mVPT2</b> and <b>mYF</b> (ℏ² theory) — Upadhyayula, Pollak, <i>J. Phys. Chem. A</i> <b>128</b>, 3434 (2024);</li>
-        <li><b>SVPT2, SVPT4</b> and <b>modified SVPT4</b> (ℏ⁴ theory) — Pollak, Upadhyayula, <i>J. Chem. Phys.</i> <b>160</b>, 184110 (2024).;</li>
-        <li><b>exact-WKB transmission P = 1/(1+exp(W/ħ)) with W = W₀ + ħ²W₂ (+ ħ⁴W₄)</b> — J. E. Lawrence, <i>J. Chem. Phys.</i> <b>163</b>, 234119 (2025), eqs 4.1, 4.8, 4.9, B1 (one-dimensional part of the framework). The loop integrals are evaluated numerically on an ellipse in the complex plane, which needs V, V′, V″ at complex coordinates (complex jets of the closed-form profiles); above the top W₀, W₂, W₄ are continued by their quadratic Taylor polynomials.</li>
-      </ul>
-      <p>Checks against the papers: USIT Table 1 (all four columns, all temperatures), SVPT4 Tables I–III to the printed digits (≤ 3·10⁻⁶), mVPT2/mYF Table 2 (≤ 0.1 %, one entry 0.6 %), the coefficients G₀…Z against Appendix B. Lawrence: the loop integrals reproduce his closed form W₂ₙ for the asymmetric Eckart barrier (eq 4.11) to 10⁻⁹ and the ħ-expansion coefficients of the exact transmission of a Gaussian barrier (W₂ to 10⁻⁴, W₄ to 5 %); on the Eckart barrier κ is within 10⁻³ (ħ²) and 2·10⁻³ (ħ⁴) of the exact value; this page agrees with the Python package to 4·10⁻³ % on six model profiles (test python_agreement_lawrence). The modified SVPT4 uses constants U₃₁, U₄₁ that were <i>derived</i> from the conditions of the paper's Sec. III.B instead of being copied from its eq 3.22; it reproduces Tables I–III to 10⁻⁴ (up to 10⁻³ at u = 20). <b>Taylor coefficients</b> V₃…V₈ are taken from the closed-form profile by power-series arithmetic. Where a theory is undefined (standard instanton above its crossover temperature, SVPT4 with Z &lt; 0) the table shows “—”.</p>
-      <div class="notice"><b>Not implemented</b>: SCT/LCT/μOMT (in one dimension without reaction-path curvature they reduce to ZCT; the curvature terms need the multidimensional reaction-path Hamiltonian, which a V(s) table does not contain), ring-polymer instanton and RPMD (dynamical methods that need the full-dimensional potential), the multidimensional parts of Lawrence’s framework (ħ² instanton corrections in many dimensions, sphaleron rate above the crossover, anharmonic Wigner correction; its one-dimensional O(ħ²) and O(ħ⁴) expressions are implemented above). These are different observables or need multidimensional input; no superiority over them is claimed. The calibrations ZCT-EC and EQ-FREQ were tested only on smooth single-humped one-dimensional profiles. On the manuscript benchmark (Sect. 4.4: 648 cases from 270 model profiles, κ<sub>exact</sub> ≥ 2) the modified Yasumori–Fueki variant is comparable to ZCT-EC/EQ-FREQ in the median but has a larger worst case (1.44 against 1.14/1.11 on the development families), the ħ⁴ series (SVPT4, mSVPT4 and Lawrence ħ⁴) are often undefined or unreliable and do not improve the worst case for strongly curved barriers (ħω/V₁ ≳ 0.5), the exact-WKB ħ² transmission of Lawrence is of the same quality as mYF (median 1.00, worst 1.41 on the development families), and USIT is biased low like ZCT-MEP; these statistics hold for smooth single-humped model profiles only and the higher-order theories need derivatives at the barrier top, which a tabulated IRC does not provide.</div>
-      <h2 style="margin-top:18px">How to read the results</h2>
-      <ul class="t">
-        <li>Matched profiles with the same (V₁, V₂, |ν‡|) can have different exact κ: the three numbers do not determine κ. In the manuscript the spread at 298.15 K for V₁ = 12, V₂ = 20, 1800 cm⁻¹ is a factor of 2.6.</li>
-        <li>The exact solver is exact only for the one-dimensional Hamiltonian. It does not account for corner cutting, transverse zero-point-energy variation or other multidimensional effects.</li>
-        <li><b>Path option:</b> V(s) of an IRC enters ZCT-MEP/ZCT-EC/EQ-FREQ as it is. If the path has an intermediate minimum (well), resonances can matter and the exact 1D reference may not converge; the page warns when it detects such a feature. Flat tops (|ν‡| undefined) are not covered.</li>
-        <li>The exact solver on a user path pads the path with constant potential at both ends; IRC end points that are not asymptotes make this a model assumption.</li>
-        <li>Barrier heights and |ν‡| depend on the electronic-structure method; the page propagates what you type. A ±10 % change of |ν‡| changes the Eckart κ at 298 K by tens of percent (see the sensitivity panels).</li>
-      </ul>
-      <h2 style="margin-top:18px">Validation</h2>
-      <p>This is an independent browser implementation of the equations of the manuscript, not a line-by-line translation of the Python package. The two codes differ in numerical details (see “Relation to the Python package” below); the differences were measured and are far below the model differences discussed in the article. Live self-test of the closed-form models against values printed in the manuscript:</p>
-      <div class="tnl-scroll"><table class="tnl-table" id="selftest"><thead><tr><th>case</th><th>this page</th><th>manuscript</th><th></th></tr></thead><tbody></tbody></table></div>
-      <div class="row"><button class="btn ghost" id="t2-run" type="button">Reproduce Table 2 of the manuscript (exact solver, ~4 s)</button><span class="tnl-status" id="t2-status"></span></div>
-      <div class="tnl-scroll" id="t2-out"></div>
-      <h2 style="margin-top:18px">Relation to the Python package</h2>
-      <p>The Python package of the article is the reference implementation for all results in the paper. This page re-implements the equations of the manuscript for interactive use. What it reproduces and what it does not:</p>
-      <ul class="t">
-        <li><b>Reproduced here:</b> the closed-form models (Wigner, truncated parabola, Eckart), the exact 1D reference, ZCT-MEP, ZCT-EC and EQ-FREQ on matched model profiles (Table 2, five families, button above), the double-hump case, and the CH₄ + OH• example.</li>
-        <li><b>Python only:</b> the 540-case benchmark, bootstrap and Clopper–Pearson intervals, literature cases, mass and isotope scans, parameter maps, the real-IRC analysis and the Hessian-based isotope analysis.</li>
-        <li><b>Numerical differences</b> to the Python code: cubic spline with natural end conditions (SciPy’s default is not-a-knot), a dense path grid of 8001 points (Python: 20001), barrier top refined by a parabola through the three highest grid points (Python: grid maximum), Gauss–Chebyshev quadrature of the WKB action between turning points (Python: trapezoid rule on the grid), an analytic action for the Eckart reference in ZCT-EC/EQ-FREQ (Python: a discrete 801-point model path), and a transfer-matrix propagator with Richardson extrapolation in ln T for the exact solver (Python: Riccati log-derivative, Richardson in T). For isotopologues of a model profile the whole potential, including the product-side step, is scaled with the mass (the same Cartesian potential); the Python isotope scan keeps the step width fixed at 0.6 Å·amu<sup>½</sup> for both isotopes.</li>
-        <li><b>Measured agreement</b> (all 1224 profile–temperature cases of the Python benchmark that this page can build: Gaussian, Lorentzian, sech², sech⁴, Lorentzian², shoulder and the double-hump family with separation 2.4 w; 200–600 K): exact κ agrees to ≤ 0.01 % (double-hump set ≤ 0.09 %), Wigner, truncated parabola and Eckart to ≤ 0.03 %, ZCT-MEP, ZCT-EC and EQ-FREQ to ≤ 0.03 % (double-hump set ≤ 0.8 %, where the action integral passes the intermediate minimum), ν<sub>eff</sub> to ≤ 0.24 %, the plain-WKB variant of ZCT-MEP to ≤ 0.5 %. The semiclassical methods agree on 1170 cases to ≤ 0.03 % (instanton, USIT, mVPT2, mYF, SVPT2, mSVPT4, Lawrence ħ² and ħ⁴) and to ≤ 0.3 % (SVPT4); for mSVPT4 the cases without a result and the “usable” criterion (modification of the potential ≤ 50 %) are identical in all 1170 cases. For an ORCA trajectory the parsers give the same s(V) and the same ZCT-MEP κ to six digits when the same atomic masses are used. Reference values and the scripts that produced them are in the Python package repository.</li>
-        <li><b>Atomic masses for ORCA files:</b> this page uses the most abundant isotopes by default (what ORCA and Gaussian use in the IRC), the Python package uses standard atomic weights (e.g. C 12.0107). For a CH<sub>3</sub>-type path the arc length then differs by up to 0.1 %, κ by 0.03–0.1 % in the example; the selector in the “Reaction path” tab switches between the two.</li>
-      </ul>
-      <h2 style="margin-top:18px">Citation, code and licence</h2>
+    <footer>
       <p id="cite"></p>
-      <p>MIT licence. The page and its Python counterpart contain no tracking and no external requests.</p>
-    </div>
-  </section>
+      <p>Tunnelling correction calculator · v1.3 · results are valid for the one-dimensional models described in the
+        manuscript. MIT licence. No tracking, no external requests.</p>
+    </footer>
+  </div>
 
-  <footer>Tunneling correction calculator · browser implementation of the manuscript’s equations and of published semiclassical theories · v1.3 · results are valid for the one-dimensional models described under “Methods” (Advanced mode).</footer>
-</div>
-
-<script src="core.js"></script>
-<script src="semiclassical.js"></script>
-<script src="irc.js"></script>
-<script src="plots.js"></script>
-<script src="tasks.js"></script>
-<script src="app.js"></script>
+  <script src="core.js"></script>
+  <script src="semiclassical.js"></script>
+  <script src="irc.js"></script>
+  <script src="plots.js"></script>
+  <script src="tasks.js"></script>
+  <script src="app.js"></script>
 </body>
+
 </html>
