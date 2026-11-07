@@ -49,8 +49,6 @@
     <div class="tnl-tabs adv" role="tablist" aria-label="Calculator sections">
       <button role="tab" id="tab-b-params" aria-controls="tab-params" aria-selected="true" type="button">Three numbers
         (V₁, ΔE, ν‡)</button>
-      <button role="tab" id="tab-b-path" aria-controls="tab-path" aria-selected="false" type="button">Reaction path
-        (IRC)</button>
     </div>
 
     <!-- ===================================================== PARAMETERS ===================================================== -->
@@ -174,88 +172,6 @@
       <div id="p-out"></div>
     </section>
 
-    <!-- ===================================================== PATH ===================================================== -->
-    <section id="tab-path" role="tabpanel" aria-labelledby="tab-b-path" hidden>
-      <div class="tnl-card">
-        <h2>Reaction path V(s)</h2>
-        <div class="dropzone" id="r-drop">
-          <p style="margin:0 0 8px"><b>Drop files here</b> or choose them:
-            ORCA <code>*_IRC_Full_trj.xyz</code> (or <code>_IRC_B_trj.xyz</code> + <code>_IRC_F_trj.xyz</code>), a
-            Gaussian IRC output <code>.log/.out</code>, or a two-column table (s, V).</p>
-          <input type="file" id="r-file" multiple>
-          <p class="hint" style="margin:8px 0 0">ORCA: the energy is read from the comment line of each frame and the
-            mass-weighted arc length is built from the geometries (Kabsch alignment).
-            Gaussian: the “Summary of reaction path following” table (RxCoord in bohr·amu<sup>1/2</sup>). Files stay on
-            your computer.</p>
-        </div>
-        <div class="row" id="r-orcaopts" hidden>
-          <label class="f" style="max-width:420px"><span>Atomic masses for the arc length <span class="tip" tabindex="0"
-                role="note"
-                data-tip="ORCA and Gaussian use the masses of the most abundant isotopes by default. The Python package of the article uses standard atomic weights (C 12.0107 instead of 12.0000); the effect on s is below 0.05 % for C, O, N.">?</span></span>
-            <select id="r-masses">
-              <option value="iso">most abundant isotope (ORCA/Gaussian default)</option>
-              <option value="std">standard atomic weights (as the Python package)</option>
-            </select></label>
-        </div>
-        <div class="row" id="r-tableopts" hidden>
-          <label class="f" style="min-width:160px">s column unit<select id="r-sUnit">
-              <option value="A">Å·amu^½</option>
-              <option value="bohr">bohr·amu^½</option>
-            </select></label>
-          <label class="f" style="min-width:160px">energy unit<select id="r-eUnit">
-              <option value="kcal">kcal/mol</option>
-              <option value="kJ">kJ/mol</option>
-              <option value="eV">eV</option>
-              <option value="Eh">hartree</option>
-            </select></label>
-        </div>
-        <div class="tnl-form" style="margin-top:12px">
-          <label class="f">|ν‡| imaginary frequency <span class="u">cm⁻¹ (blank = from path curvature)</span><input
-              id="r-nu" type="number" step="any" min="1" placeholder="from the path"></label>
-          <label class="f">V₁ from a better level <span class="u">kcal/mol, optional</span><input id="r-V1"
-              type="number" step="any" min="0" placeholder="path value"></label>
-          <label class="f">Reactant side
-            <select id="r-side">
-              <option value="auto">auto (higher end)</option>
-              <option value="first">first point</option>
-              <option value="last">last point</option>
-            </select>
-          </label>
-          <label class="f">T for the table <span class="u">K</span><input id="r-T" type="number" step="any" min="1"
-              value="298.15"></label>
-          <label class="f">T from <span class="u">K</span><input id="r-Tmin" type="number" step="any" min="1"
-              value="200"></label>
-          <label class="f">T to <span class="u">K</span><input id="r-Tmax" type="number" step="any" min="1"
-              value="600"></label>
-          <label class="f">points<input id="r-nT" type="number" step="1" min="3" max="80" value="21"></label>
-          <label class="f">Heavy isotopologue
-            <select id="r-iso">
-              <option value="1">none</option>
-              <option value="1.99854">H → D (1.9985)</option>
-              <option value="2.99244">H → T (2.9924)</option>
-              <option value="1.08362">¹²C → ¹³C (1.0836)</option>
-            </select>
-          </label>
-        </div>
-        <div class="row">
-          <label class="chk"><input type="checkbox" id="r-exact"> also solve the Schrödinger equation on this path
-            (exact 1D, see caveats in “Methods”)</label>
-          <label class="chk"><span>frequency file (optional):</span> <input type="file" id="r-freq"></label>
-        </div>
-        <p class="hint">Rescaling to a different V₁ multiplies V by c = V₁/V<sub>top</sub> and s by √c (the curvature is
-          kept); ΔE is scaled by the same factor. Use ZPE-corrected energies of the stationary points whenever possible.
-        </p>
-        <div class="row">
-          <button class="btn" id="r-run" type="button" disabled>Calculate</button>
-          <button class="btn ghost" id="r-demo" type="button">Load a demo path (Eckart model, 12 / 17 / 1800)</button>
-          <button class="btn ghost" id="r-csv" type="button" disabled>Download results (CSV)</button>
-          <span class="tnl-status" id="r-status" role="status" aria-live="polite"></span>
-        </div>
-        <div class="tnl-progress" id="r-prog"><i></i></div>
-      </div>
-      <div id="r-out"></div>
-    </section>
-
     <footer>
       <p id="cite"></p>
       <p>Tunnelling correction calculator · v1.3 · results are valid for the one-dimensional models described in the
@@ -265,7 +181,6 @@
 
   <script src="core.js"></script>
   <script src="semiclassical.js"></script>
-  <script src="irc.js"></script>
   <script src="plots.js"></script>
   <script src="tasks.js"></script>
   <script src="app.js"></script>
