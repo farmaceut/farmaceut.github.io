@@ -1,7 +1,8 @@
 /* UI of the tunneling correction calculator. Depends on core.js, irc.js, plots.js, tasks.js (and worker.js). MIT licence. */
 (function () {
   'use strict';
-  const C = TunnelingCore, Tk = TunnelingTasks, I = TunnelingIRC, P = TunnelingPlots;
+  const C = TunnelingCore, Tk = TunnelingTasks, P = TunnelingPlots;
+  const I = window.TunnelingIRC || {};
   const CFG = Object.assign({ paperCitation: '', paperUrl: '', repoUrl: '', homeUrl: '../../' }, window.TNL_CONFIG || {});
   const $ = (s, r) => (r || document).querySelector(s), $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
   const R_KCAL = C.CONST.R_KCAL;
@@ -27,8 +28,10 @@
   }
   function svgToPng(svg, name) {
     const img = new Image(), url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
-    img.onload = () => { const c = document.createElement('canvas'); c.width = img.width * 2.5; c.height = img.height * 2.5; const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
-      c.toBlob((b) => { const u = URL.createObjectURL(b), a = document.createElement('a'); a.href = u; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 1000); }); URL.revokeObjectURL(url); };
+    img.onload = () => {
+      const c = document.createElement('canvas'); c.width = img.width * 2.5; c.height = img.height * 2.5; const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
+      c.toBlob((b) => { const u = URL.createObjectURL(b), a = document.createElement('a'); a.href = u; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 1000); }); URL.revokeObjectURL(url);
+    };
     img.src = url;
   }
   const safeLS = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } } };
@@ -122,12 +125,23 @@
 
   // ------------------------------------------------------------------ tabs
   function showTab(name) {
-    for (const t of ['params', 'path', 'about']) { const on = t === name; $('#tab-' + t).hidden = !on; $('#tab-b-' + t).setAttribute('aria-selected', on ? 'true' : 'false'); }
+    for (const t of ['params', 'path', 'about']) {
+      const p = $('#tab-' + t); if (p) p.hidden = t !== name;
+      const b = $('#tab-b-' + t); if (b) b.setAttribute('aria-selected', t === name ? 'true' : 'false');
+    }
     safeLS.set('tnl-tab', name);
   }
-  ['params', 'path', 'about'].forEach((t) => $('#tab-b-' + t).addEventListener('click', () => showTab(t)));
-  const tabs = $$('.tnl-tabs button');
-  $('.tnl-tabs').addEventListener('keydown', (ev) => { const i = tabs.indexOf(document.activeElement); if (i < 0) return; if (ev.key === 'ArrowRight') { tabs[(i + 1) % 3].focus(); tabs[(i + 1) % 3].click(); } if (ev.key === 'ArrowLeft') { tabs[(i + 2) % 3].focus(); tabs[(i + 2) % 3].click(); } });
+  ['params', 'path', 'about'].forEach((t) => { const b = $('#tab-b-' + t); if (b) b.addEventListener('click', () => showTab(t)); });
+  const tabsEl = $('.tnl-tabs');
+  if (tabsEl) {
+    const tabs = $$('.tnl-tabs button');
+    tabsEl.addEventListener('keydown', (ev) => {
+      const i = tabs.indexOf(document.activeElement); if (i < 0) return;
+      const n = tabs.length; if (!n) return;
+      if (ev.key === 'ArrowRight') { tabs[(i + 1) % n].focus(); tabs[(i + 1) % n].click(); }
+      if (ev.key === 'ArrowLeft') { tabs[(i + n - 1) % n].focus(); tabs[(i + n - 1) % n].click(); }
+    });
+  }
 
   // ------------------------------------------------------------------ shared rendering
   const Tgrid = (T0, T1, n, Tstar) => { let T = C.linspace(T0, T1, n); T.push(Tstar); T = Array.from(new Set(T.map((x) => +x.toFixed(6)))).sort((a, b) => a - b); return T; };
@@ -219,8 +233,10 @@
         const x = [], y = []; b.Ts.forEach((T, i) => { const v = e.sc[m.k][i]; if (Number.isFinite(v) && v > 0 && !(m.k === 'msvpt4' && e.sc.msvpt4mod[i] > 0.5)) { x.push(T); y.push(Math.log10(v / e.exact[i])); } });
         if (x.length) ch.add({ x, y, label: m.name, color: th === 'dark' ? m.col[1] : m.col[0], dash: m.dash, width: 1.9 });
       }
-      { const x = [], y = []; b.Ts.forEach((T, i) => { const v = e.sc.inst[i]; if (Number.isFinite(v) && v > 0) { x.push(T); y.push(Math.log10(v / e.exact[i])); } });
-        if (x.length) ch.add({ x, y, label: 'standard instanton', color: th === 'dark' ? '#adb5bd' : '#868e96', dash: '2 3', width: 1.8 }); }
+      {
+        const x = [], y = []; b.Ts.forEach((T, i) => { const v = e.sc.inst[i]; if (Number.isFinite(v) && v > 0) { x.push(T); y.push(Math.log10(v / e.exact[i])); } });
+        if (x.length) ch.add({ x, y, label: 'standard instanton', color: th === 'dark' ? '#adb5bd' : '#868e96', dash: '2 3', width: 1.8 });
+      }
       ch.add(mser('zctEC', b.Ts, e.m.zctEC.map((v, i) => Math.log10(v / e.exact[i])), undefined, th)).add(mser('eq', b.Ts, e.m.eq.map((v, i) => Math.log10(v / e.exact[i])), undefined, th));
       ch.hline(0, { color: th === 'dark' ? '#777' : '#999', range: false });
       ch.o.ylim = [-1.6, 1.2];
@@ -289,8 +305,10 @@
       for (const e of ents) {
         const col = famCol(e.key, th);
         if (which === 'eck') ch.add({ x, y: b.Ts.map((T, i) => rt(i) * Math.log((e.eckartSeen ? e.eckartSeen[i] : b.an.eck[i]) / e.exact[i])), label: shortLabel(e), color: col, width: 1.8, marker: 'o', ms: 2.5 });
-        else { ch.add({ x, y: b.Ts.map((T, i) => rt(i) * Math.log(e.m.zctEC[i] / e.exact[i])), label: shortLabel(e) + ' ZCT-EC', color: col, width: 1.8 });
-          ch.add({ x, y: b.Ts.map((T, i) => rt(i) * Math.log(e.m.eq[i] / e.exact[i])), label: ents.length > 1 ? null : 'EQ-FREQ', color: col, width: 1.5, dash: '5 3' }); }
+        else {
+          ch.add({ x, y: b.Ts.map((T, i) => rt(i) * Math.log(e.m.zctEC[i] / e.exact[i])), label: shortLabel(e) + ' ZCT-EC', color: col, width: 1.8 });
+          ch.add({ x, y: b.Ts.map((T, i) => rt(i) * Math.log(e.m.eq[i] / e.exact[i])), label: ents.length > 1 ? null : 'EQ-FREQ', color: col, width: 1.5, dash: '5 3' });
+        }
       }
       ch.hline(0, { color: th === 'dark' ? '#777' : '#999', range: false }); ch.vline(1, { color: th === 'dark' ? '#7c8dff' : '#5c6bc0', dash: '5 4', range: false });
       return ch;
@@ -361,8 +379,10 @@
 
   // ---- results assembly -------------------------------------------
   function buildEntry(res, Ts) {
-    const e = { key: res.key, label: res.label, dev: res.dev, exact: res.exact, fsub: res.fsub, m: res.models, PE: res.PE, profile: res.profile, iso: res.iso, sc: res.sc,
-      V1seen: res.V1, V2seen: res.V2, nuSeen: res.nu, eckartSeen: res.models.eckart };
+    const e = {
+      key: res.key, label: res.label, dev: res.dev, exact: res.exact, fsub: res.fsub, m: res.models, PE: res.PE, profile: res.profile, iso: res.iso, sc: res.sc,
+      V1seen: res.V1, V2seen: res.V2, nuSeen: res.nu, eckartSeen: res.models.eckart
+    };
     return e;
   }
   function simpleNote(b) {
@@ -548,108 +568,113 @@
   $('#p-share').addEventListener('click', async () => { const p = readParams(); if (p.err.length) return; const url = location.href.split('#')[0] + hashFromParams(p); try { await navigator.clipboard.writeText(url); $('#p-status').textContent = 'link copied'; } catch (e) { $('#p-status').textContent = url; } });
 
   // ------------------------------------------------------------------ PATH mode
-  let pathData = null, lastPathB = null, runningPath = false;
-  const rstat = (m, cls) => { $('#r-status').textContent = m; $('#r-status').className = 'tnl-status ' + (cls || ''); };
-  async function readFiles(files) {
-    const list = Array.from(files); if (!list.length) return;
-    const texts = await Promise.all(list.map(async (f) => ({ name: f.name, text: await f.text() })));
-    const isTable = !texts.some((f) => /\.xyz$/i.test(f.name)) && !/Summary of reaction path following|NET REACTION COORDINATE|Gaussian, Inc|Entering Gaussian/i.test(texts[0].text);
-    $('#r-tableopts').hidden = !isTable; $('#r-orcaopts').hidden = !texts.some((f) => /\.xyz$/i.test(f.name));
-    lastTexts = texts; ingest(texts, isTable);
+  if ($('#r-drop')) {
+    let pathData = null, lastPathB = null, runningPath = false;
+    const rstat = (m, cls) => { $('#r-status').textContent = m; $('#r-status').className = 'tnl-status ' + (cls || ''); };
+    async function readFiles(files) {
+      const list = Array.from(files); if (!list.length) return;
+      const texts = await Promise.all(list.map(async (f) => ({ name: f.name, text: await f.text() })));
+      const isTable = !texts.some((f) => /\.xyz$/i.test(f.name)) && !/Summary of reaction path following|NET REACTION COORDINATE|Gaussian, Inc|Entering Gaussian/i.test(texts[0].text);
+      $('#r-tableopts').hidden = !isTable; $('#r-orcaopts').hidden = !texts.some((f) => /\.xyz$/i.test(f.name));
+      lastTexts = texts; ingest(texts, isTable);
+    }
+    let lastTexts = null;
+    $('#r-masses').addEventListener('change', () => { if (lastTexts && pathData && pathData.source === 'ORCA') ingest(lastTexts, false); });
+    function ingest(texts, isTable) {
+      try {
+        const d = I.detectAndParse(texts, { sUnit: $('#r-sUnit').value, eUnit: $('#r-eUnit').value, massSet: $('#r-masses').value });
+        pathData = d; pathData.raw = texts; pathData.isTable = isTable;
+        rstat(`${d.source}: ${d.n} points (${d.note})`, 'ok-t'); $('#r-run').disabled = false; previewPath();
+      } catch (e) { pathData = null; $('#r-run').disabled = true; rstat(e.message, 'bad-t'); $('#r-out').innerHTML = ''; }
+    }
+    $('#r-file').addEventListener('change', (ev) => readFiles(ev.target.files));
+    ['#r-sUnit', '#r-eUnit'].forEach((id) => $(id).addEventListener('change', () => { if (pathData && pathData.isTable) readFiles2(); }));
+    async function readFiles2() { if (!pathData) return; try { const d = I.tablePath(pathData.raw[0].text, { sUnit: $('#r-sUnit').value, eUnit: $('#r-eUnit').value }); Object.assign(pathData, d); previewPath(); } catch (e) { rstat(e.message, 'bad-t'); } }
+    const dz = $('#r-drop');
+    ['dragenter', 'dragover'].forEach((t) => dz.addEventListener(t, (e) => { e.preventDefault(); dz.classList.add('over'); }));
+    ['dragleave', 'drop'].forEach((t) => dz.addEventListener(t, (e) => { e.preventDefault(); dz.classList.remove('over'); }));
+    dz.addEventListener('drop', (e) => { if (e.dataTransfer && e.dataTransfer.files.length) readFiles(e.dataTransfer.files); });
+    $('#r-freq').addEventListener('change', async (ev) => { const f = ev.target.files[0]; if (!f) return; const nu = I.imaginaryFrequency(await f.text()); if (nu) { $('#r-nu').value = nu.toFixed(2); rstat(`imaginary frequency ${nu.toFixed(1)} cm⁻¹ read from ${f.name}`, 'ok-t'); } else rstat('no imaginary frequency found in ' + f.name, 'bad-t'); });
+    $('#r-demo').addEventListener('click', () => {
+      const V1 = 12, V2 = 17, nu = 1800, A = V1 - V2, B = Math.pow(Math.sqrt(V1) + Math.sqrt(V2), 2), t = (A + B) / (2 * B), l = Math.sqrt(2 * B) * t * (1 - t), K = nu / C.CONST.NUCONST, s = [], V = [];
+      for (let i = 0; i < 121; i++) { const xi = -9 + 18 * i / 120, tt = 1 / (1 + Math.exp(-xi)); V.push(A * tt + B * tt * (1 - tt)); s.push(xi * l / K); }
+      pathData = { s, V, n: s.length, source: 'demo', note: 'Eckart model path V₁ = 12, V₂ = 17, |ν‡| = 1800 cm⁻¹', raw: [], isTable: false }; $('#r-nu').value = '1800'; $('#r-run').disabled = false; rstat('demo path loaded', 'ok-t'); previewPath();
+    });
+    function orientPath() {
+      let s = pathData.s.slice(), V = pathData.V.slice(), side = $('#r-side').value; const n = s.length;
+      const first = V[0], last = V[n - 1];
+      const flip = side === 'last' || (side === 'auto' && first < last);
+      if (flip) { s = s.map((_, i) => -pathData.s[n - 1 - i]); V = V.map((_, i) => pathData.V[n - 1 - i]); }
+      return { s, V, flip };
+    }
+    function previewPath() {
+      if (!pathData) return;
+      try {
+        const { s, V, flip } = orientPath(), nuIn = num('#r-nu'), V1t = num('#r-V1');
+        const pm = new C.PathModel(s, V, { nu: Number.isFinite(nuIn) ? nuIn : null, V1target: Number.isFinite(V1t) && V1t > 0 ? V1t : null });
+        const out = $('#r-out'); registry.path.length = 0;
+        let w = `<p class="hint">Reactant side: ${flip ? 'last' : 'first'} point of the file. V₁ = ${f2(pm.V1)}, V₂ = ${f2(pm.V2)}, ΔE = ${f2(pm.dE)} kcal/mol; |ν‡| from the path curvature = ${f2(pm.nuPath, 0)} cm⁻¹. Press “Calculate”.</p>`;
+        out.innerHTML = `<div class="tnl-card" style="margin-top:14px"><h2>Path preview</h2>${w}</div><div class="tnl-plots" id="r-prev"></div>`;
+        const dense = []; const sd = [], vd = []; for (let i = 0; i < 400; i++) { const ss = pm.s0 + (pm.sN - pm.s0) * i / 399; sd.push(ss); vd.push(pm.spline.at(ss)); }
+        const bb = { V1: pm.V1, dE: pm.dE, pathCurve: { s: sd, V: vd, sRaw: Array.from(pm.sRaw), VRaw: Array.from(pm.VRaw), sTop: pm.sTop } };
+        addPlot('path', $('#r-prev'), 'path_V_preview', 'V(s) from the file', chartPathV(bb));
+      } catch (e) { $('#r-out').innerHTML = `<div class="notice bad" style="margin-top:14px">${esc(e.message)}</div>`; }
+    }
+    ['#r-nu', '#r-V1', '#r-side'].forEach((id) => $(id).addEventListener('change', () => { previewPath(); }));
+    async function runPathMode() {
+      if (!pathData || runningPath) return;
+      const T = num('#r-T'), Tmin = num('#r-Tmin'), Tmax = num('#r-Tmax'), nT = Math.max(3, Math.min(80, Math.round(num('#r-nT')) || 21));
+      const out = $('#r-out');
+      if (![T, Tmin, Tmax].every((x) => x > 0) || Tmax <= Tmin) { out.innerHTML = '<div class="notice bad" style="margin-top:14px">Check the temperatures (positive, T to &gt; T from).</div>'; return; }
+      const { s, V, flip } = orientPath(), nuIn = num('#r-nu'), V1t = num('#r-V1'), rho = Math.max(1, parseFloat($('#r-iso').value) || 1), exact = $('#r-exact').checked;
+      const Ts = Tgrid(Tmin, Tmax, nT, T);
+      runningPath = true; $('#r-run').disabled = true; const pr = progressUI('r'); pr.start('path models…');
+      try {
+        const res = await runTask('path', { s, V, nu: Number.isFinite(nuIn) ? nuIn : null, V1target: Number.isFinite(V1t) && V1t > 0 ? V1t : null, Ts, exact, rho, iso: rho > 1 }, (f, m) => pr.set(f, m));
+        const warnings = [];
+        if (!res.valid) {
+          const why = res.topAtEdge ? 'the barrier maximum lies at the end of the path (the path does not extend over both sides of the TS)' : (res.V2 <= 0 ? 'the reverse barrier V₂ is not positive for the chosen reactant side (barrierless or reversed direction)' : 'no valid |ν‡| (flat or non-concave top)');
+          out.innerHTML = `<div class="notice bad" style="margin-top:14px">The path cannot be used: ${why}. Try the other reactant side or give |ν‡| explicitly.</div>`; pr.done(''); runningPath = false; $('#r-run').disabled = false; return;
+        }
+        if (res.minima > 0 || res.maxima > 1) warnings.push({ cls: 'bad', text: `The path has ${res.maxima} maxima and ${res.minima} interior minimum(a) (deepest well ≈ ${f2(res.wellDepth)} kcal/mol). With an intermediate well the one-dimensional problem has resonances; ZCT-MEP, the calibrations and especially the exact 1D reference are not validated for deep wells.` });
+        if (res.nuGiven && Number.isFinite(res.nuPath) && Math.abs(res.nuPath / res.nu - 1) > 0.15) warnings.push({ text: `The |ν‡| you typed (${f2(res.nu, 0)} cm⁻¹) differs from the curvature of the path (${f2(res.nuPath, 0)} cm⁻¹) by more than 15 %; ZCT-MEP uses the typed value only for the parabolic continuation above the top and the Eckart-based corrections use it as the Eckart curvature. A discontinuity at the barrier top means the path was computed at a different level.` });
+        if (!res.nuGiven) warnings.push({ text: 'No |ν‡| given: it is estimated from the curvature of the interpolated path. A frequency from the Hessian of the transition state is preferable.' });
+        if (res.rescale !== 1) warnings.push({ cls: 'ok', text: `Path rescaled by c = ${res.rescale.toFixed(4)} (V → cV, s → √c s) to the requested V₁; ΔE is scaled by the same factor.` });
+        if (exact) warnings.push({ text: 'The exact 1D curve solves the Schrödinger equation on this path with constant potential continued beyond both ends; it is exact for this one-dimensional model only.' });
+        const an = analytic(res.V1, res.dE, res.nu, Ts), isoAn = rho > 1 ? analytic(res.V1, res.dE, res.nu / Math.sqrt(rho), Ts) : null;
+        const entry = { key: 'path', label: 'IRC path', dev: true, exact: res.exact, fsub: res.fsub, m: res.models, PE: res.PE, iso: res.iso, profile: null, eckartSeen: res.models.eckart };
+        const b = { mode: 'path', V1: res.V1, dE: res.dE, V2: res.V2, nu: res.nu, Ts, Tstar: T, an, isoAn, rho, nuH: res.nu / Math.sqrt(rho), entries: [entry], warnings, pathCurve: null };
+        const sd = [], vd = []; { const pm = new C.PathModel(s, V, { nu: res.nu, V1target: Number.isFinite(V1t) && V1t > 0 ? V1t : null }); for (let i = 0; i < 400; i++) { const ss = pm.s0 + (pm.sN - pm.s0) * i / 399; sd.push(ss); vd.push(pm.spline.at(ss)); } b.pathCurve = { s: sd, V: vd, sRaw: res.curve.s, VRaw: res.curve.V, sTop: res.sTop }; }
+        renderResults('path', out, b); lastPathB = b; $('#r-csv').disabled = false; pr.done('done');
+      } catch (e) { pr.done(''); out.innerHTML = `<div class="notice bad" style="margin-top:14px">Calculation failed: ${esc(e.message)}</div>`; }
+      runningPath = false; $('#r-run').disabled = false;
+    }
+    $('#r-run').addEventListener('click', runPathMode);
+    $('#r-csv').addEventListener('click', () => { if (lastPathB) download('tunneling_path_kappa.csv', toCSV(lastPathB), 'text/csv'); });
   }
-  let lastTexts = null;
-  $('#r-masses').addEventListener('change', () => { if (lastTexts && pathData && pathData.source === 'ORCA') ingest(lastTexts, false); });
-  function ingest(texts, isTable) {
-    try {
-      const d = I.detectAndParse(texts, { sUnit: $('#r-sUnit').value, eUnit: $('#r-eUnit').value, massSet: $('#r-masses').value });
-      pathData = d; pathData.raw = texts; pathData.isTable = isTable;
-      rstat(`${d.source}: ${d.n} points (${d.note})`, 'ok-t'); $('#r-run').disabled = false; previewPath();
-    } catch (e) { pathData = null; $('#r-run').disabled = true; rstat(e.message, 'bad-t'); $('#r-out').innerHTML = ''; }
-  }
-  $('#r-file').addEventListener('change', (ev) => readFiles(ev.target.files));
-  ['#r-sUnit', '#r-eUnit'].forEach((id) => $(id).addEventListener('change', () => { if (pathData && pathData.isTable) readFiles2(); }));
-  async function readFiles2() { if (!pathData) return; try { const d = I.tablePath(pathData.raw[0].text, { sUnit: $('#r-sUnit').value, eUnit: $('#r-eUnit').value }); Object.assign(pathData, d); previewPath(); } catch (e) { rstat(e.message, 'bad-t'); } }
-  const dz = $('#r-drop');
-  ['dragenter', 'dragover'].forEach((t) => dz.addEventListener(t, (e) => { e.preventDefault(); dz.classList.add('over'); }));
-  ['dragleave', 'drop'].forEach((t) => dz.addEventListener(t, (e) => { e.preventDefault(); dz.classList.remove('over'); }));
-  dz.addEventListener('drop', (e) => { if (e.dataTransfer && e.dataTransfer.files.length) readFiles(e.dataTransfer.files); });
-  $('#r-freq').addEventListener('change', async (ev) => { const f = ev.target.files[0]; if (!f) return; const nu = I.imaginaryFrequency(await f.text()); if (nu) { $('#r-nu').value = nu.toFixed(2); rstat(`imaginary frequency ${nu.toFixed(1)} cm⁻¹ read from ${f.name}`, 'ok-t'); } else rstat('no imaginary frequency found in ' + f.name, 'bad-t'); });
-  $('#r-demo').addEventListener('click', () => {
-    const V1 = 12, V2 = 17, nu = 1800, A = V1 - V2, B = Math.pow(Math.sqrt(V1) + Math.sqrt(V2), 2), t = (A + B) / (2 * B), l = Math.sqrt(2 * B) * t * (1 - t), K = nu / C.CONST.NUCONST, s = [], V = [];
-    for (let i = 0; i < 121; i++) { const xi = -9 + 18 * i / 120, tt = 1 / (1 + Math.exp(-xi)); V.push(A * tt + B * tt * (1 - tt)); s.push(xi * l / K); }
-    pathData = { s, V, n: s.length, source: 'demo', note: 'Eckart model path V₁ = 12, V₂ = 17, |ν‡| = 1800 cm⁻¹', raw: [], isTable: false }; $('#r-nu').value = '1800'; $('#r-run').disabled = false; rstat('demo path loaded', 'ok-t'); previewPath();
-  });
-  function orientPath() {
-    let s = pathData.s.slice(), V = pathData.V.slice(), side = $('#r-side').value; const n = s.length;
-    const first = V[0], last = V[n - 1];
-    const flip = side === 'last' || (side === 'auto' && first < last);
-    if (flip) { s = s.map((_, i) => -pathData.s[n - 1 - i]); V = V.map((_, i) => pathData.V[n - 1 - i]); }
-    return { s, V, flip };
-  }
-  function previewPath() {
-    if (!pathData) return;
-    try {
-      const { s, V, flip } = orientPath(), nuIn = num('#r-nu'), V1t = num('#r-V1');
-      const pm = new C.PathModel(s, V, { nu: Number.isFinite(nuIn) ? nuIn : null, V1target: Number.isFinite(V1t) && V1t > 0 ? V1t : null });
-      const out = $('#r-out'); registry.path.length = 0;
-      let w = `<p class="hint">Reactant side: ${flip ? 'last' : 'first'} point of the file. V₁ = ${f2(pm.V1)}, V₂ = ${f2(pm.V2)}, ΔE = ${f2(pm.dE)} kcal/mol; |ν‡| from the path curvature = ${f2(pm.nuPath, 0)} cm⁻¹. Press “Calculate”.</p>`;
-      out.innerHTML = `<div class="tnl-card" style="margin-top:14px"><h2>Path preview</h2>${w}</div><div class="tnl-plots" id="r-prev"></div>`;
-      const dense = []; const sd = [], vd = []; for (let i = 0; i < 400; i++) { const ss = pm.s0 + (pm.sN - pm.s0) * i / 399; sd.push(ss); vd.push(pm.spline.at(ss)); }
-      const bb = { V1: pm.V1, dE: pm.dE, pathCurve: { s: sd, V: vd, sRaw: Array.from(pm.sRaw), VRaw: Array.from(pm.VRaw), sTop: pm.sTop } };
-      addPlot('path', $('#r-prev'), 'path_V_preview', 'V(s) from the file', chartPathV(bb));
-    } catch (e) { $('#r-out').innerHTML = `<div class="notice bad" style="margin-top:14px">${esc(e.message)}</div>`; }
-  }
-  ['#r-nu', '#r-V1', '#r-side'].forEach((id) => $(id).addEventListener('change', () => { previewPath(); }));
-  async function runPathMode() {
-    if (!pathData || runningPath) return;
-    const T = num('#r-T'), Tmin = num('#r-Tmin'), Tmax = num('#r-Tmax'), nT = Math.max(3, Math.min(80, Math.round(num('#r-nT')) || 21));
-    const out = $('#r-out');
-    if (![T, Tmin, Tmax].every((x) => x > 0) || Tmax <= Tmin) { out.innerHTML = '<div class="notice bad" style="margin-top:14px">Check the temperatures (positive, T to &gt; T from).</div>'; return; }
-    const { s, V, flip } = orientPath(), nuIn = num('#r-nu'), V1t = num('#r-V1'), rho = Math.max(1, parseFloat($('#r-iso').value) || 1), exact = $('#r-exact').checked;
-    const Ts = Tgrid(Tmin, Tmax, nT, T);
-    runningPath = true; $('#r-run').disabled = true; const pr = progressUI('r'); pr.start('path models…');
-    try {
-      const res = await runTask('path', { s, V, nu: Number.isFinite(nuIn) ? nuIn : null, V1target: Number.isFinite(V1t) && V1t > 0 ? V1t : null, Ts, exact, rho, iso: rho > 1 }, (f, m) => pr.set(f, m));
-      const warnings = [];
-      if (!res.valid) {
-        const why = res.topAtEdge ? 'the barrier maximum lies at the end of the path (the path does not extend over both sides of the TS)' : (res.V2 <= 0 ? 'the reverse barrier V₂ is not positive for the chosen reactant side (barrierless or reversed direction)' : 'no valid |ν‡| (flat or non-concave top)');
-        out.innerHTML = `<div class="notice bad" style="margin-top:14px">The path cannot be used: ${why}. Try the other reactant side or give |ν‡| explicitly.</div>`; pr.done(''); runningPath = false; $('#r-run').disabled = false; return;
-      }
-      if (res.minima > 0 || res.maxima > 1) warnings.push({ cls: 'bad', text: `The path has ${res.maxima} maxima and ${res.minima} interior minimum(a) (deepest well ≈ ${f2(res.wellDepth)} kcal/mol). With an intermediate well the one-dimensional problem has resonances; ZCT-MEP, the calibrations and especially the exact 1D reference are not validated for deep wells.` });
-      if (res.nuGiven && Number.isFinite(res.nuPath) && Math.abs(res.nuPath / res.nu - 1) > 0.15) warnings.push({ text: `The |ν‡| you typed (${f2(res.nu, 0)} cm⁻¹) differs from the curvature of the path (${f2(res.nuPath, 0)} cm⁻¹) by more than 15 %; ZCT-MEP uses the typed value only for the parabolic continuation above the top and the Eckart-based corrections use it as the Eckart curvature. A discontinuity at the barrier top means the path was computed at a different level.` });
-      if (!res.nuGiven) warnings.push({ text: 'No |ν‡| given: it is estimated from the curvature of the interpolated path. A frequency from the Hessian of the transition state is preferable.' });
-      if (res.rescale !== 1) warnings.push({ cls: 'ok', text: `Path rescaled by c = ${res.rescale.toFixed(4)} (V → cV, s → √c s) to the requested V₁; ΔE is scaled by the same factor.` });
-      if (exact) warnings.push({ text: 'The exact 1D curve solves the Schrödinger equation on this path with constant potential continued beyond both ends; it is exact for this one-dimensional model only.' });
-      const an = analytic(res.V1, res.dE, res.nu, Ts), isoAn = rho > 1 ? analytic(res.V1, res.dE, res.nu / Math.sqrt(rho), Ts) : null;
-      const entry = { key: 'path', label: 'IRC path', dev: true, exact: res.exact, fsub: res.fsub, m: res.models, PE: res.PE, iso: res.iso, profile: null, eckartSeen: res.models.eckart };
-      const b = { mode: 'path', V1: res.V1, dE: res.dE, V2: res.V2, nu: res.nu, Ts, Tstar: T, an, isoAn, rho, nuH: res.nu / Math.sqrt(rho), entries: [entry], warnings, pathCurve: null };
-      const sd = [], vd = []; { const pm = new C.PathModel(s, V, { nu: res.nu, V1target: Number.isFinite(V1t) && V1t > 0 ? V1t : null }); for (let i = 0; i < 400; i++) { const ss = pm.s0 + (pm.sN - pm.s0) * i / 399; sd.push(ss); vd.push(pm.spline.at(ss)); } b.pathCurve = { s: sd, V: vd, sRaw: res.curve.s, VRaw: res.curve.V, sTop: res.sTop }; }
-      renderResults('path', out, b); lastPathB = b; $('#r-csv').disabled = false; pr.done('done');
-    } catch (e) { pr.done(''); out.innerHTML = `<div class="notice bad" style="margin-top:14px">Calculation failed: ${esc(e.message)}</div>`; }
-    runningPath = false; $('#r-run').disabled = false;
-  }
-  $('#r-run').addEventListener('click', runPathMode);
-  $('#r-csv').addEventListener('click', () => { if (lastPathB) download('tunneling_path_kappa.csv', toCSV(lastPathB), 'text/csv'); });
-
   // ------------------------------------------------------------------ ABOUT: self test, Table 2
   function renderSelfTest() {
-    const tb = $('#selftest tbody'); tb.innerHTML = '';
+    const tb = $('#selftest tbody'); if (!tb) return;
+    tb.innerHTML = '';
     for (const r of Tk.selfTest()) tb.insertAdjacentHTML('beforeend', `<tr><td>${esc(r.name)}</td><td>${fmtK(r.got)}</td><td>${fmtK(r.ref)}</td><td class="${r.ok ? 'ok-t' : 'bad-t'}">${r.ok ? '✓' : '✗'}</td></tr>`);
   }
-  const TAB2 = { gauss: [54.5, 81.1, 48.6, 55.2, 54.8, 1720], lorentz: [37.5, 81.0, 32.6, 37.0, 36.5, 1637], sech2: [63.4, 81.1, 56.0, 63.7, 63.4, 1750], sech4: [97.5, 81.1, 85.7, 97.4, 97.7, 1838], lorentz2: [63.4, 81.1, 55.7, 63.3, 63.0, 1749] };
-  $('#t2-run').addEventListener('click', async () => {
-    const st = $('#t2-status'); $('#t2-run').disabled = true; st.textContent = 'computing…';
-    try {
-      const res = await runTask('profiles', { V1: 12, dE: -8, nu: 1800, Ts: [298.15], families: Object.keys(TAB2), iso: false, rho: 1, sc: false }, (f) => { st.textContent = `computing… ${(100 * f).toFixed(0)} %`; });
-      let h = '<table class="tnl-table"><thead><tr><th>profile</th><th>V₁ / V₂ seen</th><th>exact</th><th>Eckart</th><th>ZCT-MEP</th><th>ZCT-EC</th><th>EQ-FREQ</th><th>ν<sub>eff</sub></th><th>max dev. from the manuscript</th></tr></thead><tbody>';
-      for (const r of res.families) { const ref = TAB2[r.key], got = [r.exact[0], r.models.eckart[0], r.models.zct[0], r.models.zctEC[0], r.models.eq[0], r.models.nuEff[0]];
-        const dev = Math.max(...got.map((g, i) => Math.abs(g / ref[i] - 1)));
-        h += `<tr><td>${esc(r.label)}</td><td>${f2(r.V1, 3)} / ${f2(r.V2, 3)}</td>${got.map((g, i) => `<td>${i === 5 ? f2(g, 0) : f2(g, 1)} <span class="hint">(${i === 5 ? ref[i] : ref[i].toFixed(1)})</span></td>`).join('')}<td class="${dev < 0.01 ? 'ok-t' : 'warn-t'}">${(100 * dev).toFixed(2)} %</td></tr>`; }
-      $('#t2-out').innerHTML = h + '</tbody></table><p class="hint">V₁ = 12, V₂ = 20 kcal/mol, 1800 cm⁻¹, 298.15 K. In brackets: values printed in Table 2 of the manuscript (rounded to the printed digits).</p>'; st.textContent = '';
-    } catch (e) { st.textContent = 'failed: ' + e.message; }
-    $('#t2-run').disabled = false;
-  });
-
+  if ($('#t2-run')) {
+    const TAB2 = { gauss: [54.5, 81.1, 48.6, 55.2, 54.8, 1720], lorentz: [37.5, 81.0, 32.6, 37.0, 36.5, 1637], sech2: [63.4, 81.1, 56.0, 63.7, 63.4, 1750], sech4: [97.5, 81.1, 85.7, 97.4, 97.7, 1838], lorentz2: [63.4, 81.1, 55.7, 63.3, 63.0, 1749] };
+    $('#t2-run').addEventListener('click', async () => {
+      const st = $('#t2-status'); $('#t2-run').disabled = true; st.textContent = 'computing…';
+      try {
+        const res = await runTask('profiles', { V1: 12, dE: -8, nu: 1800, Ts: [298.15], families: Object.keys(TAB2), iso: false, rho: 1, sc: false }, (f) => { st.textContent = `computing… ${(100 * f).toFixed(0)} %`; });
+        let h = '<table class="tnl-table"><thead><tr><th>profile</th><th>V₁ / V₂ seen</th><th>exact</th><th>Eckart</th><th>ZCT-MEP</th><th>ZCT-EC</th><th>EQ-FREQ</th><th>ν<sub>eff</sub></th><th>max dev. from the manuscript</th></tr></thead><tbody>';
+        for (const r of res.families) {
+          const ref = TAB2[r.key], got = [r.exact[0], r.models.eckart[0], r.models.zct[0], r.models.zctEC[0], r.models.eq[0], r.models.nuEff[0]];
+          const dev = Math.max(...got.map((g, i) => Math.abs(g / ref[i] - 1)));
+          h += `<tr><td>${esc(r.label)}</td><td>${f2(r.V1, 3)} / ${f2(r.V2, 3)}</td>${got.map((g, i) => `<td>${i === 5 ? f2(g, 0) : f2(g, 1)} <span class="hint">(${i === 5 ? ref[i] : ref[i].toFixed(1)})</span></td>`).join('')}<td class="${dev < 0.01 ? 'ok-t' : 'warn-t'}">${(100 * dev).toFixed(2)} %</td></tr>`;
+        }
+        $('#t2-out').innerHTML = h + '</tbody></table><p class="hint">V₁ = 12, V₂ = 20 kcal/mol, 1800 cm⁻¹, 298.15 K. In brackets: values printed in Table 2 of the manuscript (rounded to the printed digits).</p>'; st.textContent = '';
+      } catch (e) { st.textContent = 'failed: ' + e.message; }
+      $('#t2-run').disabled = false;
+    });
+  }
   // ------------------------------------------------------------------ init
   (function init() {
     if (CFG.homeUrl) $('#homeLink').href = CFG.homeUrl;
@@ -657,7 +682,7 @@
     if (CFG.paperUrl) cite += ` <a href="${esc(CFG.paperUrl)}" rel="noopener">[article]</a>`;
     if (CFG.repoUrl) cite += ` <a href="${esc(CFG.repoUrl)}" rel="noopener">[code]</a>`;
     $('#cite').innerHTML = cite || 'Please cite the accompanying article.';
-    renderSelfTest(); applyTheme();
+    if ($('#selftest')) renderSelfTest(); applyTheme();
     const had = applyHash();
     const tab = had ? 'params' : (safeLS.get('tnl-tab') || 'params'); showTab(['params', 'path', 'about'].includes(tab) ? tab : 'params');
     setMode(mode, true); symFromValue();
