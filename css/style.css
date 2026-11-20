@@ -1907,12 +1907,25 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon {
     align-items: center;
     justify-content: center;
     width: 180px;
-    height: 45px;
+    height: 65px;
+    padding: 10px 12px;
     flex-shrink: 0;
-    color: var(--tx-on-paper-dim);
+    border: 1px solid rgba(15, 18, 32, .1);
+    border-radius: 6px;
+    background: #f6f5f1;
+    color: #404553;
     font-family: var(--f-mono);
     font-size: .7rem;
     text-align: center;
+}
+
+html[data-theme="night"] .sp-logostrip-group a {
+    background: #eae8e2;
+}
+
+.sp-logostrip-group a:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
 }
 
 .sp-logostrip-group a.is-loaded span,
@@ -1923,15 +1936,14 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon {
 .sp-logostrip-track img {
     height: 45px;
     width: auto;
-    max-width: 180px;
+    max-width: 100%;
     object-fit: contain;
-    filter: grayscale(1);
-    opacity: .5;
-    transition: opacity .2s, filter .2s;
+    filter: grayscale(.35);
+    transition: filter .2s;
 }
 
-.sp-logostrip-track img:hover {
-    opacity: 1;
+.sp-logostrip-group a:hover img,
+.sp-logostrip-group a:focus-visible img {
     filter: grayscale(0);
 }
 
