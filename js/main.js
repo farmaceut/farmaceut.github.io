@@ -1039,21 +1039,36 @@ const PortfolioApp = {
         });
     },
 
-    /* Logo strip: pulls straight from locations[] (skip entries with no
-       logo — Altınbaş/Univerzita Karlova currently have '') so there's one
-       source of truth for institutions, shared with the globe. Duplicates
-       the list once so the CSS translateX(-50%) loop is seamless. */
+    /* Two identical groups keep the scrolling loop seamless. */
     initLogoStrip() {
         const track = document.getElementById('logoStrip');
         if (!track) return;
         const institutions = this.institutions.filter(i => i.logo);
         if (!institutions.length) return;
-        const doubled = [...institutions, ...institutions];
-        track.innerHTML = doubled.map(i => `
-            <a href="${i.website || '#'}" target="_blank" rel="noopener" title="${i.name}">
-                <img src="${i.logo}" alt="${i.name}" loading="lazy">
-            </a>
-        `).join('');
+        const makeGroup = isDuplicate => {
+            const group = document.createElement('div');
+            group.className = 'sp-logostrip-group';
+            if (isDuplicate) group.setAttribute('aria-hidden', 'true');
+            institutions.forEach(institution => {
+                const link = document.createElement('a');
+                link.href = institution.website;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.title = institution.name;
+                if (isDuplicate) link.tabIndex = -1;
+                const label = document.createElement('span');
+                label.textContent = institution.name;
+                const image = document.createElement('img');
+                image.alt = institution.name;
+                image.addEventListener('load', () => link.classList.add('is-loaded'));
+                image.addEventListener('error', () => image.remove());
+                image.src = institution.logo;
+                link.append(label, image);
+                group.appendChild(link);
+            });
+            return group;
+        };
+        track.replaceChildren(makeGroup(false), makeGroup(true));
     },
 
     initReveal() {

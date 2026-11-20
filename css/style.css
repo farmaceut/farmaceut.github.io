@@ -1887,22 +1887,39 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon {
     margin-bottom: 28px;
 }
 
-/* 1. Track Container & Speed Control */
 .sp-logostrip-track {
     display: flex;
     align-items: center;
-    gap: 64px;
     width: max-content;
-    /* CHANGE SPEED HERE: Lower number = faster (e.g., 25s instead of 75s) */
     animation: sp-scroll 40s linear infinite;
 }
 
-/* Optional: Override gap specifically when inside .sp-collab-network */
-.sp-collab-network .sp-logostrip-track {
+.sp-logostrip-group {
+    display: flex;
+    align-items: center;
     gap: 72px;
+    padding-right: 72px;
+    flex-shrink: 0;
 }
 
-/* Image Styling */
+.sp-logostrip-group a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    height: 45px;
+    flex-shrink: 0;
+    color: var(--tx-on-paper-dim);
+    font-family: var(--f-mono);
+    font-size: .7rem;
+    text-align: center;
+}
+
+.sp-logostrip-group a.is-loaded span,
+.sp-logostrip-group a:not(.is-loaded) img {
+    display: none;
+}
+
 .sp-logostrip-track img {
     height: 45px;
     width: auto;
@@ -1918,7 +1935,10 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon {
     filter: grayscale(0);
 }
 
-/* Scroll Keyframe Animation */
+.sp-logostrip-track:focus-within {
+    animation-play-state: paused;
+}
+
 @keyframes sp-scroll {
     from {
         transform: translateX(0);
@@ -1929,13 +1949,22 @@ html[data-theme="day"] .sp-theme-toggle .sp-icon-moon {
     }
 }
 
-/* Accessibility: Pause for users preferring reduced motion */
 @media (prefers-reduced-motion: reduce) {
     .sp-logostrip-track {
         animation: none;
+        width: 100%;
+    }
+
+    .sp-logostrip-group {
         flex-wrap: wrap;
         justify-content: center;
         width: 100%;
+        padding-right: 0;
+        flex-shrink: 1;
+    }
+
+    .sp-logostrip-group[aria-hidden="true"] {
+        display: none;
     }
 }
 
